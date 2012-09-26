@@ -53,7 +53,7 @@ class PrsoThemeAppController extends PrsoThemeConfig {
  		
  		if(isset( $this->plugin_slug, $var )) {
  			//Pass wordpress filter 'prso_core_get_slug' plugin_slug, $var, and Current Object $this
- 			$slug = apply_filters( 'prso_core_get_slug', $slug, $var, $this->plugin_slug, &$this  );	
+ 			$slug = apply_filters( 'prso_core_get_slug', $slug, $var, $this->plugin_slug, $this  );	
  		}
  		
  		return $slug;
