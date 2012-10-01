@@ -133,7 +133,29 @@ jQuery(document).ready(function ($) {
     activateTab($('a[href="' + window.location.hash + '"]').parent('dd'));
     $.foundation.customForms.appendCustomMarkup();
   }
-
+  
+  /* Accordion --------------------------------- */
+  /* Remove if you don't need :) */
+  ;(function ($, window, undefined){
+	  'use strict';
+	
+	  $.fn.foundationAccordion = function (options) {
+	
+	    $('.accordion li', this).on('click.fndtn', function () {
+	    var p = $(this).parent(); //changed this
+	      var flyout = $(this).children('.content').first();
+	      $('.content', p).not(flyout).hide().parent('li').removeClass('active'); //changed this
+	      flyout.show(0, function () {
+	        flyout.parent('li').addClass('active');
+	      });
+	    });
+	
+	  };
+	
+	})( jQuery, this );
+  
+  $(document).foundationAccordion();
+  
   /* ALERT BOXES ------------ */
   $(".alert-box").delegate("a.close", "click", function(event) {
     event.preventDefault();
