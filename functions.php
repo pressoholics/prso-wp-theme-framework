@@ -12,7 +12,6 @@ URL: htp://www.BenjaminMoody.com
 //Combine and Minify all enqueued scripts and styles - comment out to disable auto minifying
 add_action( 'wp_print_scripts', 'prso_theme_merge_scripts' );	
 add_action( 'wp_print_styles', 'prso_theme_merge_styles' );	
- 		
 
 /**
 * merge_scripts
