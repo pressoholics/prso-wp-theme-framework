@@ -261,4 +261,150 @@ class PostHelper {
 		return $_children;
 	}
 	
+	/**
+	 * prev_next_pagination()
+	 *
+	 * This helper will return the post permalink for next or previous posts of similar post type and/or
+	 * custom taxonomy.
+	 *
+	 * The helper uses wp_query to query the posts so simply add you wp_query args into $args and the helper
+	 * will automatically create a 1 post/page pagination loop allowing you to use prev/next post buttons for users
+	 * to loop through a set of posts.
+	 *
+	 * @param	array	$args - any get_categories args you wish to customize
+	 * @return	array	$_children	- Onject array containing all child/grandchild categories
+	 */
+	public function prev_next_pagination( $args = array() ) {
+		
+		//Init vats
+		global $post;
+		$paged				= NULL;
+		$total_posts		= NULL;
+		$post_terms 		= NULL;
+		$post_term_slug		= NULL;
+		$taxonomy 			= NULL;
+		$portfolio_posts	= NULL;	
+		$PostData			= NULL;
+		$permalink			= NULL;
+		$defaults = array(
+			'direction' 		=> NULL,
+			'post_type'			=> 'page',
+			'posts_per_page' 	=> 1,
+			'tax_query'			=> array(
+				array(
+					'taxonomy' 	=> NULL,
+					'field'		=> 'slug',
+					'terms'		=> NULL
+				)
+			)
+		);
+		
+		$args = wp_parse_args($args, $defaults);
+		
+		extract($args);
+		
+		//Cache the page var
+		$paged = get_query_var('page');
+		
+		//First get the current portfolio items taxonomy
+		if( isset($post->ID) ) {
+			$post_terms = wp_get_post_terms( $post->ID, $taxonomy );
+			
+			//Cache the first term as artist cat
+			if( isset($post_terms[0]->slug) ) {
+				$post_term_slug = $post_terms[0]->slug;
+			}
+			
+			//Get all portfolio post for this artist
+			$args['tax_query'][0]['terms'] = $post_term_slug;
+			
+			
+			//this is the first page and we must find where this sits in relation to other posts	
+			$paged = NULL;
+			
+			//We need to find which page the landing page sits in relation to wp_query pagination
+			//So get all pages and loop until we find the page we are on
+			$args['posts_per_page'] = -1;
+			$portfolio_posts = new WP_Query( $args );
+			
+			wp_reset_query();
+			
+			//Loop through all posts and find out where our current post is in the array this will be the page var
+			if( isset($portfolio_posts->posts) && !empty($portfolio_posts->posts) ) {
+				$post_page_count = 1;
+				
+				foreach( $portfolio_posts->posts as $key => $post_obj ){
+					//If we have found the landing post, cache it's array position as the $paged var
+					if( $post_obj->ID === $post->ID ) {
+						$paged = $post_page_count;
+						break;
+					}
+					
+					$post_page_count++;
+				}
+				
+				//Now run the query again this time find either the page previous or next and get the hyperlink
+				if( isset($paged) && is_int($paged) ) {
+					
+					//First cache the total number of posts found in the pagination
+					$total_posts = count( $portfolio_posts->posts );
+			
+					//As we only have 1 post per page $total_posts is also the total number of pages too!
+					$total_pages = $total_posts;
+					
+					//Based on $direction var set the page to get
+					switch( $direction ) {
+						case 'previous':
+							//Add page arg to url
+							$new_page = $paged - 1;
+							
+							//Make sure we don't go negative
+							if( $new_page < 1 ) {
+								$new_page = $total_pages;
+							}
+							
+							break;
+						case 'next':
+							//Add page arg to url
+							$new_page = $paged + 1;
+							
+							//Make sure we don't go over total pages
+							if( $new_page > $total_pages ) {
+								$new_page = 1;
+							}
+							
+							break;
+					}
+					
+					$args['paged'] = $new_page;
+					
+					$args['posts_per_page'] = 1;
+					$portfolio_posts = new WP_Query( $args );
+					
+					if( isset($portfolio_posts->posts) ) {
+						$PostData = $portfolio_posts;
+					}
+					
+					wp_reset_query();
+					
+				}
+				
+			}
+			
+			//So if we have found the post data lets create the hyperlink for next/previous page
+			if( isset($PostData->posts[0]->ID) ){
+				
+				//Get the post permalink
+				$permalink = get_post_permalink( $PostData->posts[0]->ID );
+					
+			}
+			
+		}
+		
+		if( !empty($permalink) ) {
+			echo esc_url( $permalink );
+		}
+		
+	}
+	
 }
