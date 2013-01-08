@@ -24,6 +24,7 @@
 	*
 	*/
 	protected $theme_root = NULL;
+	protected $child_theme_root = NULL; //Path to child theme's framework folder if child theme is active
 	
 	/**
 	* The full path to the directory which holds "helpers", WITHOUT a trailing DS.
@@ -32,19 +33,14 @@
 	protected $theme_helpers = NULL;
 	
 	/**
-	* The full path to the directory which holds "plugins", WITHOUT a trailing DS.
-	*
-	*/
-	protected $themes_folder = NULL;
-	
-	/**
 	* The full path to the directory which holds "views", WITHOUT a trailing DS.
 	*
 	*/
 	protected $theme_views = NULL;
+	protected $child_theme_views = NULL; //Path to child theme framework views folder if child theme is active
 	
 	/**
-	* Unique slug prepended to all class names, based on var $theme_slug set at top of this file
+	* Unique slug prepended to all class names
 	*
 	*/
 	protected $theme_class_slug = NULL;
@@ -56,13 +52,15 @@
  		//parent::__construct();
  		
  		//Set framework root (Parent Theme path)
-		$this->theme_root = get_template_directory() . '/prso_framework';
+		$this->theme_root 		= get_template_directory() . '/prso_framework';
+		$this->child_theme_root = get_stylesheet_directory() . '/prso_framework';
 		
 		//Set framework helpers dir
 		$this->theme_helpers = $this->theme_root . '/helpers';
 		
 		//Set framework views folder
-		$this->theme_views = $this->theme_root . '/views';
+		$this->theme_views 			= $this->theme_root . '/views';
+		$this->child_theme_views	= $this->child_theme_root . '/views';
 		
 		//Set plugin Class slug to be prepended to class names making them unique
 		$this->theme_class_slug = 'PrsoTheme';
@@ -225,7 +223,8 @@
  		//Init vars
  		$result = false;
  		$args	= array(
-			'plugin_views_dir' => $this->theme_views
+			'plugin_views_dir' 			=> $this->theme_views,
+			'plugin_child_views_dir'	=> $this->child_theme_views
 		);
  		 		
  		$result = apply_filters( 'prso_core_scan_plugin_views', $result, $args );
@@ -243,9 +242,10 @@
  	private function load_admin_views() {
  		
  		$args = array(
-			'views_scan' 		=> $this->views_scan,
-			'plugin_class_slug'	=> $this->theme_class_slug,
-			'plugin_views_dir'	=> $this->theme_views
+			'views_scan' 				=> $this->views_scan,
+			'plugin_class_slug'			=> $this->theme_class_slug,
+			'plugin_views_dir'			=> $this->theme_views,
+			'plugin_child_views_dir'	=> $this->child_theme_views
 		);
  		
  		do_action( 'prso_core_load_plugin_views', $args );
