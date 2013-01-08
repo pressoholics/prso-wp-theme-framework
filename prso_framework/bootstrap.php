@@ -293,6 +293,17 @@
  		
  		//Init vars
  		$file_path 	= $this->theme_root . '/walkers.php';
+ 		$child_theme_file_path = $this->child_theme_root . '/walkers.php';
+ 		
+ 		//If a child theme is being used check to see if it has any walkers to load
+ 		if( is_child_theme() ) {
+	 		//Check file exsists in framework
+	 		if( file_exists($child_theme_file_path) ) {
+	 			
+	 			include_once($child_theme_file_path);
+	 			
+	 		}
+ 		}
  		
  		//Check file exsists in framework
  		if( file_exists($file_path) ) {
