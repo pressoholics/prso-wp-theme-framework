@@ -48,8 +48,6 @@
  	
  	
  	function __construct( $args = array() ) {
- 		//Ensure vars set in config are available
- 		//parent::__construct();
  		
  		//Set framework root (Parent Theme path)
 		$this->theme_root 		= get_template_directory() . '/prso_framework';

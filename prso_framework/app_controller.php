@@ -5,8 +5,7 @@ class PrsoThemeAppController extends PrsoThemeConfig {
 	protected $data = array(); //Master store of all data for plugin actions - options data, _GET, Overload data from magic methods
 	
 	function __construct() {
-		//Ensure vars set in config are available
- 		parent::__construct(); 		
+		 		
 	}
 	
 	/**
