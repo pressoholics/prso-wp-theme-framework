@@ -2,6 +2,7 @@
 /*
 Author: Benjamin Moody
 URL: htp://www.BenjaminMoody.com
+Version: 2.0
 */
 
 /**
@@ -116,7 +117,7 @@ if( !function_exists('prso_add_search_to_nav') ) {
 * Call method to boot core framework
 *
 */	
-if( file_exists( dirname(__FILE__) . '/prso_framework/bootstrap.php' ) ) {
+if( file_exists( get_template_directory() . '/prso_framework/bootstrap.php' ) ) {
 
 	if( !class_exists('PrsoThemeBootstrap') ) {
 		
@@ -124,16 +125,16 @@ if( file_exists( dirname(__FILE__) . '/prso_framework/bootstrap.php' ) ) {
 		* Include config file to set core definitions
 		*
 		*/
-		if( file_exists( dirname(__FILE__) . '/prso_framework/config.php' ) ) {
+		if( file_exists( get_stylesheet_directory() . '/prso_framework/config.php' ) ) {
 			
-			include( dirname(__FILE__) . '/prso_framework/config.php' );
+			include( get_stylesheet_directory() . '/prso_framework/config.php' );
 			
 			if( class_exists('PrsoThemeConfig') ) {
 				
 				new PrsoThemeConfig();
 				
 				//Core loaded, load rest of plugin core
-				include( dirname(__FILE__) . '/prso_framework/bootstrap.php' );
+				include( get_template_directory() . '/prso_framework/bootstrap.php' );
 
 				//Instantiate bootstrap class
 				if( class_exists('PrsoThemeBootstrap') ) {

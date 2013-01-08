@@ -325,7 +325,7 @@ class PrsoThemeConfig {
 	function __construct() {
 		
 		//Set plugin root
-		$this->theme_root = dirname(__FILE__);
+		$this->theme_root = get_template_directory() . '/prso_framework';
 		
 		//Set plugin filename
 		$this->theme_filename = __FILE__;
