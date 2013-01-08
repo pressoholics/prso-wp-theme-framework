@@ -282,63 +282,6 @@ class PrsoThemeConfig {
 	);
  	
 	//***** END -- THEME OPTIONS - DON'T EDIT PASSED HERE!! *****//
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/**
-	* The full path to the directory which holds "presso_framework", WITHOUT a trailing DS.
-	*
-	*/
-	protected $theme_root = NULL;
-	protected $theme_filename = NULL;
-	
-	/**
-	* The full path to the directory which holds "helpers", WITHOUT a trailing DS.
-	*
-	*/
-	protected $theme_helpers = NULL;
-	
-	/**
-	* The full path to the directory which holds "plugins", WITHOUT a trailing DS.
-	*
-	*/
-	protected $themes_folder = NULL;
-	
-	/**
-	* The full path to the directory which holds "views", WITHOUT a trailing DS.
-	*
-	*/
-	protected $theme_views = NULL;
-	
-	/**
-	* Unique slug prepended to all class names, based on var $theme_slug set at top of this file
-	*
-	*/
-	protected $theme_class_slug = NULL;
-	
-	function __construct() {
-		
-		//Set plugin root
-		$this->theme_root = get_template_directory() . '/prso_framework';
-		
-		//Set plugin filename
-		$this->theme_filename = __FILE__;
-		
-		//Set plugin helpers dir
-		$this->theme_helpers = $this->theme_root . '/helpers';
-		
-		//Set plugin views folder
-		$this->theme_views = $this->theme_root . '/views';
-		
-		//Set plugin Class slug to be prepended to class names making them unique
-		$this->theme_class_slug = str_replace(' ', '', ucwords(str_replace('_', ' ', $this->theme_slug)));
-		
-	}
+
 	
 }
