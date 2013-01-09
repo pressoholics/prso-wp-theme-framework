@@ -7,12 +7,10 @@
  * CONTENTS:
  *
  *	1. do_action('prso_get_related_posts', $args); 
- *
- *	get_ID_by_slug($page_slug)
- *	get_posts( $args = array() )
- *	loop_category( $parent_cat_slug = null, $args = array() )
- *	loop_category_widget( $cat_args )
- *	get_cat_children( $args = array() )
+ *	2. apply_filters('prso_get_page_id_by_slug', NULL, $page_slug, $post_type);
+ *  3. apply_filters('prso_get_page_content', NULL, $page_id_slug);
+ *  4. do_action('prso_query_posts_by_category', $cat_slug, $args);
+ *  5. do_action('prso_prev_next_permalink', $args);
  * 
  */
 class PostHelper {
@@ -28,46 +26,6 @@ class PostHelper {
 	}
 	
 	/**
-	* add_action
-	* 
-	* Helper to deal with Wordpress add_action requests. Checks to make sure that the action is not
-	* duplicated if a class is instantiated multiple times.
-	* 
-	* @access 	protected
-	* @author	Ben Moody
-	*/
-	private function add_action( $tag = NULL, $method = NULL, $priority = 10, $accepted_args = NULL ) {
-		
-		if( isset($tag,$method) ) {
-			//Check that action has not already been added
-			if( !has_action($tag) ) {
-				add_action( $tag, array($this, $method), $priority, $accepted_args );
-			}
-		}
-		
-	}
-	
-	/**
-	* add_filter
-	* 
-	* Helper to deal with Wordpress add_filter requests. Checks to make sure that the filter is not
-	* duplicated if a class is instantiated multiple times.
-	* 
-	* @access 	protected
-	* @author	Ben Moody
-	*/
-	private function add_filter( $tag = NULL, $method = NULL, $priority = 10, $accepted_args = NULL ) {
-		
-		if( isset($tag,$method) ) {
-			//Check that action has not already been added
-			if( !has_filter($tag) ) {
-				add_filter( $tag, array($this, $method), $priority, $accepted_args );
-			}
-		}
-		
-	}
-	
-	/**
 	* custom_action_hooks
 	* 
 	* Create any custom WP Action Hooks here for post helpers
@@ -78,10 +36,34 @@ class PostHelper {
  	private function custom_action_hooks() {
  		
  		/**
- 		* prso_get_related_posts
- 		* 	Returns/Echos a ul list of related posts.
+ 		* 1. prso_get_related_posts
+ 		* 	 Returns/Echos a ul list of related posts.
  		*/
  		$this->add_action( 'prso_get_related_posts', 'get_related_posts', 10, 1 );
+ 		
+ 		/**
+ 		* 2. prso_get_page_id_by_slug
+ 		* 	 Shortcut for returning a page ID using it's slug.
+ 		*/
+ 		$this->add_filter( 'prso_get_page_id_by_slug', 'get_ID_by_slug', 1, 3 );
+ 		
+ 		/**
+ 		* 3. prso_get_page_content
+ 		* 	 Shortcut for returning a pages content by ID or Slug
+ 		*/
+ 		$this->add_filter( 'prso_get_page_content', 'get_page_content', 1, 2 );
+ 		
+ 		/**
+ 		* 4. prso_query_posts_by_category
+ 		* 	 Alters the main loop to return posts in a specific category
+ 		*/
+ 		$this->add_action( 'prso_query_posts_by_category', 'loop_category', 10, 2 );
+ 		
+ 		/**
+ 		* 5. prso_prev_next_permalink
+ 		* 	 Echo permalink to next/prev post in a loop of pages
+ 		*/
+ 		$this->add_action( 'prso_prev_next_permalink', 'prev_next_pagination', 10, 1 );
  		
  	}
 	
@@ -106,8 +88,6 @@ class PostHelper {
 	* 2. 'no_posts_msg'	- string or NULL
 	*		If you dont need a msg to output when no related posts found, set to NULL
 	*
-	* 3. 'echo' - TRUE/FALSE
-	*		When set to FALSE function will return unordered list html.
 	*
 	* @param	array	$args (see above comments)
 	* @access 	public
@@ -133,7 +113,6 @@ class PostHelper {
 			'meta_value' =>'', 'post_type' => 'post',
 			'suppress_filters' => true,
 			'no_posts_msg'	=> 'No related posts',
-			'echo'			=> TRUE,
 			'relation'		=> 'category__and__tag'
 		);
 		
@@ -260,80 +239,72 @@ class PostHelper {
 		//Close output html
 		$output.= '</ul>';
 		
-		//Detect if to echo or return output
-		if( $query['echo'] === TRUE ) {
+		if( !empty($output) ) {
 			echo $output;
-		} else {
-			return $output;
 		}
 		
 	}
 	
 	/**
 	* get_ID_by_slug
+	*
+	* apply_filters('prso_get_page_id_by_slug', NULL, $page_slug, $post_type);
+	*
 	* Shortcut for returning a page ID using it's slug
 	*
+	* @param	string	$page_slug - page slug, can be take from url :)
+	* @param	string	$post_type - 'page', 'post', 'custom post type'
 	*/ 
-	public function get_ID_by_slug($page_slug) {
-	    $page = get_page_by_path($page_slug);
-	    if ($page) {
-	        return $page->ID;
+	public function get_ID_by_slug( $output, $page_slug, $post_type = 'page' ) {
+	    
+	    $page = get_page_by_path( $page_slug, 'OBJECT', $post_type );
+	    
+	    if ( isset($page->ID) ) {
+	        $output = $page->ID;
 	    } else {
-	        return null;
+	        $output = null;
 	    }
+	    
+	    return $output;
 	}
 	
 	/**
-	* get_posts()
+	* get_page_content
+	* 
+	* apply_filters('prso_get_page_content', NULL, $page_id_slug);
+	* 
+	* Returns the content of any page by either it's ID or slug
 	*
-	* This automates get_posts by setting some default args as well as
-	* allowing you to pass a string for category rather than just cat_id
-	* lets you use cat slug too.
-	*
-	* @param	array	$args - any get_posts args you wish to customize
-	* @return	array	$_posts	- posts array returned by wp get_posts
+	* @param	mixed	ID or slug of page content you wish to return
+	* @access 	public
+	* @author	Ben Moody
 	*/
-	public function get_posts( $args = array() ) {
+	public function get_page_content( $content, $page_id_slug = NULL ) {
 		
 		//Init vars
-		global $post;
-		$_posts		= array();
-		$_CatObject = null;
-		$_args 		= array(
-			'numberposts'     => 5,
-		    'offset'          => 0,
-		    'category'        => null,
-		    'orderby'         => 'post_date',
-		    'order'           => 'ASC',
-		    'include'         => null,
-		    'exclude'         => null,
-		    'meta_key'        => null,
-		    'meta_value'      => null,
-		    'post_type'       => 'post',
-		    'post_mime_type'  => null,
-		    'post_parent'     => null,
-		    'post_status'     => 'publish'
-		);
+		$page_data 	= NULL;
 		
-		//Combine default arg with args provided
-		$args = array_merge( $_args, $args );
+		$page_id_slug = esc_attr( $page_id_slug );
 		
-		//Set category ID in args if cat provided is category slug string
-		if( isset($args['category']) && is_string($args['category']) ) {
+		if( isset($page_id_slug) ) {
 			
-			//Get category id using cat slug provided
-			if( $_CatObject = get_category_by_slug($args['category']) ){
-				$args['category'] 	= $_CatObject->term_id;
-			}else{
-				$args['category'] 	= null;
+			//Detect if this is a page ID or Slug
+			if( is_string($page_id_slug) ) {
+				//Convert slug into page ID
+				$page_id_slug = apply_filters( 'prso_get_page_id_by_slug', NULL, $page_id_slug );
+			}
+			
+			//Get page data
+			if( isset($page_id_slug) ) {
+				$page_data = get_page( $page_id_slug );
+				
+				//Get page content and run wordpress content filters on it
+				$content = apply_filters( 'the_content', $page_data->post_content );
 			}
 			
 		}
 		
-		//Get posts using args
-		$_posts = get_posts( $args );
-	
-		return $_posts;
+		return $content;
 	}
 	
 	/**
@@ -364,7 +335,7 @@ class PostHelper {
 	* @access 	public
 	* @author	Ben Moody
 	*/
-	function loop_category( $parent_cat_slug = null, $args = array() ) {
+	public function loop_category( $parent_cat_slug = null, $args = array() ) {
 		
 		$_CatObject 		= null; //Cache object for categories
 		$wp_query			= null;
@@ -439,73 +410,13 @@ class PostHelper {
 	 * the parent category if current loop is a custom loop filtered by category.
 	 *
 	 */
-	function loop_category_widget( $cat_args ) {
+	public function loop_category_widget( $cat_args ) {
 		
 		if( isset($this->loop_cat_parent_id) ) {
 			$cat_args['child_of'] = $this->loop_cat_parent_id;
 		}
 		
 		return $cat_args;
-	}
-	
-	/**
-	 * get_cat_children()
-	 *
-	 * This automates get_categories by setting some default args as well as
-	 * allowing you to pass a string for category rather than just cat_id
-	 * lets you use cat slug too.
-	 *
-	 * @param	array	$args - any get_categories args you wish to customize
-	 * @return	array	$_children	- Onject array containing all child/grandchild categories
-	 */
-	public function get_cat_children( $args = array() ) {
-		
-		//Init vars
-		global $post;
-		$_children	= array();
-		$_CatObject = null;
-		$_args 		= array(
-			'type'                     => 'post',
-			'child_of'                 => 0,
-			'parent'                   => '',
-			'orderby'                  => 'name',
-			'order'                    => 'ASC',
-			'hide_empty'               => 1,
-			'hierarchical'             => 1,
-			'exclude'                  => '',
-			'include'                  => '',
-			'number'                   => '',
-			'taxonomy'                 => 'category',
-			'pad_counts'               => false
-		);
-		
-		//Combine default arg with args provided
-		$args = array_merge( $_args, $args );
-		
-		//Check if we should get all children and grandchildren
-		if( isset($args['child_of']) && is_string($args['child_of']) ) {
-			
-			//Get category id using cat slug provided
-			if( $_CatObject = get_category_by_slug($args['child_of']) ){
-				$args['child_of'] 	= $_CatObject->term_id;
-			}
-			
-		} elseif ( isset($args['parent']) && is_string($args['parent']) ) {
-			
-			//Get category id using cat slug provided
-			if( $_CatObject = get_category_by_slug($args['parent']) ){
-				$args['parent'] 	= $_CatObject->term_id;
-			}
-			
-		}
-		
-		//Get all category children
-		$_children['children'] = get_categories( $args );
-		
-		//Return args too
-		$_children['args'] = $args;
-		
-		return $_children;
 	}
 	
 	/**
@@ -652,6 +563,52 @@ class PostHelper {
 		
 		if( !empty($permalink) ) {
 			echo esc_url( $permalink );
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	/**
+	* add_action
+	* 
+	* Helper to deal with Wordpress add_action requests. Checks to make sure that the action is not
+	* duplicated if a class is instantiated multiple times.
+	* 
+	* @access 	protected
+	* @author	Ben Moody
+	*/
+	private function add_action( $tag = NULL, $method = NULL, $priority = 10, $accepted_args = NULL ) {
+		
+		if( isset($tag,$method) ) {
+			//Check that action has not already been added
+			if( !has_action($tag) ) {
+				add_action( $tag, array($this, $method), $priority, $accepted_args );
+			}
+		}
+		
+	}
+	
+	/**
+	* add_filter
+	* 
+	* Helper to deal with Wordpress add_filter requests. Checks to make sure that the filter is not
+	* duplicated if a class is instantiated multiple times.
+	* 
+	* @access 	protected
+	* @author	Ben Moody
+	*/
+	private function add_filter( $tag = NULL, $method = NULL, $priority = 10, $accepted_args = NULL ) {
+		
+		if( isset($tag,$method) ) {
+			//Check that action has not already been added
+			if( !has_filter($tag) ) {
+				add_filter( $tag, array($this, $method), $priority, $accepted_args );
+			}
 		}
 		
 	}
