@@ -21,9 +21,6 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  		
  		//Prepare theme
  		$this->theme_setup();
- 		
- 		//Add custom action hooks for theme framework
- 		$this->custom_action_hooks();
 
  	}
  	
@@ -101,21 +98,6 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  		
  		//Deletes empty classes and removes the sub menu class_exists
  		add_filter( 'wp_nav_menu', array($this, 'strip_empty_classes') );
- 		
- 	}
- 	
- 	/**
-	* custom_action_hooks
-	* 
-	* Create any custom WP Action Hooks here
-	* 
-	* @access 	private
-	* @author	Ben Moody
-	*/
- 	private function custom_action_hooks() {
- 		
- 		//Add custom WP Action to output related posts
- 		add_action( 'prso_theme_related_posts', array($this, 'get_related_posts') );
  		
  	}
  	
@@ -510,53 +492,6 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 	public function remove_p_tag_from_images( $content ) {
 		
 		return preg_replace('/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(<\/a>)?\s*<\/p>/iU', '\1\2\3', $content);
-		
-	}
-	
-	/**
-	* get_related_posts
-	* 
-	* Custom method which returns an ul list of related posts.
-	*
-	* Use in theme via custom Action Hook 'prso_theme_related_posts'
-	*
-	* E.G. do_action('prso_theme_related_posts');
-	* 
-	* @param	type	name
-	* @var		type	name
-	* @return	type	name
-	* @access 	public
-	* @author	Ben Moody
-	*/
-	public function get_related_posts() {
-		
-		//Init vars
-		global $post;
-
-		echo '<ul id="bones-related-posts">';
-		
-		$tags = wp_get_post_tags($post->ID);
-		
-		if($tags) {
-			foreach($tags as $tag) { $tag_arr .= $tag->slug . ','; }
-	        $args = array(
-	        	'tag' => $tag_arr,
-	        	'numberposts' => 5, /* you can change this to show more */
-	        	'post__not_in' => array($post->ID)
-	     	);
-	        $related_posts = get_posts($args);
-	        if($related_posts) {
-	        	foreach ($related_posts as $post) : setup_postdata($post); ?>
-		           	<li class="related_post"><a href="<?php the_permalink() ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></li>
-		        <?php endforeach; } 
-		    else { ?>
-	            <li class="no_related_post">No Related Posts Yet!</li>
-			<?php }
-		}
-		
-		wp_reset_query();
-		
-		echo '</ul>';
 		
 	}
 	
