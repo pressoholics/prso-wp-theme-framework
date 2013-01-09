@@ -4,12 +4,43 @@
  *
  * Contains methods required by the Prso Theme Framework.
  * 
- * Output for some of these methods can be edited via vars set in the config class
+ * DO NOT call these functions directly, output for some of 
+ * these methods can be edited via vars set in the config class - config.php
  *
- * Use the Wordpress API call's within __construct to call your methods:
- *	//Action hook example
- *	add_action( 'init', array( &$this, 'test' ) ); 
+ */
+ 
+ /**
+ * Contents
  *
+ * 1. theme_setup	-	Calls functions in this class via wp actions and filters to setup the theme/admin area
+ * 2. wp_head_cleanup	-	Remove elements and scripts from page head via wp_head action hook
+ * 3. remove_rss_version	-	Returns NULL to remove wp version from rss feed
+ * 4. enqueue_front_end_scripts	-	Register and Enqueue default scripts required for prso theme framework
+ * 5. enqueue_zurb_foundation_scripts	-	Called by enqueue_front_end_scripts, use wp_dequeue_script in functions.php to remove unused scripts
+ * 6. enqueue_comments_script	-	Enqueue comments script only on pages where comments are open
+ * 7. load_google_jquery	-	Registers Googles CDN jQuery for theme, replaces wp version, set url using $theme_google_jquery_url in config.php
+ * 8. load_wp_jquery	-	Enqueues Wordpress' jQuery library for theme front end
+ * 9. enqueue_theme_styles	-	Registers base stylesheets for theme framework
+ * 10. add_theme_support	-	Register support for theme features with wordpress, alter features via config.php
+ * 11. add_custom_thumbnails	-	Register custom thumbnail sizes or alter wp defaults, use $theme_thumbnail_settings in config.php
+ * 12. register_sidebars	-	Register theme sidebars, define using $theme_sidebar_settings in config.php
+ * 13. remove_p_tag_from_images	-	Filter out <p> tags wrapped around <img> tags
+ * 14. yoast_allow_rel	-	Adds rel="" to links
+ * 15. add_user_contact_methods	-	Adds extra contact fields to admin user profiles, define in $admin_user_contact_methods in config.php
+ * 16. admin_area_actions	-	Call any functions to alter wp admin area here
+ * 17. disable_dashboard_widgets	-	Disable admin dashboard widgets. Define widget with admin_disable_dashboard_widgets in config.php
+ * 18. add_comments_classes	-	Add html classes to comments html wrapper
+ * 19. custom_post_password_form	-	Overwrite the form html output for protected posts
+ * 20. update_wp_tag_cloud	-	Call any function to alter the wp tag cloud here.
+ * 21. add_tag_class 	-	filter tag clould output so that it can be styled by CSS
+ * 22. my_widget_tag_cloud_args	-	Override wordpress tag cloud args
+ * 23. wp_tag_cloud_filter	-	Wrap the WP tag cloud in custom html
+ * 24. add_class_the_tags	-	Add custom classes to tag <a> links
+ * 25. remove_more_jump_link	-	Remove the html page jump (#DOM_ID) from more links
+ * 26. remove_thumbnail_dimensions	-	Remove height/width dimensions from thumbnail images to ensure they are dynamic and fluid
+ * 27. custom_wp_nav_menu	-	Override the list of allowed classes to output for WP Nav Menus
+ * 28. current_to_active	-	Change the class used to indicate an active page in the WP Nav Menu
+ * 29. strip_empty_classes	-	Deletes empty classes and removes the sub menu class_exists
  *
  */
 class PrsoThemeFunctions extends PrsoThemeAppController {
@@ -372,11 +403,11 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  	}
  	
  	/**
-	* register_sidebars
+	* add_custom_thumbnails
 	* 
-	* Registers the theme sidebars.
+	* Registers custom thumbnail sizes for theme as well as overrides wp defaults if requested
 	*
-	* NOTE: to add or remove sidebars from the theme edit the $theme_sidebar_settings in config class
+	* NOTE: Use $theme_thumbnail_settings array in config.php to customize thumbnails
 	* 
 	* @access 	public
 	* @author	Ben Moody
@@ -656,6 +687,8 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 	/**
 	* add_tag_class
 	* 
+	* filter tag clould output so that it can be styled by CSS
+	*
 	* @access 	public
 	* @author	Ben Moody
 	*/
@@ -678,10 +711,22 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 	* @author	Ben Moody
 	*/
 	public function my_widget_tag_cloud_args( $args ) {
-		$args['number'] = 20; // show less tags
-		$args['largest'] = 9.75; // make largest and smallest the same - i don't like the varying font-size look
-		$args['smallest'] = 9.75;
-		$args['unit'] = 'px';
+		
+		//Init vars
+		$defaults = array(
+			'number'	=>	20,		// show less tags
+			'largest'	=>	9.75,	// make largest and smallest the same - i don't like the varying font-size look
+			'smallest'	=>	9.75,	// make largest and smallest the same - i don't like the varying font-size look
+			'unit'		=>	'px'
+		);
+		
+		//Parse args from config.php
+		if( isset($this->theme_tag_cloud_args) ) {
+			$args = wp_parse_args( $defaults, $this->theme_tag_cloud_args );
+		} else {
+			$args = wp_parse_args( $args, $this->theme_tag_cloud_args );
+		}
+		
 		return $args;
 	} 
 	
@@ -788,6 +833,8 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
     /**
 	* strip_empty_classes
 	* 
+	* Deletes empty classes and removes the sub menu class_exists
+	*
 	* @access 	public
 	* @author	Ben Moody
 	*/
