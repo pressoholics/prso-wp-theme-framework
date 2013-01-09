@@ -24,7 +24,8 @@ class PrsoThemeConfig {
  * 6. Scripts
  * 7. Wordpress Dashboard
  * 8. Wordpress User Admin Page
- * 9. Theme Admin Page Options		- IMPORTANT MUST USE!
+ * 9. Tag cloud widget args
+ * 10. Theme Admin Page Options		- IMPORTANT MUST USE!
  *
  */
  
@@ -297,9 +298,32 @@ class PrsoThemeConfig {
 		'google_profile'	=> 'Google Profile URL'
 	);
  
- 
 /******************************************************************
- * 9. 	Theme Admin Page Options - IMPORTANT
+ * 9. 	Tag cloud widget args
+ *		Alter the wp tag cloud widget output
+ *****************************************************************/ 
+
+ 	/**
+	* $this->theme_tag_cloud_args
+	* 
+	* Add more contact fields to user profiles
+	* 
+	* array(
+			'number'	=>	20,		// show less tags
+			'largest'	=>	9.75,	// make largest and smallest the same - i don't like the varying font-size look
+			'smallest'	=>	9.75,	// make largest and smallest the same - i don't like the varying font-size look
+			'unit'		=>	'px'
+		);
+	*/
+	protected $theme_tag_cloud_args = array(
+		'number'	=>	20,		// show less tags
+		'largest'	=>	9.75,	// make largest and smallest the same - i don't like the varying font-size look
+		'smallest'	=>	9.75,	// make largest and smallest the same - i don't like the varying font-size look
+		'unit'		=>	'px'
+	);
+
+/******************************************************************
+ * 10. 	Theme Admin Page Options - IMPORTANT
  *		Define some core values required to setup your theme's 
  *		admin options page
  *****************************************************************/ 
