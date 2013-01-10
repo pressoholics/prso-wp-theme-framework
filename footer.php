@@ -7,17 +7,19 @@
 						<div class="row">
 
 							<nav class="ten columns clearfix">
-								<?php 
-									wp_nav_menu(
-								    	array(
-								    		'menu' 				=> 'footer_links', /* menu name */
-								    		'menu_class' 		=> 'link-list',
-								    		'theme_location' 	=> 'footer_links', /* where in the theme it's assigned */
-								    		'container_class' 	=> 'footer-links clearfix', /* container class */
-								    		'walker' 			=> new footer_links_walker(),
-								    		'fallback_cb'		=> false
-								    	)
-									);
+								<?php
+									if( class_exists('footer_links_walker') ) {
+										wp_nav_menu(
+									    	array(
+									    		'menu' 				=> 'footer_links', /* menu name */
+									    		'menu_class' 		=> 'link-list',
+									    		'theme_location' 	=> 'footer_links', /* where in the theme it's assigned */
+									    		'container_class' 	=> 'footer-links clearfix', /* container class */
+									    		'walker' 			=> new footer_links_walker(),
+									    		'fallback_cb'		=> false
+									    	)
+										);
+									}
 								?>
 							</nav>
 
