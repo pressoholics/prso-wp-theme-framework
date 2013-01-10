@@ -41,6 +41,8 @@
  * 27. custom_wp_nav_menu	-	Override the list of allowed classes to output for WP Nav Menus
  * 28. current_to_active	-	Change the class used to indicate an active page in the WP Nav Menu
  * 29. strip_empty_classes	-	Deletes empty classes and removes the sub menu class_exists
+ * 30. merge_scripts	-	Merges and minifies scripts, define scripts to merge via $theme_script_merge_args in config.php
+ * 31. merge_styles	-	Merges and minifies stlyesheets, define options via $theme_style_merge_args in config.php
  *
  */
 class PrsoThemeFunctions extends PrsoThemeAppController {
@@ -129,6 +131,12 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  		
  		//Deletes empty classes and removes the sub menu class_exists
  		add_filter( 'wp_nav_menu', array($this, 'strip_empty_classes') );
+ 		
+ 		//Merges and minifies scripts
+ 		add_action( 'wp_print_scripts', array($this, 'merge_scripts') );
+ 		
+ 		//Merges and minifies stylesheets
+ 		add_action( 'wp_print_styles', array($this, 'merge_styles') );
  		
  	}
  	
@@ -842,5 +850,90 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 	    $menu = preg_replace('/ class=""| class="sub-menu"/','',$menu);
 	    return $menu;
 	}
-
+	
+	/**
+	* merge_scripts
+	* 
+	* Called during wp_print_scripts to intercept script output from theme and plugins.
+	* It dequeues all scripts enqueued using wp_enqueue_scripts and calls $this->minify_scripts to merge
+	* all the scripts into one single app.min.js.
+	*
+	* NOTE: To ignore a script add it's enqueue handle to $exceptions array
+	*
+	* Param - $args array:
+	*	- 'merged_path' REQUIRED, Full PATH to your new merged scripts file
+	*	- 'merged_url' REQUIRED, URL to new merged scripts file
+	*	- 'depends' Array of script handles to be enqueued BEFORE the min script, e.g. 'jquery'
+	*	- 'handles' Array of script handles to merge, if empty ALL theme AND plugin scripts will be merged
+	*	- 'enqueue_handle' Shouldn't need to change this as default should work fine without conflict
+	*
+	* @access 	public
+	* @author	Ben Moody
+	*/
+	public function merge_scripts() {
+		
+		//Init vars
+		$args 		= array();
+		$exceptions = array();
+		
+		//Get vars from config.php
+		if( isset($this->theme_script_merge_args) ) {
+			$args = $this->theme_script_merge_args;
+		}
+		
+		if( isset($this->theme_script_merge_exceptions) ) {
+			$exceptions = $this->theme_script_merge_exceptions;
+		}
+		
+		if( isset($args['merged_path']) && !empty($args['merged_path']) ) {
+			
+			//Before calling the merge action prepend the theme's stylesheet dir and uri to args
+			$args['merged_url'] = get_stylesheet_directory_uri() . $args['merged_path'];
+			$args['merged_path'] = get_stylesheet_directory() . $args['merged_path'];
+			
+			do_action( 'prso_minify_merge_scripts', $args, $exceptions );
+		}
+		
+	}
+	
+	
+	/**
+	* merge_styles
+	*
+	* Called during wp_print_styles to intercept style output and merge/minify all enqueued styles
+	* into one stylesheet.
+	*
+	* Makes use of custom WP Action 'prso_minify_merge_styles' which de-enqueues all styles and enqueues
+	* the new merged stylesheet. Note it will ignore all WP Core stylesheets and process only those in
+	* /wp-content/ thus all plugins and theme styles.
+	*
+	* Param - $args array:
+	*	- 'merged_path' REQUIRED, Full PATH to your new merged stylesheet file
+	*	- 'merged_url' REQUIRED, URL to new merged stylesheet
+	*	- 'enqueue_handle' Shouldn't need to change this as default should work fine without conflict
+	*
+	* @access 	public
+	* @author	Ben Moody
+	*/
+	public function merge_styles() {
+		
+		//Init vars
+		$args = array();
+		
+		//Get vars from config.php
+		if( isset($this->theme_style_merge_args) ) {
+			$args = $this->theme_style_merge_args;
+		}
+		
+		if( isset($args['merged_path']) && !empty($args['merged_path']) ) {
+			
+			//Before calling the merge action prepend the theme's stylesheet dir and uri to args
+			$args['merged_url'] = get_stylesheet_directory_uri() . $args['merged_path'];
+			$args['merged_path'] = get_stylesheet_directory() . $args['merged_path'];
+			
+			do_action( 'prso_minify_merge_styles', $args );
+		}
+		
+	}
+	
 }
