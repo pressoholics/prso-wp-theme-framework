@@ -25,7 +25,9 @@ class PrsoThemeConfig {
  * 7. Wordpress Dashboard
  * 8. Wordpress User Admin Page
  * 9. Tag cloud widget args
- * 10. Theme Admin Page Options		- IMPORTANT MUST USE!
+ * 10. Merge scripts
+ * 11. Merge stylesheets
+ * 12. Theme Admin Page Options		- IMPORTANT MUST USE!
  *
  */
  
@@ -323,7 +325,60 @@ class PrsoThemeConfig {
 	);
 
 /******************************************************************
- * 10. 	Theme Admin Page Options - IMPORTANT
+ * 10. 	Merge Scripts
+ *		Define some handles of scripts to auto merge and minify
+ *****************************************************************/
+
+ 	/**
+ 	* $this->theme_script_merge_args
+ 	*
+ 	* NOTE :: To disable script auto merging empty/comment out this array
+ 	*
+ 	* Param - array:
+	*	- 'merged_path' REQUIRED, PATH to your new merged scripts file, RELATIVE to stylesheet_directory, e.g. '/js/app.min.js'
+	*	- 'depends' Array of script handles to be enqueued BEFORE the min script, e.g. 'jquery'
+	*	- 'handles' Array of script handles to merge, if empty ALL theme AND plugin scripts will be merged
+	*	- 'enqueue_handle' Shouldn't need to change this as default should work fine without conflict
+	*/
+	protected $theme_script_merge_args = array(
+		'merged_path' 		=> '/javascripts/app.min.js',
+		'depends'			=> array( 'jquery' ),
+		'handles'			=> array( 
+			'modernizr', 'foundation-reveal', 'foundation-orbit', 
+			'foundation-custom-forms', 'foundation-placeholder', 'foundation-tooltips', 
+			'foundation-off-canvas', 'foundation-app' 
+		)
+	);
+	
+	/**
+ 	* $this->theme_script_merge_exceptions
+ 	*
+ 	* NOTE: To ignore a script add it's enqueue handle to $theme_script_merge_exceptions array
+ 	*
+ 	* e.g. array('jquery');
+	*/
+	protected $theme_script_merge_exceptions = array();
+	
+/******************************************************************
+ * 11. 	Merge Stylesheets
+ *		Define path to where your auto merged stylsheet should go (relative to theme root)
+ *****************************************************************/
+
+ 	/**
+ 	* $this->theme_style_merge_args
+ 	*
+ 	* NOTE :: To disable sylesheet auto merging empty/comment out this array
+ 	*
+ 	* Param - array:
+	*	- 'merged_path' REQUIRED, PATH to your new merged stylesheet file, RELATIVE to stylesheet_directory, e.g. '/css/app-min.css'
+	*	- 'enqueue_handle' Shouldn't need to change this as default should work fine without conflict
+	*/
+	protected $theme_style_merge_args = array(
+		'merged_path' 	=> '/stylesheets/app-min.css'
+	);
+	
+/******************************************************************
+ * 12. 	Theme Admin Page Options - IMPORTANT
  *		Define some core values required to setup your theme's 
  *		admin options page
  *****************************************************************/ 
