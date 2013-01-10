@@ -54,9 +54,16 @@ if( file_exists( get_template_directory() . '/prso_framework/bootstrap.php' ) ) 
 		* Include config file to set core definitions
 		*
 		*/
+		$config_path = get_template_directory() . '/prso_framework/config.php';
+		
+		//Search for config in child theme
 		if( file_exists( get_stylesheet_directory() . '/prso_framework/config.php' ) ) {
+			$config_path = get_stylesheet_directory() . '/prso_framework/config.php';
+		}
+		
+		if( file_exists($config_path) ) {
 			
-			include( get_stylesheet_directory() . '/prso_framework/config.php' );
+			include( $config_path );
 			
 			if( class_exists('PrsoThemeConfig') ) {
 				
