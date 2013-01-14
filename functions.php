@@ -8,36 +8,7 @@ Version: 2.0
 /**
 * ADD CUSTOM THEME FUNCTIONS HERE -----
 *
-*/	
-
-//Add a search field to the main nav
-add_filter( 'wp_nav_menu_items', 'prso_add_search_to_nav', 10, 2 );
-if( !function_exists('prso_add_search_to_nav') ) {
-	
-	function prso_add_search_to_nav( $items, $args ) {
-	
-		//Add only to main nav
-		if( isset($args->menu) && $args->menu === 'main_nav' ) {
-			
-			ob_start();
-			?>
-			<li class="nav-search" >
-				<form action="<?php echo home_url( '/' ); ?>" method="get">
-			      <div class="twelve columns">
-			        <input type="text" id="search" placeholder="Search" name="s" value="<?php the_search_query(); ?>" />
-			      </div>
-		  		</form>
-			</li>
-			<?php
-			$items.= ob_get_contents();
-			ob_end_clean();
-			
-		}
-		
-		return $items;
-	}
-	
-}
+*/
 
 
 

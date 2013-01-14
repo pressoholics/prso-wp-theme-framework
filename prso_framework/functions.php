@@ -43,6 +43,7 @@
  * 29. strip_empty_classes	-	Deletes empty classes and removes the sub menu class_exists
  * 30. merge_scripts	-	Merges and minifies scripts, define scripts to merge via $theme_script_merge_args in config.php
  * 31. merge_styles	-	Merges and minifies stlyesheets, define options via $theme_style_merge_args in config.php
+ * 32. add_search_to_nav	-	Adds a wp search field to the end of the main nav, enable via $theme_nav_search in config.php
  *
  */
 class PrsoThemeFunctions extends PrsoThemeAppController {
@@ -137,6 +138,9 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  		
  		//Merges and minifies stylesheets
  		add_action( 'wp_print_styles', array($this, 'merge_styles') );
+ 		
+ 		//Adds a WP search field to end of main nav
+ 		add_filter( 'wp_nav_menu_items', array($this, 'add_search_to_nav'), 10, 2 );
  		
  	}
  	
@@ -934,6 +938,55 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 			do_action( 'prso_minify_merge_styles', $args );
 		}
 		
+	}
+	
+	/**
+	* add_search_to_nav
+	*
+	* Called during wp_nav_items filter, appends a wp search form onto the end of the main_nav
+	*
+	* Will only add the search nav to the main_nav, all other navs will be left alone
+	*
+	* Param
+	*		To enable/disable the search field use the $theme_nav_search var in config.php
+	*		To change the slug of the menu used, define it using $theme_nav_search_slug - OPTIONAL
+	*
+	* @access 	public
+	* @author	Ben Moody
+	*/
+	public function add_search_to_nav( $items, $args ) {
+		
+		//Init vars
+		$activate_search 	= FALSE;
+		$nav_slug			= 'main_nav';
+		
+		//Detect the config setting
+		if( isset($this->theme_nav_search) && is_bool($this->theme_nav_search) ) {
+			$activate_search = $this->theme_nav_search;
+		}
+		if( isset($this->theme_nav_search_slug) ) {
+			$nav_slug = esc_attr($this->theme_nav_search_slug);
+		}
+		
+		//Add only to main nav
+		if( isset($args->menu) && $args->menu === $nav_slug && $activate_search == TRUE ) {
+			
+			ob_start();
+			?>
+			<li class="nav-search" >
+				<form action="<?php echo home_url( '/' ); ?>" method="get">
+			      <div class="twelve columns">
+			        <input type="text" id="search" placeholder="Search" name="s" value="<?php the_search_query(); ?>" />
+			      </div>
+		  		</form>
+			</li>
+			<?php
+			$items.= ob_get_contents();
+			ob_end_clean();
+			
+		}
+		
+		return $items;
 	}
 	
 }

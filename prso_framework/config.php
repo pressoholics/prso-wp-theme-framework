@@ -27,7 +27,8 @@ class PrsoThemeConfig {
  * 9. Tag cloud widget args
  * 10. Merge scripts
  * 11. Merge stylesheets
- * 12. Theme Admin Page Options		- IMPORTANT MUST USE!
+ * 12. Add main nav search box
+ * 13. Theme Admin Page Options		- IMPORTANT MUST USE!
  *
  */
  
@@ -376,9 +377,22 @@ class PrsoThemeConfig {
 	protected $theme_style_merge_args = array(
 		'merged_path' 	=> '/stylesheets/app-min.css'
 	);
-	
+
 /******************************************************************
- * 12. 	Theme Admin Page Options - IMPORTANT
+ * 12. 	Merge Stylesheets
+ *		Adds a WP search field to the end of the main nav
+ *****************************************************************/
+
+ 	/**
+ 	* $this->theme_nav_search
+ 	*
+ 	* NOTE :: Set to FALSE to disable the main nav search field
+ 	*
+	*/
+	protected $theme_nav_search = TRUE; 
+
+/******************************************************************
+ * 13. 	Theme Admin Page Options - IMPORTANT
  *		Define some core values required to setup your theme's 
  *		admin options page
  *****************************************************************/ 
