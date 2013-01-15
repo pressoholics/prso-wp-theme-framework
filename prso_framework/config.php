@@ -28,7 +28,8 @@ class PrsoThemeConfig {
  * 10. Merge scripts
  * 11. Merge stylesheets
  * 12. Add main nav search box
- * 13. Theme Admin Page Options		- IMPORTANT MUST USE!
+ * 13. Custom pagination
+ * 14. Theme Admin Page Options		- IMPORTANT MUST USE!
  *
  */
  
@@ -392,7 +393,29 @@ class PrsoThemeConfig {
 	protected $theme_nav_search = TRUE; 
 
 /******************************************************************
- * 13. 	Theme Admin Page Options - IMPORTANT
+ * 13. 	Custom Pagination
+ *		Control/Override the 'prso_pagination' action which handles pagination in theme files
+ *****************************************************************/
+
+ 	/**
+ 	* $this->theme_custom_pagination
+ 	*
+ 	* NOTE :: Set to FALSE to disable custom pagination and use WP default prev/next links
+ 	*
+	*/
+	protected $theme_custom_pagination = TRUE;
+	
+	/**
+ 	* $this->theme_custom_pagination_override
+ 	*
+ 	* NOTE :: If you want to use a custom pagination function in child theme functions.php
+ 	*			just add the name of the function here and 'prso_pagination' will call that function for you.
+ 	*
+	*/
+	protected $theme_custom_pagination_override = NULL;
+
+/******************************************************************
+ * 14. 	Theme Admin Page Options - IMPORTANT
  *		Define some core values required to setup your theme's 
  *		admin options page
  *****************************************************************/ 

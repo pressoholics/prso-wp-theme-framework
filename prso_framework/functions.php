@@ -44,6 +44,7 @@
  * 30. merge_scripts	-	Merges and minifies scripts, define scripts to merge via $theme_script_merge_args in config.php
  * 31. merge_styles	-	Merges and minifies stlyesheets, define options via $theme_style_merge_args in config.php
  * 32. add_search_to_nav	-	Adds a wp search field to the end of the main nav, enable via $theme_nav_search in config.php
+ * 33. custom_pagination	-	Outputs custom pagination to template files via 'prso_pagination' action
  *
  */
 class PrsoThemeFunctions extends PrsoThemeAppController {
@@ -141,6 +142,9 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  		
  		//Adds a WP search field to end of main nav
  		add_filter( 'wp_nav_menu_items', array($this, 'add_search_to_nav'), 10, 2 );
+ 		
+ 		//Custom prso theme framework pagination
+ 		add_action( 'prso_pagination', array($this, 'custom_pagination'), 10, 2 );
  		
  	}
  	
@@ -987,6 +991,134 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		}
 		
 		return $items;
+	}
+	
+	/**
+	* theme_pagination
+	*
+	* Called using custom action 'prso_pagination' within theme template files
+	*
+	* NOTE: If you wish to disable (use WP default prev/next post links set $theme_custom_pagination in config.php
+	*		If you want to use your own pagination then you can always create a function in your child theme's functions.php
+	*		AND add the function's name to the $theme_custom_pagination_override var in config.php
+	*
+	* Param
+	*		To enable/disable use the $theme_custom_pagination var in config.php
+	*		To override this function in your child theme functions.php add function name to $theme_custom_pagination_override var in config.php
+	*
+	* @param	$before		string	String to place before the pagination output
+	* @param	$after		string	String to place after the pagination output
+	* @access 	public
+	* @author	Ben Moody
+	*/
+	public function custom_pagination( $before = '', $after = '' ) {
+		
+		//Init vars
+		global $wpdb, $wp_query;
+		$pagination_active 	= TRUE;
+		$override_function	= NULL;
+		$output				= NULL; //Output WP prev/next link pagination fallback if required
+		
+		//Cache pagination status from framework config
+		if( isset($this->theme_custom_pagination) && is_bool($this->theme_custom_pagination) ) {
+			$pagination_active = $this->theme_custom_pagination;
+		}
+		
+		//Cache pagination override function name string from config
+		if( isset($this->theme_custom_pagination_override) && !empty($this->theme_custom_pagination_override) ) {
+			$override_function = esc_attr($this->theme_custom_pagination_override);
+		}
+		
+		//First check if someone has with disabled this function or overridden it
+		if( $pagination_active === TRUE && empty($override_function) ) {
+			
+			$request 		= $wp_query->request;
+			$posts_per_page = intval(get_query_var('posts_per_page'));
+			$paged 			= intval(get_query_var('paged'));
+			$numposts 		= $wp_query->found_posts;
+			$max_page 		= $wp_query->max_num_pages;
+			
+			
+			if ( $numposts <= $posts_per_page ) { return; }
+			if(empty($paged) || $paged == 0) {
+				$paged = 1;
+			}
+			$pages_to_show = 7;
+			$pages_to_show_minus_1 = $pages_to_show-1;
+			$half_page_start = floor($pages_to_show_minus_1/2);
+			$half_page_end = ceil($pages_to_show_minus_1/2);
+			$start_page = $paged - $half_page_start;
+			if($start_page <= 0) {
+				$start_page = 1;
+			}
+			$end_page = $paged + $half_page_end;
+			if(($end_page - $start_page) != $pages_to_show_minus_1) {
+				$end_page = $start_page + $pages_to_show_minus_1;
+			}
+			if($end_page > $max_page) {
+				$start_page = $max_page - $pages_to_show_minus_1;
+				$end_page = $max_page;
+			}
+			if($start_page <= 0) {
+				$start_page = 1;
+			}
+				
+			echo $before.'<ul class="pagination clearfix">'."";
+			if ($paged > 1) {
+				$first_page_text = "&laquo";
+				echo '<li class="prev"><a href="'.get_pagenum_link().'" title="First">'.$first_page_text.'</a></li>';
+			}
+				
+			echo '<li class="">';
+			previous_posts_link('&larr; Previous');
+			echo '</li>';
+			for($i = $start_page; $i  <= $end_page; $i++) {
+				if($i == $paged) {
+					echo '<li class="current"><a href="#">'.$i.'</a></li>';
+				} else {
+					echo '<li><a href="'.get_pagenum_link($i).'">'.$i.'</a></li>';
+				}
+			}
+			echo '<li class="">';
+			next_posts_link('Next &rarr;');
+			echo '</li>';
+			if ($end_page < $max_page) {
+				$last_page_text = "&raquo;";
+				echo '<li class="next"><a href="'.get_pagenum_link($max_page).'" title="Last">'.$last_page_text.'</a></li>';
+			}
+			echo '</ul>'.$after."";
+			
+		}
+		
+		//Ok let's see if we should output default WP prev/next pagination links
+		if( $pagination_active === FALSE && empty($override_function) ) {
+			
+			ob_start();
+			?>
+			<nav class="wp-prev-next">
+				<ul class="clearfix">
+					<?php if( get_previous_posts_link() !== NULL ): ?>
+					<li class="prev-link"><?php previous_posts_link(__('&laquo; Older Entries', "prso_theme")); ?></li>
+					<?php endif; ?>
+					<?php if( get_next_posts_link() !== NULL ): ?>
+					<li class="next-link"><?php next_posts_link(__('Newer Entries &raquo;', "prso_theme")); ?></li>
+					<?php endif; ?>
+				</ul>
+			</nav>
+			<?php
+			$output = ob_get_contents();
+			ob_end_clean();
+			
+			echo $output;
+			
+		}
+		
+		//Last thing, lets see if the child theme has overriden this function
+		if( !empty($override_function) && function_exists($override_function) ) {
+			//Call the override function
+			call_user_func_array($override_function);
+		}
+		
 	}
 	
 }
