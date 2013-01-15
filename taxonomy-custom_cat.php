@@ -47,18 +47,7 @@ taxonomy-shoes.php
 	
 	<?php endwhile; ?>	
 	
-	<?php if (function_exists('prso_theme_paginate')) { // if expirimental feature is active ?>
-		
-		<?php prso_theme_paginate(); // use the page navi function ?>
-
-	<?php } else { // if it is disabled, display regular wp prev & next links ?>
-		<nav class="wp-prev-next">
-			<ul class="clearfix">
-				<li class="prev-link"><?php next_posts_link(_e('&laquo; Older Entries', "bonestheme")) ?></li>
-				<li class="next-link"><?php previous_posts_link(_e('Newer Entries &raquo;', "bonestheme")) ?></li>
-			</ul>
-		</nav>
-	<?php } ?>
+	<?php do_action('prso_pagination'); ?>
 				
 	
 	<?php else : ?>
