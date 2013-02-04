@@ -693,7 +693,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		add_filter( 'widget_tag_cloud_args', array($this, 'my_widget_tag_cloud_args') );
 		
 		//Wrap tag cloud output
-		add_filter( 'wp_tag_cloud', array($this, 'wp_tag_cloud_filter') );
+		add_filter( 'wp_tag_cloud', array($this, 'wp_tag_cloud_filter'), 10, 2 );
 		
 		//Alter the link (<a>) tag html
 		add_filter( 'the_tags', array($this, 'add_class_the_tags') );
@@ -754,7 +754,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 	* @access 	public
 	* @author	Ben Moody
 	*/
-	public function wp_tag_cloud_filter($return, $args) {
+	public function wp_tag_cloud_filter($return, $tags) {
 	  return '<div id="tag-cloud"><p>'.$return.'</p></div>';
 	}
 	
@@ -940,6 +940,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 			$args['merged_path'] = get_stylesheet_directory() . $args['merged_path'];
 			
 			do_action( 'prso_minify_merge_styles', $args );
+			
 		}
 		
 	}
