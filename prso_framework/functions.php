@@ -339,6 +339,9 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
    		//Register Theme Stylsheet - req by wordpress, use app.css for custom styles
  		wp_register_style( 'presso-theme-base', get_stylesheet_directory_uri() . '/style.css', array( 'foundation-app' ), filemtime( get_stylesheet_directory() . '/style.css' ), 'all' );
    		
+   		//Register the Prso Theme Core stylesheet
+	    wp_register_style( 'presso-theme-core', get_template_directory_uri() . '/stylesheets/app-core.css', array( 'foundation-app' ), filemtime( get_template_directory() . '/stylesheets/app-core.css' ), 'all' );
+   		
    		//Register Wordpress Specific Stylsheet
  		wp_register_style( 'presso-theme-wp', get_template_directory_uri() . '/stylesheets/app-wordpress.css', array( 'presso-theme-base' ), filemtime( get_template_directory() . '/stylesheets/app-wordpress.css' ), 'all' );
  		
