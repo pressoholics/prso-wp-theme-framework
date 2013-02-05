@@ -45,6 +45,7 @@
  * 31. merge_styles	-	Merges and minifies stlyesheets, define options via $theme_style_merge_args in config.php
  * 32. add_search_to_nav	-	Adds a wp search field to the end of the main nav, enable via $theme_nav_search in config.php
  * 33. custom_pagination	-	Outputs custom pagination to template files via 'prso_pagination' action
+ * 34. post_class_filter	-	Filter post classes printed by worpdress via post_class();
  *
  */
 class PrsoThemeFunctions extends PrsoThemeAppController {
@@ -145,6 +146,9 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  		
  		//Custom prso theme framework pagination
  		add_action( 'prso_pagination', array($this, 'custom_pagination'), 10, 2 );
+ 		
+ 		//Add filter to alter the array of classes used by post_class()
+ 		add_filter( 'post_class', array($this, 'post_class_filter'), 10, 1 );
  		
  	}
  	
@@ -1260,6 +1264,32 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 			call_user_func_array($override_function);
 		}
 		
+	}
+	
+	/**
+	* post_class_filter
+	* 
+	* Used to filter the classes returned to the page by post_class()
+	*
+	* @param	array	$classes	-	Array of class names for a post
+	* @access 	public
+	* @author	Ben Moody
+	*/
+	public function post_class_filter( $classes = array() ) {
+		
+		if( !empty($classes) ) {
+			
+			// Change 'sticky' class to 'sticky-post', avoid conflict with .sticky used by zurb topbar
+			// to make nav bars stick to the top of the page
+			foreach( $classes as $key => $class ) {
+				if( $class === 'sticky' ) {
+					$classes[$key] = 'sticky-post';
+				}
+			}
+			
+		}
+		
+		return $classes;
 	}
 	
 }
