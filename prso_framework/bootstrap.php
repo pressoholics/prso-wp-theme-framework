@@ -19,9 +19,50 @@
  	private $helpers_scan 	= array(); //Cache all helpers in helpers dir
  	private $views_scan		= array(); //Cache all views in views dir 
  	
+ 	/**
+	* The full path to the directory which holds "presso_framework", WITHOUT a trailing DS.
+	*
+	*/
+	protected $theme_root = NULL;
+	protected $child_theme_root = NULL; //Path to child theme's framework folder if child theme is active
+	
+	/**
+	* The full path to the directory which holds "helpers", WITHOUT a trailing DS.
+	*
+	*/
+	protected $theme_helpers = NULL;
+	
+	/**
+	* The full path to the directory which holds "views", WITHOUT a trailing DS.
+	*
+	*/
+	protected $theme_views = NULL;
+	protected $child_theme_views = NULL; //Path to child theme framework views folder if child theme is active
+	
+	/**
+	* Unique slug prepended to all class names
+	*
+	*/
+	protected $theme_class_slug = NULL;
+ 	
+ 	
+ 	
  	function __construct( $args = array() ) {
- 		//Ensure vars set in config are available
- 		parent::__construct();
+ 		
+ 		//Set framework root (Parent Theme path)
+		$this->theme_root 		= get_template_directory() . '/prso_framework';
+		$this->child_theme_root = get_stylesheet_directory() . '/prso_framework';
+		
+		//Set framework helpers dir
+		$this->theme_helpers = $this->theme_root . '/helpers';
+		
+		//Set framework views folder
+		$this->theme_views 			= $this->theme_root . '/views';
+		$this->child_theme_views	= $this->child_theme_root . '/views';
+		
+		//Set plugin Class slug to be prepended to class names making them unique
+		$this->theme_class_slug = 'PrsoTheme';
+		//REMOVE - $this->theme_class_slug = str_replace(' ', '', ucwords(str_replace('_', ' ', $this->theme_slug)));
  		
  		//Boot plugin
  		add_action( 'after_setup_theme', array( $this, 'boot' ) );
@@ -180,7 +221,8 @@
  		//Init vars
  		$result = false;
  		$args	= array(
-			'plugin_views_dir' => $this->theme_views
+			'plugin_views_dir' 			=> $this->theme_views,
+			'plugin_child_views_dir'	=> $this->child_theme_views
 		);
  		 		
  		$result = apply_filters( 'prso_core_scan_plugin_views', $result, $args );
@@ -198,9 +240,10 @@
  	private function load_admin_views() {
  		
  		$args = array(
-			'views_scan' 		=> $this->views_scan,
-			'plugin_class_slug'	=> $this->theme_class_slug,
-			'plugin_views_dir'	=> $this->theme_views
+			'views_scan' 				=> $this->views_scan,
+			'plugin_class_slug'			=> $this->theme_class_slug,
+			'plugin_views_dir'			=> $this->theme_views,
+			'plugin_child_views_dir'	=> $this->child_theme_views
 		);
  		
  		do_action( 'prso_core_load_plugin_views', $args );
@@ -248,6 +291,17 @@
  		
  		//Init vars
  		$file_path 	= $this->theme_root . '/walkers.php';
+ 		$child_theme_file_path = $this->child_theme_root . '/walkers.php';
+ 		
+ 		//If a child theme is being used check to see if it has any walkers to load
+ 		if( is_child_theme() ) {
+	 		//Check file exsists in framework
+	 		if( file_exists($child_theme_file_path) ) {
+	 			
+	 			include_once($child_theme_file_path);
+	 			
+	 		}
+ 		}
  		
  		//Check file exsists in framework
  		if( file_exists($file_path) ) {

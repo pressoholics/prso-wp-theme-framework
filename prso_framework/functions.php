@@ -4,12 +4,47 @@
  *
  * Contains methods required by the Prso Theme Framework.
  * 
- * Output for some of these methods can be edited via vars set in the config class
+ * DO NOT call these functions directly, output for some of 
+ * these methods can be edited via vars set in the config class - config.php
  *
- * Use the Wordpress API call's within __construct to call your methods:
- *	//Action hook example
- *	add_action( 'init', array( &$this, 'test' ) ); 
+ */
+ 
+ /**
+ * Contents
  *
+ * 1. theme_setup	-	Calls functions in this class via wp actions and filters to setup the theme/admin area
+ * 2. wp_head_cleanup	-	Remove elements and scripts from page head via wp_head action hook
+ * 3. remove_rss_version	-	Returns NULL to remove wp version from rss feed
+ * 4. enqueue_front_end_scripts	-	Register and Enqueue default scripts required for prso theme framework
+ * 5. enqueue_zurb_foundation_scripts	-	Called by enqueue_front_end_scripts, use wp_dequeue_script in functions.php to remove unused scripts
+ * 6. enqueue_comments_script	-	Enqueue comments script only on pages where comments are open
+ * 7. load_google_jquery	-	Registers Googles CDN jQuery for theme, replaces wp version, set url using $theme_google_jquery_url in config.php
+ * 8. load_wp_jquery	-	Enqueues Wordpress' jQuery library for theme front end
+ * 9. enqueue_theme_styles	-	Registers base stylesheets for theme framework
+ * 10. add_theme_support	-	Register support for theme features with wordpress, alter features via config.php
+ * 11. add_custom_thumbnails	-	Register custom thumbnail sizes or alter wp defaults, use $theme_thumbnail_settings in config.php
+ * 12. register_sidebars	-	Register theme sidebars, define using $theme_sidebar_settings in config.php
+ * 13. remove_p_tag_from_images	-	Filter out <p> tags wrapped around <img> tags
+ * 14. yoast_allow_rel	-	Adds rel="" to links
+ * 15. add_user_contact_methods	-	Adds extra contact fields to admin user profiles, define in $admin_user_contact_methods in config.php
+ * 16. admin_area_actions	-	Call any functions to alter wp admin area here
+ * 17. disable_dashboard_widgets	-	Disable admin dashboard widgets. Define widget with admin_disable_dashboard_widgets in config.php
+ * 18. add_comments_classes	-	Add html classes to comments html wrapper
+ * 19. custom_post_password_form	-	Overwrite the form html output for protected posts
+ * 20. update_wp_tag_cloud	-	Call any function to alter the wp tag cloud here.
+ * 21. add_tag_class 	-	filter tag clould output so that it can be styled by CSS
+ * 22. my_widget_tag_cloud_args	-	Override wordpress tag cloud args
+ * 23. wp_tag_cloud_filter	-	Wrap the WP tag cloud in custom html
+ * 24. add_class_the_tags	-	Add custom classes to tag <a> links
+ * 25. remove_more_jump_link	-	Remove the html page jump (#DOM_ID) from more links
+ * 26. remove_thumbnail_dimensions	-	Remove height/width dimensions from thumbnail images to ensure they are dynamic and fluid
+ * 27. custom_wp_nav_menu	-	Override the list of allowed classes to output for WP Nav Menus
+ * 28. current_to_active	-	Change the class used to indicate an active page in the WP Nav Menu
+ * 29. strip_empty_classes	-	Deletes empty classes and removes the sub menu class_exists
+ * 30. merge_scripts	-	Merges and minifies scripts, define scripts to merge via $theme_script_merge_args in config.php
+ * 31. merge_styles	-	Merges and minifies stlyesheets, define options via $theme_style_merge_args in config.php
+ * 32. add_search_to_nav	-	Adds a wp search field to the end of the main nav, enable via $theme_nav_search in config.php
+ * 33. custom_pagination	-	Outputs custom pagination to template files via 'prso_pagination' action
  *
  */
 class PrsoThemeFunctions extends PrsoThemeAppController {
@@ -21,9 +56,6 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  		
  		//Prepare theme
  		$this->theme_setup();
- 		
- 		//Add custom action hooks for theme framework
- 		$this->custom_action_hooks();
 
  	}
  	
@@ -102,20 +134,17 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  		//Deletes empty classes and removes the sub menu class_exists
  		add_filter( 'wp_nav_menu', array($this, 'strip_empty_classes') );
  		
- 	}
- 	
- 	/**
-	* custom_action_hooks
-	* 
-	* Create any custom WP Action Hooks here
-	* 
-	* @access 	private
-	* @author	Ben Moody
-	*/
- 	private function custom_action_hooks() {
+ 		//Merges and minifies scripts
+ 		add_action( 'wp_print_scripts', array($this, 'merge_scripts') );
  		
- 		//Add custom WP Action to output related posts
- 		add_action( 'prso_theme_related_posts', array($this, 'get_related_posts') );
+ 		//Merges and minifies stylesheets
+ 		add_action( 'wp_print_styles', array($this, 'merge_styles') );
+ 		
+ 		//Adds a WP search field to end of main nav
+ 		add_filter( 'wp_nav_menu_items', array($this, 'add_search_to_nav'), 10, 2 );
+ 		
+ 		//Custom prso theme framework pagination
+ 		add_action( 'prso_pagination', array($this, 'custom_pagination'), 10, 2 );
  		
  	}
  	
@@ -310,6 +339,9 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
    		//Register Theme Stylsheet - req by wordpress, use app.css for custom styles
  		wp_register_style( 'presso-theme-base', get_stylesheet_directory_uri() . '/style.css', array( 'foundation-app' ), filemtime( get_stylesheet_directory() . '/style.css' ), 'all' );
    		
+   		//Register the Prso Theme Core stylesheet
+	    wp_register_style( 'presso-theme-core', get_template_directory_uri() . '/stylesheets/app-core.css', array( 'foundation-app' ), filemtime( get_template_directory() . '/stylesheets/app-core.css' ), 'all' );
+   		
    		//Register Wordpress Specific Stylsheet
  		wp_register_style( 'presso-theme-wp', get_template_directory_uri() . '/stylesheets/app-wordpress.css', array( 'presso-theme-base' ), filemtime( get_template_directory() . '/stylesheets/app-wordpress.css' ), 'all' );
  		
@@ -390,11 +422,11 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  	}
  	
  	/**
-	* register_sidebars
+	* add_custom_thumbnails
 	* 
-	* Registers the theme sidebars.
+	* Registers custom thumbnail sizes for theme as well as overrides wp defaults if requested
 	*
-	* NOTE: to add or remove sidebars from the theme edit the $theme_sidebar_settings in config class
+	* NOTE: Use $theme_thumbnail_settings array in config.php to customize thumbnails
 	* 
 	* @access 	public
 	* @author	Ben Moody
@@ -467,8 +499,8 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 			'id'            => 'sidebar',
 			'description'   => '',
 		    'class'         => '',
-			'before_widget' => '<li id="%1$s" class="widget %2$s">',
-			'after_widget'  => '</li>',
+			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</aside>',
 			'before_title'  => '<h2 class="widgettitle">',
 			'after_title'   => '</h2>' 
 		);
@@ -510,53 +542,6 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 	public function remove_p_tag_from_images( $content ) {
 		
 		return preg_replace('/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(<\/a>)?\s*<\/p>/iU', '\1\2\3', $content);
-		
-	}
-	
-	/**
-	* get_related_posts
-	* 
-	* Custom method which returns an ul list of related posts.
-	*
-	* Use in theme via custom Action Hook 'prso_theme_related_posts'
-	*
-	* E.G. do_action('prso_theme_related_posts');
-	* 
-	* @param	type	name
-	* @var		type	name
-	* @return	type	name
-	* @access 	public
-	* @author	Ben Moody
-	*/
-	public function get_related_posts() {
-		
-		//Init vars
-		global $post;
-
-		echo '<ul id="bones-related-posts">';
-		
-		$tags = wp_get_post_tags($post->ID);
-		
-		if($tags) {
-			foreach($tags as $tag) { $tag_arr .= $tag->slug . ','; }
-	        $args = array(
-	        	'tag' => $tag_arr,
-	        	'numberposts' => 5, /* you can change this to show more */
-	        	'post__not_in' => array($post->ID)
-	     	);
-	        $related_posts = get_posts($args);
-	        if($related_posts) {
-	        	foreach ($related_posts as $post) : setup_postdata($post); ?>
-		           	<li class="related_post"><a href="<?php the_permalink() ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></li>
-		        <?php endforeach; } 
-		    else { ?>
-	            <li class="no_related_post">No Related Posts Yet!</li>
-			<?php }
-		}
-		
-		wp_reset_query();
-		
-		echo '</ul>';
 		
 	}
 	
@@ -711,7 +696,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		add_filter( 'widget_tag_cloud_args', array($this, 'my_widget_tag_cloud_args') );
 		
 		//Wrap tag cloud output
-		add_filter( 'wp_tag_cloud', array($this, 'wp_tag_cloud_filter') );
+		add_filter( 'wp_tag_cloud', array($this, 'wp_tag_cloud_filter'), 10, 2 );
 		
 		//Alter the link (<a>) tag html
 		add_filter( 'the_tags', array($this, 'add_class_the_tags') );
@@ -721,6 +706,8 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 	/**
 	* add_tag_class
 	* 
+	* filter tag clould output so that it can be styled by CSS
+	*
 	* @access 	public
 	* @author	Ben Moody
 	*/
@@ -743,10 +730,22 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 	* @author	Ben Moody
 	*/
 	public function my_widget_tag_cloud_args( $args ) {
-		$args['number'] = 20; // show less tags
-		$args['largest'] = 9.75; // make largest and smallest the same - i don't like the varying font-size look
-		$args['smallest'] = 9.75;
-		$args['unit'] = 'px';
+		
+		//Init vars
+		$defaults = array(
+			'number'	=>	20,		// show less tags
+			'largest'	=>	9.75,	// make largest and smallest the same - i don't like the varying font-size look
+			'smallest'	=>	9.75,	// make largest and smallest the same - i don't like the varying font-size look
+			'unit'		=>	'px'
+		);
+		
+		//Parse args from config.php
+		if( isset($this->theme_tag_cloud_args) ) {
+			$args = wp_parse_args( $defaults, $this->theme_tag_cloud_args );
+		} else {
+			$args = wp_parse_args( $args, $this->theme_tag_cloud_args );
+		}
+		
 		return $args;
 	} 
 	
@@ -758,7 +757,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 	* @access 	public
 	* @author	Ben Moody
 	*/
-	public function wp_tag_cloud_filter($return, $args) {
+	public function wp_tag_cloud_filter($return, $tags) {
 	  return '<div id="tag-cloud"><p>'.$return.'</p></div>';
 	}
 	
@@ -853,6 +852,8 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
     /**
 	* strip_empty_classes
 	* 
+	* Deletes empty classes and removes the sub menu class_exists
+	*
 	* @access 	public
 	* @author	Ben Moody
 	*/
@@ -860,5 +861,268 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 	    $menu = preg_replace('/ class=""| class="sub-menu"/','',$menu);
 	    return $menu;
 	}
-
+	
+	/**
+	* merge_scripts
+	* 
+	* Called during wp_print_scripts to intercept script output from theme and plugins.
+	* It dequeues all scripts enqueued using wp_enqueue_scripts and calls $this->minify_scripts to merge
+	* all the scripts into one single app.min.js.
+	*
+	* NOTE: To ignore a script add it's enqueue handle to $exceptions array
+	*
+	* Param - $args array:
+	*	- 'merged_path' REQUIRED, Full PATH to your new merged scripts file
+	*	- 'merged_url' REQUIRED, URL to new merged scripts file
+	*	- 'depends' Array of script handles to be enqueued BEFORE the min script, e.g. 'jquery'
+	*	- 'handles' Array of script handles to merge, if empty ALL theme AND plugin scripts will be merged
+	*	- 'enqueue_handle' Shouldn't need to change this as default should work fine without conflict
+	*
+	* @access 	public
+	* @author	Ben Moody
+	*/
+	public function merge_scripts() {
+		
+		//Init vars
+		$args 		= array();
+		$exceptions = array();
+		
+		//Get vars from config.php
+		if( isset($this->theme_script_merge_args) ) {
+			$args = $this->theme_script_merge_args;
+		}
+		
+		if( isset($this->theme_script_merge_exceptions) ) {
+			$exceptions = $this->theme_script_merge_exceptions;
+		}
+		
+		if( isset($args['merged_path']) && !empty($args['merged_path']) ) {
+			
+			//Before calling the merge action prepend the theme's stylesheet dir and uri to args
+			$args['merged_url'] = get_stylesheet_directory_uri() . $args['merged_path'];
+			$args['merged_path'] = get_stylesheet_directory() . $args['merged_path'];
+			
+			do_action( 'prso_minify_merge_scripts', $args, $exceptions );
+		}
+		
+	}
+	
+	
+	/**
+	* merge_styles
+	*
+	* Called during wp_print_styles to intercept style output and merge/minify all enqueued styles
+	* into one stylesheet.
+	*
+	* Makes use of custom WP Action 'prso_minify_merge_styles' which de-enqueues all styles and enqueues
+	* the new merged stylesheet. Note it will ignore all WP Core stylesheets and process only those in
+	* /wp-content/ thus all plugins and theme styles.
+	*
+	* Param - $args array:
+	*	- 'merged_path' REQUIRED, Full PATH to your new merged stylesheet file
+	*	- 'merged_url' REQUIRED, URL to new merged stylesheet
+	*	- 'enqueue_handle' Shouldn't need to change this as default should work fine without conflict
+	*
+	* @access 	public
+	* @author	Ben Moody
+	*/
+	public function merge_styles() {
+		
+		//Init vars
+		$args = array();
+		
+		//Get vars from config.php
+		if( isset($this->theme_style_merge_args) ) {
+			$args = $this->theme_style_merge_args;
+		}
+		
+		if( isset($args['merged_path']) && !empty($args['merged_path']) ) {
+			
+			//Before calling the merge action prepend the theme's stylesheet dir and uri to args
+			$args['merged_url'] = get_stylesheet_directory_uri() . $args['merged_path'];
+			$args['merged_path'] = get_stylesheet_directory() . $args['merged_path'];
+			
+			do_action( 'prso_minify_merge_styles', $args );
+			
+		}
+		
+	}
+	
+	/**
+	* add_search_to_nav
+	*
+	* Called during wp_nav_items filter, appends a wp search form onto the end of the main_nav
+	*
+	* Will only add the search nav to the main_nav, all other navs will be left alone
+	*
+	* Param
+	*		To enable/disable the search field use the $theme_nav_search var in config.php
+	*		To change the slug of the menu used, define it using $theme_nav_search_slug - OPTIONAL
+	*
+	* @access 	public
+	* @author	Ben Moody
+	*/
+	public function add_search_to_nav( $items, $args ) {
+		
+		//Init vars
+		$activate_search 	= FALSE;
+		$nav_slug			= 'main_nav';
+		
+		//Detect the config setting
+		if( isset($this->theme_nav_search) && is_bool($this->theme_nav_search) ) {
+			$activate_search = $this->theme_nav_search;
+		}
+		if( isset($this->theme_nav_search_slug) ) {
+			$nav_slug = esc_attr($this->theme_nav_search_slug);
+		}
+		
+		//Add only to main nav
+		if( isset($args->menu) && $args->menu === $nav_slug && $activate_search == TRUE ) {
+			
+			ob_start();
+			?>
+			<li class="nav-search" >
+				<form action="<?php echo home_url( '/' ); ?>" method="get">
+			      <div class="twelve columns">
+			        <input type="text" id="search" placeholder="Search" name="s" value="<?php the_search_query(); ?>" />
+			      </div>
+		  		</form>
+			</li>
+			<?php
+			$items.= ob_get_contents();
+			ob_end_clean();
+			
+		}
+		
+		return $items;
+	}
+	
+	/**
+	* theme_pagination
+	*
+	* Called using custom action 'prso_pagination' within theme template files
+	*
+	* NOTE: If you wish to disable (use WP default prev/next post links set $theme_custom_pagination in config.php
+	*		If you want to use your own pagination then you can always create a function in your child theme's functions.php
+	*		AND add the function's name to the $theme_custom_pagination_override var in config.php
+	*
+	* Param
+	*		To enable/disable use the $theme_custom_pagination var in config.php
+	*		To override this function in your child theme functions.php add function name to $theme_custom_pagination_override var in config.php
+	*
+	* @param	$before		string	String to place before the pagination output
+	* @param	$after		string	String to place after the pagination output
+	* @access 	public
+	* @author	Ben Moody
+	*/
+	public function custom_pagination( $before = '', $after = '' ) {
+		
+		//Init vars
+		global $wpdb, $wp_query;
+		$pagination_active 	= TRUE;
+		$override_function	= NULL;
+		$output				= NULL; //Output WP prev/next link pagination fallback if required
+		
+		//Cache pagination status from framework config
+		if( isset($this->theme_custom_pagination) && is_bool($this->theme_custom_pagination) ) {
+			$pagination_active = $this->theme_custom_pagination;
+		}
+		
+		//Cache pagination override function name string from config
+		if( isset($this->theme_custom_pagination_override) && !empty($this->theme_custom_pagination_override) ) {
+			$override_function = esc_attr($this->theme_custom_pagination_override);
+		}
+		
+		//First check if someone has with disabled this function or overridden it
+		if( $pagination_active === TRUE && empty($override_function) ) {
+			
+			$request 		= $wp_query->request;
+			$posts_per_page = intval(get_query_var('posts_per_page'));
+			$paged 			= intval(get_query_var('paged'));
+			$numposts 		= $wp_query->found_posts;
+			$max_page 		= $wp_query->max_num_pages;
+			
+			
+			if ( $numposts <= $posts_per_page ) { return; }
+			if(empty($paged) || $paged == 0) {
+				$paged = 1;
+			}
+			$pages_to_show = 7;
+			$pages_to_show_minus_1 = $pages_to_show-1;
+			$half_page_start = floor($pages_to_show_minus_1/2);
+			$half_page_end = ceil($pages_to_show_minus_1/2);
+			$start_page = $paged - $half_page_start;
+			if($start_page <= 0) {
+				$start_page = 1;
+			}
+			$end_page = $paged + $half_page_end;
+			if(($end_page - $start_page) != $pages_to_show_minus_1) {
+				$end_page = $start_page + $pages_to_show_minus_1;
+			}
+			if($end_page > $max_page) {
+				$start_page = $max_page - $pages_to_show_minus_1;
+				$end_page = $max_page;
+			}
+			if($start_page <= 0) {
+				$start_page = 1;
+			}
+				
+			echo $before.'<ul class="pagination clearfix">'."";
+			if ($paged > 1) {
+				$first_page_text = "&laquo";
+				echo '<li class="prev"><a href="'.get_pagenum_link().'" title="First">'.$first_page_text.'</a></li>';
+			}
+				
+			echo '<li class="">';
+			previous_posts_link('&larr; Previous');
+			echo '</li>';
+			for($i = $start_page; $i  <= $end_page; $i++) {
+				if($i == $paged) {
+					echo '<li class="current"><a href="#">'.$i.'</a></li>';
+				} else {
+					echo '<li><a href="'.get_pagenum_link($i).'">'.$i.'</a></li>';
+				}
+			}
+			echo '<li class="">';
+			next_posts_link('Next &rarr;');
+			echo '</li>';
+			if ($end_page < $max_page) {
+				$last_page_text = "&raquo;";
+				echo '<li class="next"><a href="'.get_pagenum_link($max_page).'" title="Last">'.$last_page_text.'</a></li>';
+			}
+			echo '</ul>'.$after."";
+			
+		}
+		
+		//Ok let's see if we should output default WP prev/next pagination links
+		if( $pagination_active === FALSE && empty($override_function) ) {
+			
+			ob_start();
+			?>
+			<nav class="wp-prev-next">
+				<ul class="clearfix">
+					<?php if( get_previous_posts_link() !== NULL ): ?>
+					<li class="prev-link"><?php previous_posts_link(__('&laquo; Older Entries', "prso_theme")); ?></li>
+					<?php endif; ?>
+					<?php if( get_next_posts_link() !== NULL ): ?>
+					<li class="next-link"><?php next_posts_link(__('Newer Entries &raquo;', "prso_theme")); ?></li>
+					<?php endif; ?>
+				</ul>
+			</nav>
+			<?php
+			$output = ob_get_contents();
+			ob_end_clean();
+			
+			echo $output;
+			
+		}
+		
+		//Last thing, lets see if the child theme has overriden this function
+		if( !empty($override_function) && function_exists($override_function) ) {
+			//Call the override function
+			call_user_func_array($override_function);
+		}
+		
+	}
+	
 }
