@@ -343,7 +343,6 @@ class PrsoThemeConfig {
 	*	- 'handles' Array of script handles to merge, if empty ALL theme AND plugin scripts will be merged
 	*	- 'enqueue_handle' Shouldn't need to change this as default should work fine without conflict
 	*/
-	/*
 	protected $theme_script_merge_args = array(
 		'merged_path' 		=> '/javascripts/app.min.js',
 		'depends'			=> array( 'jquery' ),
@@ -351,10 +350,9 @@ class PrsoThemeConfig {
 			'modernizr', 'foundation-app',
 			'foundation-accordion', 'foundation-alerts', 'foundation-buttons', 'foundation-clearing', 'foundation-forms', 
 			'foundation-joyride', 'foundation-magellan', 'foundation-mediaQueryToggle', 'foundation-navigation', 'foundation-orbit', 
-			'foundation-reveal', 'foundation-tabs', 'foundation-tooltips', 'foundation-topbar', 'foundation-placeholder',
+			'foundation-reveal', 'foundation-tabs', 'foundation-tooltips', 'foundation-topbar', 'foundation-placeholder', 'jquery-cookie', 'jquery-offcanvas', 'jquery-event-move', 'jquery-event-swipe',
 		)
 	);
-	*/
 	
 	/**
  	* $this->theme_script_merge_exceptions
