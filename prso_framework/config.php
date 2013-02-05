@@ -95,7 +95,8 @@ class PrsoThemeConfig {
 	*/
  	protected $theme_nav_menus = array( 
 		'main_nav' => 'The Main Menu',   // main nav in header
-		'footer_links' => 'Footer Links' // secondary nav in footer
+		'footer_links' => 'Footer Links', // secondary nav in footer
+		'mobile_nav' => 'Mobile Menu' // menu for mobile devices
 	);
  
  
@@ -342,15 +343,18 @@ class PrsoThemeConfig {
 	*	- 'handles' Array of script handles to merge, if empty ALL theme AND plugin scripts will be merged
 	*	- 'enqueue_handle' Shouldn't need to change this as default should work fine without conflict
 	*/
+	/*
 	protected $theme_script_merge_args = array(
 		'merged_path' 		=> '/javascripts/app.min.js',
 		'depends'			=> array( 'jquery' ),
 		'handles'			=> array( 
-			'modernizr', 'foundation-reveal', 'foundation-orbit', 
-			'foundation-custom-forms', 'foundation-placeholder', 'foundation-tooltips', 
-			'foundation-off-canvas', 'foundation-app' 
+			'modernizr', 'foundation-app',
+			'foundation-accordion', 'foundation-alerts', 'foundation-buttons', 'foundation-clearing', 'foundation-forms', 
+			'foundation-joyride', 'foundation-magellan', 'foundation-mediaQueryToggle', 'foundation-navigation', 'foundation-orbit', 
+			'foundation-reveal', 'foundation-tabs', 'foundation-tooltips', 'foundation-topbar', 'foundation-placeholder',
 		)
 	);
+	*/
 	
 	/**
  	* $this->theme_script_merge_exceptions
