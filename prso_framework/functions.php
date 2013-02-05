@@ -331,10 +331,10 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  	public function enqueue_theme_styles() {
  		
  		//Register Zurb Foundation Full CSS
-    	//wp_register_style( 'foundation-app', get_template_directory_uri() . '/stylesheets/foundation.css', array(), '3.0', 'all' );
+    	//wp_register_style( 'foundation-app', get_template_directory_uri() . '/stylesheets/foundation.css', array(), '3.2.5', 'all' );
     	
     	//Register Zurb Foundation Min CSS
-    	wp_register_style( 'foundation-app', get_template_directory_uri() . '/stylesheets/foundation.min.css', array(), '3.0', 'all' );
+    	wp_register_style( 'foundation-app', get_template_directory_uri() . '/stylesheets/foundation.min.css', array(), '3.2.5', 'all' );
    		
    		//Register Theme Stylsheet - req by wordpress, use app.css for custom styles
  		wp_register_style( 'presso-theme-base', get_stylesheet_directory_uri() . '/style.css', array( 'foundation-app' ), filemtime( get_stylesheet_directory() . '/style.css' ), 'all' );
