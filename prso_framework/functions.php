@@ -365,6 +365,38 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  		);
  		wp_enqueue_script( 'foundation-placeholder' );
  		
+ 		wp_register_script( 'jquery-offcanvas', 
+ 			get_template_directory_uri() . '/javascripts/jquery/jquery.offcanvas.js', 
+ 			array('jquery'), 
+ 			'3.2.5', 
+ 			true 
+ 		);
+ 		wp_enqueue_script( 'jquery-offcanvas' );
+ 		
+ 		wp_register_script( 'jquery-cookie', 
+ 			get_template_directory_uri() . '/javascripts/jquery/jquery.cookie.js', 
+ 			array('jquery'), 
+ 			'3.2.5', 
+ 			true 
+ 		);
+ 		wp_enqueue_script( 'jquery-cookie' );
+ 		
+ 		wp_register_script( 'jquery-event-move', 
+ 			get_template_directory_uri() . '/javascripts/jquery/jquery.event.move.js', 
+ 			array('jquery'), 
+ 			'1.2', 
+ 			true 
+ 		);
+ 		wp_enqueue_script( 'jquery-event-move' );
+ 		
+ 		wp_register_script( 'jquery-event-swipe', 
+ 			get_template_directory_uri() . '/javascripts/jquery/jquery.event.swipe.js', 
+ 			array('jquery-event-move'), 
+ 			'0.5', 
+ 			true 
+ 		);
+ 		wp_enqueue_script( 'jquery-event-swipe' );
+ 		
 	    
 	    //NOTE if detected Child-Theme app.js will override Parent app.js
 	    if( file_exists( get_stylesheet_directory() . '/javascripts/app.js' ) ) {
