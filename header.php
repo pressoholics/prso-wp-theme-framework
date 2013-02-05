@@ -57,17 +57,19 @@
 			
 					<?php 
 						// Adjust using Menus in Wordpress Admin 
-						wp_nav_menu( 
-					    	array( 
-					    		'menu' 				=> 'main_nav', /* menu name */
-					    		'menu_class' 		=> 'top-nav nav-bar hide-for-small',
-					    		'theme_location' 	=> 'main_nav', /* where in the theme it's assigned */
-					    		'container' 		=> 'false', /* container tag */
-					    		'depth' 			=> '2',
-					    		'walker' 			=> new main_nav_walker(),
-					    		'fallback_cb'		=> false
-					    	)
-					    );
+						if( class_exists('main_nav_walker') ) {
+							wp_nav_menu( 
+						    	array( 
+						    		'menu' 				=> 'main_nav', /* menu name */
+						    		'menu_class' 		=> 'top-nav nav-bar hide-for-small',
+						    		'theme_location' 	=> 'main_nav', /* where in the theme it's assigned */
+						    		'container' 		=> 'false', /* container tag */
+						    		'depth' 			=> '2',
+						    		'walker' 			=> new main_nav_walker(),
+						    		'fallback_cb'		=> false
+						    	)
+						    );
+						}
 					?>
 
 					<div class="show-for-small menu-action">

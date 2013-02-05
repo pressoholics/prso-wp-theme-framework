@@ -6,11 +6,11 @@
  *
  * CONTENTS:
  *
- *	get_ID_by_slug($page_slug)
- *	get_posts( $args = array() )
- *	loop_category( $parent_cat_slug = null, $args = array() )
- *	loop_category_widget( $cat_args )
- *	get_cat_children( $args = array() )
+ *	1. do_action('prso_get_related_posts', $args); 
+ *	2. apply_filters('prso_get_page_id_by_slug', NULL, $page_slug, $post_type);
+ *  3. apply_filters('prso_get_page_content', NULL, $page_id_slug);
+ *  4. do_action('prso_query_posts_by_category', $cat_slug, $args);
+ *  5. do_action('prso_prev_next_permalink', $args);
  * 
  */
 class PostHelper {
@@ -19,74 +19,292 @@ class PostHelper {
 	private $loop_cat_parent_id = null;
 	
 	function __construct() {
-	
-	}
-
-	/**
-	* get_ID_by_slug
-	* Shortcut for returning a page ID using it's slug
-	*
-	*/ 
-	public function get_ID_by_slug($page_slug) {
-	    $page = get_page_by_path($page_slug);
-	    if ($page) {
-	        return $page->ID;
-	    } else {
-	        return null;
-	    }
+		
+		//Add custom action hooks for post helpers
+ 		$this->custom_action_hooks();
+		
 	}
 	
 	/**
-	* get_posts()
-	*
-	* This automates get_posts by setting some default args as well as
-	* allowing you to pass a string for category rather than just cat_id
-	* lets you use cat slug too.
-	*
-	* @param	array	$args - any get_posts args you wish to customize
-	* @return	array	$_posts	- posts array returned by wp get_posts
+	* custom_action_hooks
+	* 
+	* Create any custom WP Action Hooks here for post helpers
+	* 
+	* @access 	private
+	* @author	Ben Moody
 	*/
-	public function get_posts( $args = array() ) {
+ 	private function custom_action_hooks() {
+ 		
+ 		/**
+ 		* 1. prso_get_related_posts
+ 		* 	 Returns/Echos a ul list of related posts.
+ 		*/
+ 		$this->add_action( 'prso_get_related_posts', 'get_related_posts', 10, 1 );
+ 		
+ 		/**
+ 		* 2. prso_get_page_id_by_slug
+ 		* 	 Shortcut for returning a page ID using it's slug.
+ 		*/
+ 		$this->add_filter( 'prso_get_page_id_by_slug', 'get_ID_by_slug', 1, 3 );
+ 		
+ 		/**
+ 		* 3. prso_get_page_content
+ 		* 	 Shortcut for returning a pages content by ID or Slug
+ 		*/
+ 		$this->add_filter( 'prso_get_page_content', 'get_page_content', 1, 2 );
+ 		
+ 		/**
+ 		* 4. prso_query_posts_by_category
+ 		* 	 Alters the main loop to return posts in a specific category
+ 		*/
+ 		$this->add_action( 'prso_query_posts_by_category', 'loop_category', 10, 2 );
+ 		
+ 		/**
+ 		* 5. prso_prev_next_permalink
+ 		* 	 Echo permalink to next/prev post in a loop of pages
+ 		*/
+ 		$this->add_action( 'prso_prev_next_permalink', 'prev_next_pagination', 10, 1 );
+ 		
+ 	}
+	
+	/**
+	* get_related_posts
+	* 
+	* do_action('prso_get_related_posts', $args);
+	*
+	* Custom method which returns an ul list of related posts.
+	*
+	* Use in theme via custom Action Hook 'prso_get_related_posts'
+	* 
+	* Use WP_Query args to adjust std query elements such as numberposts.
+	* Also accepts a number of custom args:
+	*
+	* 1. 'relation' - category/tag/category__and__tag/category__or__tag
+	*		Use this to adjust the relationship between tags and categories when
+	*		querying the post relationship, so you want tag/cat to be independent
+	*		or do you define related post as posts which share both cat and tag
+	*		or just on or the other.
+	*
+	* 2. 'no_posts_msg'	- string or NULL
+	*		If you dont need a msg to output when no related posts found, set to NULL
+	*
+	*
+	* @param	array	$args (see above comments)
+	* @access 	public
+	* @author	Ben Moody
+	*/
+	public function get_related_posts( $args = array() ) {
 		
 		//Init vars
 		global $post;
-		$_posts		= array();
-		$_CatObject = null;
-		$_args 		= array(
-			'numberposts'     => 5,
-		    'offset'          => 0,
-		    'category'        => null,
-		    'orderby'         => 'post_date',
-		    'order'           => 'ASC',
-		    'include'         => null,
-		    'exclude'         => null,
-		    'meta_key'        => null,
-		    'meta_value'      => null,
-		    'post_type'       => 'post',
-		    'post_mime_type'  => null,
-		    'post_parent'     => null,
-		    'post_status'     => 'publish'
+		$tags		= array();
+		$tag_ids	= array();
+		$cats		= array();
+		$cat_ids	= array();
+		$query 		= array();
+		$get_posts	= NULL;
+		$related_posts = NULL;
+		$output		= NULL;
+		$defaults = array(
+			'numberposts' => 5, 'offset' => 0,
+			'category' => 0, 'orderby' => 'post_date',
+			'order' => 'DESC', 'include' => array(),
+			'exclude' => array(), 'meta_key' => '',
+			'meta_value' =>'', 'post_type' => 'post',
+			'suppress_filters' => true,
+			'no_posts_msg'	=> 'No related posts',
+			'relation'		=> 'category__and__tag'
 		);
 		
-		//Combine default arg with args provided
-		$args = array_merge( $_args, $args );
+		//Parse args
+		$query = wp_parse_args( $args, $defaults );
 		
-		//Set category ID in args if cat provided is category slug string
-		if( isset($args['category']) && is_string($args['category']) ) {
+		//First check the requested relationship between tag and catagories and set the wp_query tax_query arg
+		switch( $query['relation'] ) {
+			case 'category__and__tag':
+				$query['tax_query']['relation'] = 'AND';
+				break;
+			case 'category__or__tag':
+				$query['tax_query']['relation'] = 'OR';
+				break;
+		}
+		
+		//Check if we need categories
+		if( $query['relation'] === 'tag' || $query['relation'] === 'category__and__tag' || $query['relation'] === 'category__or__tag' ) {
 			
-			//Get category id using cat slug provided
-			if( $_CatObject = get_category_by_slug($args['category']) ){
-				$args['category'] 	= $_CatObject->term_id;
-			}else{
-				$args['category'] 	= null;
+			//Get all post tag id's
+			$tags = wp_get_post_tags($post->ID);
+			
+			//Loop post tags and cache in query var
+			if( !empty($tags) ) {
+				foreach( $tags as $tag ) {
+					if( isset($tag->term_id) ) {
+						$tag_ids[] = $tag->term_id;
+					}
+				}
+				
+				//Cache a wp_query tax_query arg
+				$query['tax_query'][] =	array(
+					'taxonomy'	=> 'post_tag',
+					'field'		=> 'id',
+					'terms'		=> $tag_ids
+				);
+			}
+			
+		}		
+		
+		
+		//Check if we need categories
+		if( $query['relation'] === 'category' || $query['relation'] === 'category__and__tag' || $query['relation'] === 'category__or__tag' ) {
+			
+			//Get all post cat id's
+			$cats = wp_get_post_categories( $post->ID );
+			
+			//Loop post categories and cache in query var
+			if( !empty($cats) ) {
+				foreach( $cats as $cat ) {
+					//Get term data on current cat in loop
+					$term = get_category( $cat );
+					//Cache the terms term_id
+					if( isset($term->term_id) ) {
+						$cat_ids[] = $term->term_id;
+					}
+				}
+				
+				//Cache a wp_query tax_query arg
+				$query['tax_query'][] =	array(
+					'taxonomy' 			=> 'category',
+					'terms' 			=> $cat_ids,
+					'field' 			=> 'term_id',
+					'include_children' 	=> false
+				);
+				
+				//Do not relate posts via the 'uncategorized' category
+				$query['tax_query'][] = array(
+					'taxonomy'	=> 'category',
+					'terms'		=> array( 1 ),
+					'field'		=> 'term_id',
+					'operator'	=> 'NOT IN'
+				);
 			}
 			
 		}
 		
-		//Get posts using args
-		$_posts = get_posts( $args );
+		//Lets get all related posts using our new query
+		$query['post__not_in'] 	= array( $post->ID );
+		$get_posts 				= new WP_Query;
+		$related_posts 			= $get_posts->query( $query );
+		
+		//Start the html to output unordered list
+		$output = '<ul id="prso-related-posts">';
+		
+		//Loop any posts found and add a list item for each to output html
+		if( !empty($related_posts) ) {
+			
+			foreach( $related_posts as $post ) {
+				//Prepare global post data
+				setup_postdata( $post );
+				//Cache html
+				ob_start();
+				?>
+				<li class="related_post">
+					<a href="<?php the_permalink() ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a>
+				</li>
+				<?php
+				$output.= ob_get_contents();
+				ob_end_clean();
+			}
+			
+		} else {
+			
+			//No related posts found
+			if( isset($query['no_posts_msg']) ) {
+				ob_start();
+				?>
+				<li class="related_post">
+					<?php esc_attr_e( $query['no_posts_msg'] ); ?>
+				</li>
+				<?php
+				$output.= ob_get_contents();
+				ob_end_clean();
+			}
+			
+		}
+		
+		//Reset wp query
+		wp_reset_query();
+		//Reset wp global post
+		wp_reset_postdata();
+		
+		//Close output html
+		$output.= '</ul>';
+		
+		if( !empty($output) ) {
+			echo $output;
+		}
+		
+	}
 	
-		return $_posts;
+	/**
+	* get_ID_by_slug
+	*
+	* apply_filters('prso_get_page_id_by_slug', NULL, $page_slug, $post_type);
+	*
+	* Shortcut for returning a page ID using it's slug
+	*
+	* @param	string	$page_slug - page slug, can be take from url :)
+	* @param	string	$post_type - 'page', 'post', 'custom post type'
+	*/ 
+	public function get_ID_by_slug( $output, $page_slug, $post_type = 'page' ) {
+	    
+	    $page = get_page_by_path( $page_slug, 'OBJECT', $post_type );
+	    
+	    if ( isset($page->ID) ) {
+	        $output = $page->ID;
+	    } else {
+	        $output = null;
+	    }
+	    
+	    return $output;
+	}
+	
+	/**
+	* get_page_content
+	* 
+	* apply_filters('prso_get_page_content', NULL, $page_id_slug);
+	* 
+	* Returns the content of any page by either it's ID or slug
+	*
+	* @param	mixed	ID or slug of page content you wish to return
+	* @access 	public
+	* @author	Ben Moody
+	*/
+	public function get_page_content( $content, $page_id_slug = NULL ) {
+		
+		//Init vars
+		$page_data 	= NULL;
+		
+		$page_id_slug = esc_attr( $page_id_slug );
+		
+		if( isset($page_id_slug) ) {
+			
+			//Detect if this is a page ID or Slug
+			if( is_string($page_id_slug) ) {
+				//Convert slug into page ID
+				$page_id_slug = apply_filters( 'prso_get_page_id_by_slug', NULL, $page_id_slug );
+			}
+			
+			//Get page data
+			if( isset($page_id_slug) ) {
+				$page_data = get_page( $page_id_slug );
+				
+				//Get page content and run wordpress content filters on it
+				$content = apply_filters( 'the_content', $page_data->post_content );
+			}
+			
+		}
+		
+		return $content;
 	}
 	
 	/**
@@ -117,7 +335,7 @@ class PostHelper {
 	* @access 	public
 	* @author	Ben Moody
 	*/
-	function loop_category( $parent_cat_slug = null, $args = array() ) {
+	public function loop_category( $parent_cat_slug = null, $args = array() ) {
 		
 		$_CatObject 		= null; //Cache object for categories
 		$wp_query			= null;
@@ -192,73 +410,13 @@ class PostHelper {
 	 * the parent category if current loop is a custom loop filtered by category.
 	 *
 	 */
-	function loop_category_widget( $cat_args ) {
+	public function loop_category_widget( $cat_args ) {
 		
 		if( isset($this->loop_cat_parent_id) ) {
 			$cat_args['child_of'] = $this->loop_cat_parent_id;
 		}
 		
 		return $cat_args;
-	}
-	
-	/**
-	 * get_cat_children()
-	 *
-	 * This automates get_categories by setting some default args as well as
-	 * allowing you to pass a string for category rather than just cat_id
-	 * lets you use cat slug too.
-	 *
-	 * @param	array	$args - any get_categories args you wish to customize
-	 * @return	array	$_children	- Onject array containing all child/grandchild categories
-	 */
-	public function get_cat_children( $args = array() ) {
-		
-		//Init vars
-		global $post;
-		$_children	= array();
-		$_CatObject = null;
-		$_args 		= array(
-			'type'                     => 'post',
-			'child_of'                 => 0,
-			'parent'                   => '',
-			'orderby'                  => 'name',
-			'order'                    => 'ASC',
-			'hide_empty'               => 1,
-			'hierarchical'             => 1,
-			'exclude'                  => '',
-			'include'                  => '',
-			'number'                   => '',
-			'taxonomy'                 => 'category',
-			'pad_counts'               => false
-		);
-		
-		//Combine default arg with args provided
-		$args = array_merge( $_args, $args );
-		
-		//Check if we should get all children and grandchildren
-		if( isset($args['child_of']) && is_string($args['child_of']) ) {
-			
-			//Get category id using cat slug provided
-			if( $_CatObject = get_category_by_slug($args['child_of']) ){
-				$args['child_of'] 	= $_CatObject->term_id;
-			}
-			
-		} elseif ( isset($args['parent']) && is_string($args['parent']) ) {
-			
-			//Get category id using cat slug provided
-			if( $_CatObject = get_category_by_slug($args['parent']) ){
-				$args['parent'] 	= $_CatObject->term_id;
-			}
-			
-		}
-		
-		//Get all category children
-		$_children['children'] = get_categories( $args );
-		
-		//Return args too
-		$_children['args'] = $args;
-		
-		return $_children;
 	}
 	
 	/**
@@ -270,6 +428,8 @@ class PostHelper {
 	 * The helper uses wp_query to query the posts so simply add you wp_query args into $args and the helper
 	 * will automatically create a 1 post/page pagination loop allowing you to use prev/next post buttons for users
 	 * to loop through a set of posts.
+	 *
+	 * Be sure to declare whether you want the 'next' or 'previous' post usnig the 'direction' key in args array
 	 *
 	 * @param	array	$args - any get_categories args you wish to customize
 	 * @return	array	$_children	- Onject array containing all child/grandchild categories
@@ -403,6 +563,52 @@ class PostHelper {
 		
 		if( !empty($permalink) ) {
 			echo esc_url( $permalink );
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	/**
+	* add_action
+	* 
+	* Helper to deal with Wordpress add_action requests. Checks to make sure that the action is not
+	* duplicated if a class is instantiated multiple times.
+	* 
+	* @access 	protected
+	* @author	Ben Moody
+	*/
+	private function add_action( $tag = NULL, $method = NULL, $priority = 10, $accepted_args = NULL ) {
+		
+		if( isset($tag,$method) ) {
+			//Check that action has not already been added
+			if( !has_action($tag) ) {
+				add_action( $tag, array($this, $method), $priority, $accepted_args );
+			}
+		}
+		
+	}
+	
+	/**
+	* add_filter
+	* 
+	* Helper to deal with Wordpress add_filter requests. Checks to make sure that the filter is not
+	* duplicated if a class is instantiated multiple times.
+	* 
+	* @access 	protected
+	* @author	Ben Moody
+	*/
+	private function add_filter( $tag = NULL, $method = NULL, $priority = 10, $accepted_args = NULL ) {
+		
+		if( isset($tag,$method) ) {
+			//Check that action has not already been added
+			if( !has_filter($tag) ) {
+				add_filter( $tag, array($this, $method), $priority, $accepted_args );
+			}
 		}
 		
 	}

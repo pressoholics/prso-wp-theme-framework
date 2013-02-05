@@ -1,0 +1,17 @@
+/**
+* app-core.css
+* 
+* Any changes required for Prso Theme Core are added here,
+* These are Core chagnges only, required to fix bugs, or reset the theme
+*
+* NOTE:: Add theme specific css to your child theme's app.css
+* 
+* @author	Ben Moody
+*/
+
+/* Footer */
+
+/* Hide 'flyout' menu items in footer menu */
+.footer-links ul.flyout {
+	display: none;
+}
