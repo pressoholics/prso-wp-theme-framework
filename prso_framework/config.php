@@ -380,6 +380,15 @@ class PrsoThemeConfig {
 	protected $theme_style_merge_args = array(
 		'merged_path' 	=> '/stylesheets/app-min.css'
 	);
+	
+	/**
+ 	* $this->theme_style_merge_exceptions
+ 	*
+ 	* NOTE: To ignore a stylesheet add it's enqueue handle to $theme_style_merge_exceptions array
+ 	*
+ 	* e.g. array('gforms_css');
+	*/
+	protected $theme_style_merge_exceptions = array();
 
 /******************************************************************
  * 12. 	Merge Stylesheets
