@@ -893,11 +893,11 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		
 		//Parse args from config.php
 		if( wp_is_mobile() && isset($this->theme_tag_cloud_args['is_mobile']) && !empty($this->theme_tag_cloud_args['is_mobile']) ) {
-			$args = wp_parse_args( $defaults, $this->theme_tag_cloud_args['is_mobile'] );
-		}elseif( isset($this->theme_tag_cloud_args) ) {
-			$args = wp_parse_args( $defaults, $this->theme_tag_cloud_args );
+			$args = wp_parse_args( $this->theme_tag_cloud_args['is_mobile'], $defaults['is_mobile'] );
+		} elseif( isset($this->theme_tag_cloud_args) ) {
+			$args = wp_parse_args( $this->theme_tag_cloud_args, $defaults  );
 		} else {
-			$args = wp_parse_args( $args, $this->theme_tag_cloud_args );
+			$args = wp_parse_args( $args, $defaults );
 		}
 		
 		return $args;

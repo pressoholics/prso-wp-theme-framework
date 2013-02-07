@@ -446,6 +446,10 @@ a[class^='tag-link-']:hover{
 		display: none;
 	}
 	
+	.widget_tag_cloud p.label {
+		line-height: 2;
+	}
+	
 }
 
 /* Medium screens */
@@ -480,6 +484,10 @@ a[class^='tag-link-']:hover{
 	
 	.widget_nav_menu {
 		display: none;
+	}
+	
+	.widget_tag_cloud p.label {
+		line-height: 2;
 	}
 	
 }
