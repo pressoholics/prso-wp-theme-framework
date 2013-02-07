@@ -341,7 +341,7 @@ class PrsoThemeConfig {
 		'smallest'	=>	9.75,	// make largest and smallest the same - i don't like the varying font-size look
 		'unit'		=>	'px',
 		'is_mobile'	=> array(	//Change sizes for mobile if requested
-			'number'	=>	5,		
+			'number'	=>	10,		
 			'largest'	=>	1.5,	
 			'smallest'	=>	1.5,	
 			'unit'		=>	'rem',
