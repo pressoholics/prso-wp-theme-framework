@@ -882,11 +882,19 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 			'number'	=>	20,		// show less tags
 			'largest'	=>	9.75,	// make largest and smallest the same - i don't like the varying font-size look
 			'smallest'	=>	9.75,	// make largest and smallest the same - i don't like the varying font-size look
-			'unit'		=>	'px'
+			'unit'		=>	'px',
+			'is_mobile'	=> array(	//Change sizes for mobile if requested
+				'number'	=>	5,		
+				'largest'	=>	2,	
+				'smallest'	=>	2,	
+				'unit'		=>	'rem',
+			)
 		);
 		
 		//Parse args from config.php
-		if( isset($this->theme_tag_cloud_args) ) {
+		if( wp_is_mobile() && isset($this->theme_tag_cloud_args['is_mobile']) && !empty($this->theme_tag_cloud_args['is_mobile']) ) {
+			$args = wp_parse_args( $defaults, $this->theme_tag_cloud_args['is_mobile'] );
+		}elseif( isset($this->theme_tag_cloud_args) ) {
 			$args = wp_parse_args( $defaults, $this->theme_tag_cloud_args );
 		} else {
 			$args = wp_parse_args( $args, $this->theme_tag_cloud_args );
