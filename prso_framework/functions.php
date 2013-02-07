@@ -484,11 +484,11 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
    		//Register Theme Stylsheet - req by wordpress, use app.css for custom styles
  		wp_register_style( 'presso-theme-base', get_stylesheet_directory_uri() . '/style.css', array( 'foundation-app' ), filemtime( get_stylesheet_directory() . '/style.css' ), 'all' );
    		
-   		//Register the Prso Theme Core stylesheet
-	    wp_register_style( 'presso-theme-core', get_template_directory_uri() . '/stylesheets/app-core.css', array( 'foundation-app' ), filemtime( get_template_directory() . '/stylesheets/app-core.css' ), 'all' );
-   		
    		//Register Wordpress Specific Stylsheet
  		wp_register_style( 'presso-theme-wp', get_template_directory_uri() . '/stylesheets/app-wordpress.css', array( 'presso-theme-base' ), filemtime( get_template_directory() . '/stylesheets/app-wordpress.css' ), 'all' );
+ 		
+ 		//Register the Prso Theme Core stylesheet
+	    wp_register_style( 'presso-theme-core', get_template_directory_uri() . '/stylesheets/app-core.css', array( 'presso-theme-wp' ), filemtime( get_template_directory() . '/stylesheets/app-core.css' ), 'all' );
  		
  		//Register the App's specific stylesheet - NOTE if child theme is used will try to find app.css in child dir
 	    if( file_exists( get_stylesheet_directory() . '/stylesheets/app.css' ) ) {
@@ -498,6 +498,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
     	}
     	
     	//Enqueue App's specific stylesheet - will enqueue all required styles as well :)
+    	wp_enqueue_style( 'presso-theme-core' );
     	wp_enqueue_style( 'presso-theme-app' );
  		
  	}
@@ -1075,10 +1076,15 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		
 		//Init vars
 		$args = array();
+		$exceptions = array();
 		
 		//Get vars from config.php
 		if( isset($this->theme_style_merge_args) ) {
 			$args = $this->theme_style_merge_args;
+		}
+		
+		if( isset($this->theme_style_merge_exceptions) ) {
+			$exceptions = $this->theme_style_merge_exceptions;
 		}
 		
 		if( isset($args['merged_path']) && !empty($args['merged_path']) ) {
@@ -1087,7 +1093,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 			$args['merged_url'] = get_stylesheet_directory_uri() . $args['merged_path'];
 			$args['merged_path'] = get_stylesheet_directory() . $args['merged_path'];
 			
-			do_action( 'prso_minify_merge_styles', $args );
+			do_action( 'prso_minify_merge_styles', $args, $exceptions );
 			
 		}
 		
