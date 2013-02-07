@@ -45,3 +45,32 @@ span.gform_description {
 .footer-links ul.flyout {
 	display: none;
 }
+
+
+/**** Media Queries */
+
+/* Medium Screens AND Landscape - iPad */
+@media only screen and (max-width: 1279px) and (min-width: 768px) and (orientation: landscape) {
+
+	.show-for-medium-landscape {
+		display: inherit !important;
+	}
+	
+	.hide-for-medium-landscape {
+		display: none !important;
+	}
+	
+}
+
+/* Medium Screens AND Portrait - iPad */
+@media only screen and (max-width: 1279px) and (min-width: 768px) and (orientation: portrait) {
+	
+	.show-for-medium-portrait {
+		display: inherit !important;
+	}
+	
+	.hide-for-medium-portrait {
+		display: none !important;
+	}
+	
+}

@@ -61,7 +61,7 @@
 							wp_nav_menu( 
 						    	array( 
 						    		'menu' 				=> 'main_nav', /* menu name */
-						    		'menu_class' 		=> 'top-nav nav-bar hide-for-small',
+						    		'menu_class' 		=> 'top-nav nav-bar hide-for-small hide-for-medium-portrait',
 						    		'theme_location' 	=> 'main_nav', /* where in the theme it's assigned */
 						    		'container' 		=> 'false', /* container tag */
 						    		'depth' 			=> '2',
@@ -72,7 +72,7 @@
 						}
 					?>
 
-					<div class="show-for-small menu-action">
+					<div class="show-for-small show-for-medium-portrait menu-action">
 				  	    <a href="#sidebar" id="sidebarButton" class="sidebar-button small secondary button">
 							<svg xml:space="preserve" enable-background="new 0 0 48 48" viewBox="0 0 48 48" height="18px" width="18px" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" id="Layer_1" version="1.1">
 								<line y2="8.907" x2="48" y1="8.907" x1="0" stroke-miterlimit="10" stroke-width="8" stroke="#000000" fill="none"/>
@@ -89,7 +89,7 @@
 					    		'menu' 				=> 'mobile_nav', /* menu name */
 					    		'menu_class' 		=> 'side-nav tabs vertical',
 					    		'theme_location' 	=> 'main_nav', /* where in the theme it's assigned */
-					    		'container_class' 	=> 'show-for-small mobile-nav-container', /* container tag */
+					    		'container_class' 	=> 'show-for-small show-for-medium-portrait mobile-nav-container', /* container tag */
 					    		'depth' 			=> '1',
 					    		'fallback_cb'		=> false
 					    	)

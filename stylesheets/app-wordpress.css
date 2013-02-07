@@ -448,6 +448,54 @@ a[class^='tag-link-']:hover{
 	
 }
 
+/* Medium screens */
+@media only screen and (max-width: 1279px) and (min-width: 768px) {
+	
+	/* widget styles */
+	ul.children {
+		display: none;
+	}
+	
+	.widget li a{
+		display: block;
+		color: #ffffff;
+		text-align: center;
+		border-radius: 3px 3px 3px 3px;
+		padding: 5px;
+		background: none repeat scroll 0 0 #2BA6CB;
+	}
+	
+	.widget li .prso-post-count {
+		display: none;
+	}
+
+	.widget_archive ul {
+		margin-top: 6px;
+	}
+	
+	.widget_archive > aside > ul > li,
+	.widget_categories > aside > ul > li {
+		height: 35px;
+	}
+	
+	.widget_nav_menu {
+		display: none;
+	}
+	
+}
+
+/* Medium Screens AND Landscape - iPad */
+@media only screen and (max-width: 1279px) and (min-width: 768px) and (orientation: landscape) {
+
+	
+}
+
+/* Medium Screens AND Portrait - iPad */
+@media only screen and (max-width: 1279px) and (min-width: 768px) and (orientation: portrait) {
+	
+		
+}
+
 @media only screen and (min-width: 768px) {
 	ol.commentlist div.avatar{
 		margin-right: 0;
