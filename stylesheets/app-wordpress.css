@@ -385,6 +385,7 @@ li.next{
 
 #tag-cloud{
 	margin-bottom: 18px;
+	margin-top: 5px;
 }
 
 a[class^='tag-link-']:hover{
@@ -446,7 +447,7 @@ a[class^='tag-link-']:hover{
 		display: none;
 	}
 	
-	.widget_tag_cloud p.label {
+	#tag-cloud > p > a.label {
 		line-height: 2;
 	}
 	
@@ -486,7 +487,7 @@ a[class^='tag-link-']:hover{
 		display: none;
 	}
 	
-	.widget_tag_cloud p.label {
+	#tag-cloud > p > a.label {
 		line-height: 2;
 	}
 	
