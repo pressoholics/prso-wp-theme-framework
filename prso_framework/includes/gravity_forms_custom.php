@@ -12,19 +12,136 @@ Version: 1.0
 * to change how form elements are rendered to better fit with the 
 * Zurb Foundation template.
 *
-* Gravity Forms Filters/Actions:
+* Hooks:
+* 	Filter:: 'prso_theme_gform_validation_wrapper_class' 	- change class for div around field validation message
+*	Filter:: 'prso_theme_gform_form_confirmation_class' 	- change class for div around form confirmation message
+*	Filter:: 'prso_theme_gform_form_validation_class' 		- change class for div around form validation message
+*	Filter:: 'prso_theme_gforms_address_city_class' 		- change class for div around city field
+*	Filter:: 'prso_theme_gforms_address_state_class' 		- change class for div around state field
+*	Filter:: 'prso_theme_gforms_address_zip_class' 			- change class for div around zip field
 *
-*
-* Custom Prso Filters/Actions to call in child theme for job specific styling:
-* 
 *
 */
-add_action( 'gform_enqueue_scripts', 'ben_test_5' );
-function ben_test_5() {
-	wp_dequeue_style( "gforms_css" );
+
+/**
+* prso_theme_gform_dequeue_scripts
+* 
+* Called by Gravity Forms 'gform_enqueue_scripts' filter
+* Dequeue any gforms scripts or styles here 
+*
+* @access 	public
+* @author	Ben Moody
+*/
+add_action( 'gform_enqueue_scripts', 'prso_theme_gform_dequeue_scripts' );
+function prso_theme_gform_dequeue_scripts() {
+	
+	global $wp_styles;
+
+	//Dequeue Gravity Forms front end stylesheet, we have our own :)
+	if( isset($wp_styles->registered['gforms_css']) ) {
+		unset( $wp_styles->registered['gforms_css'] );
+	}
+	
 }
 
+/**
+* prso_theme_gform_form_validation_message
+* 
+* Called by Gravity Forms 'gform_validation_message' filter
+* Allows changes to the form validation message div. 
+*
+* Hooks:
+*	Filter:: 'prso_theme_gform_form_validation_class' - change class for div around form validation message
+*
+* @param	string		validation_message
+* @param	array		form
+* @return	string		validation_message
+* @access 	public
+* @author	Ben Moody
+*/
+add_filter( 'gform_validation_message', 'prso_theme_gform_form_validation_message', 10, 2 );
+function prso_theme_gform_form_validation_message( $validation_message, $form ) {
+	
+	//Init vars
+	$form_validation_msg_classes = 'alert-box alert';
+	
+	if( !empty($validation_message) ) {
+		
+		//Filter classes for element
+		$form_validation_msg_classes = apply_filters( 'prso_theme_gform_form_validation_class', $form_validation_msg_classes, $form );
+		
+		//Add zurb foundation alert class to validation error div
+		$validation_message = preg_replace("/validation_error/", "{$form_validation_msg_classes} validation_error", $validation_message);
+		
+	}
+	
+	return $validation_message;
+}
 
+/**
+* prso_theme_gform_form_confirmation_message
+* 
+* Called by Gravity Forms 'gform_confirmation' filter
+* Allows changes to the form confirmation message div. 
+*
+* Hooks:
+*	Filter:: 'prso_theme_gform_form_confirmation_class' - change class for div around form confirmation message
+*
+* @param	string		confirmation
+* @param	array		form
+* @param	array		lead
+* @param	bool		ajax
+* @return	string		confirmation_message
+* @access 	public
+* @author	Ben Moody
+*/
+add_filter( 'gform_confirmation', 'prso_theme_gform_form_confirmation_message', 10, 4 );
+function prso_theme_gform_form_confirmation_message( $confirmation, $form, $lead, $ajax ) {
+	
+	//Init vars
+	$form_confirmation_msg_classes = 'alert-box success';
+	
+	if( !empty($confirmation) && isset($form['id']) ) {
+		
+		//Filter classes for element
+		$form_confirmation_msg_classes = apply_filters( 'prso_theme_gform_form_confirmation_class', $form_confirmation_msg_classes, $form );
+		
+		//Add zurb foundation alert class to validation error div
+		$confirmation = preg_replace("/gform_confirmation_message_{$form['id']}/", "{$form_confirmation_msg_classes} gform_confirmation_message_{$form['id']}", $confirmation);
+		
+	}
+	
+	return $confirmation;
+}
+
+/**
+* prso_theme_gform_field_content
+* 
+* Called by Gravity Forms 'gform_field_content' filter
+* If NOT admin area, detects field type and then conducts required actions
+* to re-create the field's html content.
+*
+* NOTES: This functions uses almost the same code as Gravity Forms to create
+* the field content. This approach was required as Gravity Forms does not yet
+* have sufficient filters to allow changes to how fields and their labels are
+* rendered. To ensure that the fields meet Zurb Foundation layout we needed to
+* tweak the specific order of elements in the DOM.
+*
+* Although this avoids having to edit the Gravity Forms code base directly
+* this still may break in the future if gforms change how their fields are rendered. 
+*
+* Hooks:
+*	Filter:: 'prso_theme_gform_validation_wrapper_class' - change class for div around field validation message
+*
+* @param	string		content
+* @param	array		field
+* @param	string		value
+* @param	lead_id		int
+* @param	form_id		int
+* @return	string		content
+* @access 	public
+* @author	Ben Moody
+*/
 add_filter( 'gform_field_content', 'prso_theme_gform_field_content', 10, 5 );
 function prso_theme_gform_field_content( $content, $field, $value, $lead_id, $form_id ) {
 	
@@ -37,7 +154,20 @@ function prso_theme_gform_field_content( $content, $field, $value, $lead_id, $fo
 			
 			$id = $field["id"];
 			
-			$validation_message = (rgget("failed_validation", $field) && !empty($field["validation_message"])) ? sprintf("<small class='gfield_description validation_message'>%s</div>", $field["validation_message"]) : "";
+			//Cache validation message html
+			ob_start();
+			?>
+			<div class='row'>
+				<div class='<?php echo apply_filters( 'prso_theme_gform_validation_wrapper_class', 'twelve columns', $field, $form_id ); ?>'>
+					<small class='error gfield_description validation_message'>%s</small>
+				</div>
+			</div>
+			<?php
+			$validation_message = ob_get_contents();
+			ob_end_clean();
+			
+			$validation_message = (rgget("failed_validation", $field) && !empty($field["validation_message"])) ? sprintf($validation_message, $field["validation_message"]) : "";
+			
 			
 			$field_label = $force_frontend_label ? $field["label"] : GFCommon::get_label($field);
 	        if(rgar($field, "inputType") == "singleproduct" && !rgempty($field["id"] . ".1", $value))
@@ -51,29 +181,29 @@ function prso_theme_gform_field_content( $content, $field, $value, $lead_id, $fo
 			
 			$is_description_above = rgar($field, "descriptionPlacement") == "above";
 			
+			
 			$admin_buttons = IS_ADMIN ? "<div class='gfield_admin_icons'><div class='gfield_admin_header_title'>{$field_type_title} : " . __("Field ID", "gravityforms") . " {$field["id"]}</div>" . $delete_field_link . $duplicate_field_link . "<a class='field_edit_icon edit_icon_collapsed' title='" . __("click to edit this field", "gravityforms") . "'>" . __("Edit", "gravityforms") . "</a></div>" : "";
 			
 			if(empty($target_input_id))
 	        	$target_input_id = $field_id;
-	
+	        	
+	        
+	        //Field Description
 	        $description = '';
+	        
 	        if($is_description_above)
 	            $field_content = sprintf("%s<label class='gfield_label' for='%s'>%s%s</label>%s{FIELD}%s", $admin_buttons, $target_input_id, esc_html($field_label), $required_div , $description, $validation_message);
 	        else
 	            $field_content = sprintf("%s<label class='gfield_label' for='%s'>%s%s</label>{FIELD}%s%s", $admin_buttons, $target_input_id, esc_html($field_label), $required_div , $description, $validation_message);
+	            
 			
-			
-			//$value = GFFormDisplay::default_if_empty($field, $value);
-			
+			//Detect if field type is text or address and call the required function to get field content
 			if( $field['type'] === 'address' ) {
 				$content = str_replace("{FIELD}", prso_theme_gform_get_address_field($field, $value, 0, $form_id), $field_content);
 			} else {
 				$content = str_replace("{FIELD}", GFCommon::get_field_input($field, $value, 0, $form_id), $field_content);
 			}
 	       
-			
-			//var_dump($field_content);
-			//exit();
 		}
 		
 	}
@@ -81,30 +211,59 @@ function prso_theme_gform_field_content( $content, $field, $value, $lead_id, $fo
 	return $content;
 }
 
+/**
+* prso_theme_gform_get_address_field
+* 
+* Called by 'prso_theme_gform_get_address_field' function in this document
+* Essentially a copy and past of core code from Gravity Forms, allowing us
+* to alter how each address field is rendered and laid out.
+*
+* NOTES: This functions uses almost the same code as Gravity Forms to create
+* the field content. This approach was required as Gravity Forms does not yet
+* have sufficient filters to allow changes to how fields and their labels are
+* rendered. To ensure that the fields meet Zurb Foundation layout we needed to
+* tweak the specific order of elements in the DOM.
+*
+* Although this avoids having to edit the Gravity Forms code base directly
+* this still may break in the future if gforms change how their fields are rendered. 
+*
+* Hooks:
+*	Filter:: 'prso_theme_gforms_address_city_class' 	- change class for div around city field
+*	Filter:: 'prso_theme_gforms_address_state_class' 	- change class for div around state field
+*	Filter:: 'prso_theme_gforms_address_zip_class' 		- change class for div around zip field
+*
+* @param	array		field
+* @param	string		value
+* @param	lead_id		int
+* @param	form_id		int
+* @return	string		address fields html
+* @access 	public
+* @author	Ben Moody
+*/
 function prso_theme_gform_get_address_field( $field, $value, $lead_id, $form_id ) {
 	
 	//Cache foudantion div to start a row
 	$div_row = "<div class='row'>";
 	
 	$id = $field["id"];
-        $field_id = IS_ADMIN || $form_id == 0 ? "input_$id" : "input_" . $form_id . "_$id";
-        $form_id = IS_ADMIN && empty($form_id) ? rgget("id") : $form_id;
+    $field_id = IS_ADMIN || $form_id == 0 ? "input_$id" : "input_" . $form_id . "_$id";
+    $form_id = IS_ADMIN && empty($form_id) ? rgget("id") : $form_id;
 
-        $size = rgar($field, "size");
-        $disabled_text = (IS_ADMIN && RG_CURRENT_VIEW != "entry") ? "disabled='disabled'" : "";
-        $class_suffix = RG_CURRENT_VIEW == "entry" ? "_admin" : "";
-        $class = $size . $class_suffix;
+    $size = rgar($field, "size");
+    $disabled_text = (IS_ADMIN && RG_CURRENT_VIEW != "entry") ? "disabled='disabled'" : "";
+    $class_suffix = RG_CURRENT_VIEW == "entry" ? "_admin" : "";
+    $class = $size . $class_suffix;
 
-        $currency = "";
-        if(RG_CURRENT_VIEW == "entry"){
-            $lead = RGFormsModel::get_lead($lead_id);
-            $post_id = $lead["post_id"];
-            $post_link = "";
-            if(is_numeric($post_id) && self::is_post_field($field)){
-                $post_link = "You can <a href='post.php?action=edit&post=$post_id'>edit this post</a> from the post page.";
-            }
-            $currency = $lead["currency"];
+    $currency = "";
+    if(RG_CURRENT_VIEW == "entry"){
+        $lead = RGFormsModel::get_lead($lead_id);
+        $post_id = $lead["post_id"];
+        $post_link = "";
+        if(is_numeric($post_id) && self::is_post_field($field)){
+            $post_link = "You can <a href='post.php?action=edit&post=$post_id'>edit this post</a> from the post page.";
         }
+        $currency = $lead["currency"];
+    }
 	
 	$street_value ="";
     $street2_value ="";
@@ -148,7 +307,7 @@ function prso_theme_gform_get_address_field( $field, $value, $lead_id, $form_id 
     $country_location = rgar($field,"hideState") ? "left" : "right";
 
     //address field
-    $tabindex = GFCommon::get_tabindex();
+    $tabindex = GFCommon::get_tabindex();  
     $street_address = sprintf("<span class='ginput_full$class_suffix' id='" . $field_id . "_1_container'><input type='text' name='input_%d.1' id='%s_1' value='%s' $tabindex %s placeholder='". apply_filters("gform_address_street_{$form_id}", apply_filters("gform_address_street",__("Street Address", "gravityforms"), $form_id), $form_id) ."'/></span>", $id, $field_id, $street_value, $disabled_text, $field_id);
 
     //address line 2 field
@@ -211,13 +370,13 @@ function prso_theme_gform_get_address_field( $field, $value, $lead_id, $form_id 
     }
     
     //Wrap city in foundation divs
-    $city = "<div class='five columns'>{$city}</div>";
+    $city = "<div class='". apply_filters( 'prso_theme_gforms_address_city_class', 'five columns', $field, $form_id ) ."'>{$city}</div>";
     
     //Wrap state in foundation divs
-    $state = "<div class='four columns'>{$state}</div>";
+    $state = "<div class='". apply_filters( 'prso_theme_gforms_address_state_class', 'four columns', $field, $form_id ) ."'>{$state}</div>";
     
     //Wrap ZIP in foundation divs
-    $zip = "<div class='three columns'>{$zip}</div>";
+    $zip = "<div class='". apply_filters( 'prso_theme_gforms_address_zip_class', 'three columns', $field, $form_id ) ."'>{$zip}</div>";
     
     $inputs = $address_display_format == "zip_before_city" ? $street_address . $street_address2 . $div_row . $zip . $city . $state . "</div>" . $country : $street_address . $street_address2 . $div_row . $city . $state . $zip . "</div>" . $country;
 
@@ -225,7 +384,29 @@ function prso_theme_gform_get_address_field( $field, $value, $lead_id, $form_id 
 	
 }
 
+/**
+* prso_theme_gform_get_state_field
+* 
+* Called by 'prso_theme_gform_get_address_field' function in this document
+* Essentially a copy and past of core code from Gravity Forms.
+*
+* Main reason this was copied out of gforms was the fact the original method is private
+*
+* NOTES: This functions uses almost the same code as Gravity Forms to create
+* the field content. This approach was required as Gravity Forms does not yet
+* have sufficient filters to allow changes to how fields and their labels are
+* rendered. To ensure that the fields meet Zurb Foundation layout we needed to
+* tweak the specific order of elements in the DOM.
+*
+* Although this avoids having to edit the Gravity Forms code base directly
+* this still may break in the future if gforms change how their fields are rendered. 
+*
+*
+* @access 	public
+* @author	Ben Moody
+*/
 function prso_theme_gform_get_state_field($field, $id, $field_id, $state_value, $disabled_text, $form_id, $state_label){
+
     $state_dropdown_class = $state_text_class = $state_style = $text_style = $state_field_id = "";
 
     if(empty($state_value)){
@@ -265,8 +446,33 @@ function prso_theme_gform_get_state_field($field, $id, $field_id, $state_value, 
         return $state_dropdown;
     else
         return $state_text;
+        
 }
 
+/**
+* prso_theme_gform_field_choices
+* 
+* Called by Gravity Forms 'gform_field_choices' filter
+* Essentially a copy and past of core code from Gravity Forms, allowing us
+* to wrap the field input and span elements within the field's label.
+*
+* This is required to match with how Zurb Foundation renders checkboxes, radio buttons, ect
+* allowing the use of Foudnation's 'custom inputs' js based styling.
+*
+* NOTES: This functions uses almost the same code as Gravity Forms to create
+* the field content. This approach was required as Gravity Forms does not yet
+* have sufficient filters to allow changes to how fields and their labels are
+* rendered. To ensure that the fields meet Zurb Foundation layout we needed to
+* tweak the specific order of elements in the DOM.
+*
+* Although this avoids having to edit the Gravity Forms code base directly
+* this still may break in the future if gforms change how their fields are rendered. 
+*
+* @param	string		choices	- field html
+* @param	field		array
+* @access 	public
+* @author	Ben Moody
+*/
 add_filter("gform_field_choices", "prso_theme_gform_field_choices", 10, 2);
 function prso_theme_gform_field_choices( $choices, $field ) {
 	
