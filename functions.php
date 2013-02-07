@@ -10,6 +10,18 @@ Version: 2.0
 *
 */
 
+add_filter('get_archives_link', 'archive_count_no_brackets');
+add_filter('wp_list_categories', 'archive_count_no_brackets');
+function archive_count_no_brackets($links) {
+	
+	//Wrap post count in span for styling
+	$links = str_replace('(', '</a>&nbsp;<span class="prso-post-count">(', $links);
+	$links = str_replace(')', ')</span>', $links);
+
+	return $links;
+	
+}
+
 /**
 * PRSO THEME FRAMEWORK -- DO NOT REMOVE!
 * Call method to boot core framework

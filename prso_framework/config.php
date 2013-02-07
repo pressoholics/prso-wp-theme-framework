@@ -165,6 +165,15 @@ class PrsoThemeConfig {
 	    	'after_widget' => '</aside>',
 	    	'before_title' => '<h4 class="widgettitle">',
 	    	'after_title' => '</h4>',
+	    ),
+	    'sidebar_mobile' => array(
+	    	'id' => 'sidebar_mobile',
+	    	'name' => 'Mobile Sidebar',
+	    	'description' => 'Used only for visitors on Mobile and Tablet.',
+	    	'before_widget' => '<aside id="%1$s" class="widget widget-mobile %2$s">',
+	    	'after_widget' => '</aside>',
+	    	'before_title' => '<h4 class="widgettitle">',
+	    	'after_title' => '</h4>',
 	    )
 	);
  
