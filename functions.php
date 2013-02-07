@@ -10,8 +10,6 @@ Version: 2.0
 *
 */
 
-
-
 /**
 * PRSO THEME FRAMEWORK -- DO NOT REMOVE!
 * Call method to boot core framework

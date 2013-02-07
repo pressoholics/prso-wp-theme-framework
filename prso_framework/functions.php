@@ -46,6 +46,7 @@
  * 32. add_search_to_nav	-	Adds a wp search field to the end of the main nav, enable via $theme_nav_search in config.php
  * 33. custom_pagination	-	Outputs custom pagination to template files via 'prso_pagination' action
  * 34. post_class_filter	-	Filter post classes printed by worpdress via post_class();
+ * 35. gravity_forms_customizer		-	Includes gravity_forms_custom.php from inc folder
  *
  */
 class PrsoThemeFunctions extends PrsoThemeAppController {
@@ -149,6 +150,9 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  		
  		//Add filter to alter the array of classes used by post_class()
  		add_filter( 'post_class', array($this, 'post_class_filter'), 10, 1 );
+ 		
+ 		//Call method to include Pro Gravity Forms Customizer
+ 		$this->gravity_forms_customizer();
  		
  	}
  	
@@ -1290,6 +1294,30 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		}
 		
 		return $classes;
+	}
+	
+	/**
+	* gravity_forms_customizer
+	* 
+	* Includes the Prso Gravity Forms Customizer inc file
+	* This file alters how gravity forms renders some key form fields so that
+	* they conform to Zurb Foundation standards.
+	*
+	* It also provides some custom filters/actions for you to use in your child theme
+	* to customize forms further than gravity forms allows by default.
+	*
+	* @access 	private
+	* @author	Ben Moody
+	*/
+	private function gravity_forms_customizer() {
+		
+		//Init vars
+		$file_path = get_template_directory() . "/prso_framework/includes/gravity_forms_custom.php";
+		
+		if( file_exists($file_path) ) {
+			require_once( $file_path );
+		}
+		
 	}
 	
 }
