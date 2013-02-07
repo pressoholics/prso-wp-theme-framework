@@ -9,7 +9,37 @@
 * @author	Ben Moody
 */
 
-/* Footer */
+
+/**** Gravity Forms - Adjust any gforms dom elements to meet foundation style */
+
+span.gform_description {
+	display: block;
+	line-height: 1.6;
+    margin-bottom: 17px;
+}
+
+.gform_wrapper li {
+	list-style: none;
+}
+
+/* Hide input counter */
+.ginput_counter {
+	display: none;
+}
+
+/* Validation */
+.gfield_required,
+.gfield_error label {
+	color: #C60F13;
+}
+
+.gfield_error input {
+	background-color: rgba(198, 15, 19, 0.1);
+    border-color: #C60F13;
+}
+
+
+/**** Footer */
 
 /* Hide 'flyout' menu items in footer menu */
 .footer-links ul.flyout {
