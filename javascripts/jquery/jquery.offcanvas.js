@@ -14,14 +14,14 @@
       var test = $('body.active');
       
       // Reset transform css on click to address ios safari text blurring bug
-      if( test.length !== 0 ) {
+      if( (test.length !== 0) && navigator.userAgent.match(/(iPhone|iPod|iPad)/i) ) {
 	      
 	      $("#content").css("-webkit-transform: none");
 			setTimeout(function(){
-			  $("#content").css("-webkit-transform", "translate3d(55%,0,0)");
+			  $("#content").css("-webkit-transform", "translate3d(55%,0,0)")
 			}, 0);
 	      
-      } else {
+      } else if( (test.length === 0) && navigator.userAgent.match(/(iPhone|iPod|iPad)/i) ) {
 	      
 	      $("#content").css("-webkit-transform: none");
 			setTimeout(function(){
