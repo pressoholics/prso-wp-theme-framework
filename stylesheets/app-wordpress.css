@@ -37,8 +37,12 @@ header .menu-action .button.small svg {
     opacity: 0.5;
 }
 
+/* Mobile off canvas Navigation */
+body {
+    -webkit-transform: translate3d(0, 0, 0);
+}
+
 .mobile-nav-container{
-	/*margin-left: -100%;*/
 	float: left;
 	width: 55%;
 	height: 100%;
@@ -59,6 +63,8 @@ header .menu-action .button.small svg {
     -ms-backface-visibility: hidden;
     -o-backface-visibility: hidden;
     backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    
     transform-origin: -100% 0 0;
 }
 
@@ -74,6 +80,7 @@ header .menu-action .button.small svg {
     -ms-backface-visibility: hidden;
     -o-backface-visibility: hidden;
     backface-visibility: hidden;
+    -webkit-perspective: 1000;
 }
 
 .active #content{
@@ -87,23 +94,20 @@ header .menu-action .button.small svg {
     -ms-backface-visibility: hidden;
     -o-backface-visibility: hidden;
     backface-visibility: hidden;
+    -webkit-perspective: 1000;
 }
 
 .mobile-nav-container,
 #content{
-
-	-webkit-transition: 0.25s all ease-in; 
-	-moz-transition: 0.25s all ease-in; 
-	-o-transition: 0.25s all ease-in; 
-	transition: 0.25s all ease-in;
-}
-
-.webkit-clear-fix {
-	-webkit-transform: none;
-}
-
-.webkit-translate-reset {
-	-webkit-transform: translate3d(55%, 0, 0);
+	-webkit-transition: -webkit-transform 500ms ease;
+    -moz-transition: -moz-transform 500ms ease;
+    -o-transition: -o-transform 500ms ease;
+    transition: transform 500ms ease;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 .side-nav{

@@ -5,23 +5,23 @@
   if ($selector1.length > 0) $selector1.css("margin-top", $selector1.height() * -1);
 
   // Watch for clicks to show the sidebar
+  var clickCount = 0;
   var $selector2 = $('#sidebarButton');
+  var navActive = $('body.active');
   if ($selector2.length > 0) {
     $('#sidebarButton').on(events, function (e) {
       e.preventDefault();
       $('body').toggleClass('active');
       
-      var test = $('body.active');
-      
       // Reset transform css on click to address ios safari text blurring bug
-      if( (test.length !== 0) && navigator.userAgent.match(/(iPhone|iPod|iPad)/i) ) {
+      if( (navActive.length !== 0) && navigator.userAgent.match(/(iPhone|iPod|iPad)/i) ) {
 	      
 	      $("#content").css("-webkit-transform: none");
 			setTimeout(function(){
 			  $("#content").css("-webkit-transform", "translate3d(55%,0,0)")
 			}, 0);
 	      
-      } else if( (test.length === 0) && navigator.userAgent.match(/(iPhone|iPod|iPad)/i) ) {
+      } else if( (navActive.length === 0) && navigator.userAgent.match(/(iPhone|iPod|iPad)/i) ) {
 	      
 	      $("#content").css("-webkit-transform: none");
 			setTimeout(function(){
@@ -30,10 +30,10 @@
 	      
       }
       
-      
     });
+    
   }
-
+  
   // Watch for clicks to show the menu for slide-menu pages
   var $selector3 = $('#menuButton');
   if ($selector3.length > 0)  {
