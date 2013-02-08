@@ -10,6 +10,27 @@
     $('#sidebarButton').on(events, function (e) {
       e.preventDefault();
       $('body').toggleClass('active');
+      
+      var test = $('body.active');
+      
+      // Reset transform css on click to address ios safari text blurring bug
+      if( test.length !== 0 ) {
+	      
+	      $("#content").css("-webkit-transform: none");
+			setTimeout(function(){
+			  $("#content").css("-webkit-transform", "translate3d(55%,0,0)");
+			}, 0);
+	      
+      } else {
+	      
+	      $("#content").css("-webkit-transform: none");
+			setTimeout(function(){
+			  $("#content").css("-webkit-transform", "translate3d(0,0,0)")
+			}, 0);
+	      
+      }
+      
+      
     });
   }
 
@@ -30,6 +51,7 @@
   // });
 
   // Switch panels for the paneled nav on mobile
+  /*
   var $selector5 = $('#switchPanels');
   if ($selector5.length > 0)  {
     $('#switchPanels dd').on(events, function (e) {
@@ -47,4 +69,5 @@
       $target = $(href);
     $('html, body').animate({scrollTop : $target.offset().top}, 300);
   });
+  */
 }(this, document, jQuery));
