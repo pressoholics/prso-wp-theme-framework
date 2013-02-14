@@ -114,6 +114,7 @@ class PrsoThemeConfig {
 	*  		'id' => 'sidebar1',
 	*    	'name' => 'Main Sidebar',
 	*    	'description' => 'Used on every page BUT the homepage page template.',
+	*		'class'         => '',
 	*    	'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 	*    	'after_widget' => '</aside>',
 	*    	'before_title' => '<h4 class="widgettitle">',

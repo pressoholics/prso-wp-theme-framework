@@ -641,8 +641,8 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		
 		//Init vars
 		$sidebar_defaults = array(
-			'name'          => 'Sidebar',
-			'id'            => 'sidebar',
+			'id'            => '',
+			'name'          => '',
 			'description'   => '',
 		    'class'         => '',
 			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
@@ -658,18 +658,24 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 				
 				$sidebar_args = wp_parse_args( $sidebar_args, $sidebar_defaults );
 				
-				register_sidebar(
-					array(
-						'name'          => $sidebar_args['name'],
-						'id'            => $sidebar_args['id'],
-						'description'   => $sidebar_args['description'],
-					    'class'         => $sidebar_args['class'],
-						'before_widget' => $sidebar_args['before_widget'],
-						'after_widget'  => $sidebar_args['after_widget'],
-						'before_title'  => $sidebar_args['before_widget'],
-						'after_title'   => $sidebar_args['after_title']
-					)
-				);
+				extract($sidebar_args);
+				
+				if( !empty($id) && !empty($name) ) {
+					
+					register_sidebar(
+						array(
+							'id'            => $id,
+							'name'          => $name,
+							'description'   => $description,
+						    'class'         => $class,
+							'before_widget' => $before_widget,
+							'after_widget'  => $after_widget,
+							'before_title'  => $before_title,
+							'after_title'   => $after_title
+						)
+					);
+					
+				}
 				
 			}
 			
