@@ -9,6 +9,21 @@
 * @author	Ben Moody
 */
 
+/* -----------------------------------------
+   Shared Styles
+----------------------------------------- */
+/* IE7 box sizing fix - comment out if you don't need ie7 :) */
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  *behavior: url('/wp-content/themes/pressotheme/javascripts/boxsizing.htc');
+}
+
+.clear {
+	clear: both;
+}
+
 
 /**** Gravity Forms - Adjust any gforms dom elements to meet foundation style */
 

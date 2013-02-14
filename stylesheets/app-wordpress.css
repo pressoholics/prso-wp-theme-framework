@@ -580,10 +580,6 @@ a[class^='tag-link-']:hover{
 @media only screen and (min-width: 940px) {
 	/* desktop specific styles */
 	
-	#main{
-		margin-bottom: 0;
-	}
-	
 	ol.commentlist div.avatar{
 		margin-right: 0;
 	}
