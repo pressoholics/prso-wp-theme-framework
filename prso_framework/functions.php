@@ -47,6 +47,7 @@
  * 33. custom_pagination	-	Outputs custom pagination to template files via 'prso_pagination' action
  * 34. post_class_filter	-	Filter post classes printed by worpdress via post_class();
  * 35. gravity_forms_customizer		-	Includes gravity_forms_custom.php from inc folder
+ * 36. load_cufon_script	-	Registers and enqueues Cufon font replacement script based on args from config.php
  *
  */
 class PrsoThemeFunctions extends PrsoThemeAppController {
@@ -227,6 +228,9 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		 			$this->load_wp_jquery();
 		 		}
 	 		}
+	 		
+	 		//Enqueue Cufon font replacement script if requested in config
+	 		$this->load_cufon_script();
 	 		
 	 		//Load Modernizr script from Zurb Foundation
  			wp_register_script( 'modernizr', get_template_directory_uri() . '/javascripts/foundation/modernizr.foundation.js', NULL, '3.2.5' ); 
@@ -1336,6 +1340,71 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		
 		if( file_exists($file_path) ) {
 			require_once( $file_path );
+		}
+		
+	}
+	
+	/**
+	* load_cufon_script
+	* 
+	* Registers and enqueues Cufon font replacement script using args from config.php
+	* Will try to load the CDN version using the url set in args['script_cdn'], will
+	* fallback to the local script url set in args['script']
+	*
+	* NOTE: args are set in $theme_cufon_script_args array in config.php, comment out this
+	*		array to disable cufon script enqueue
+	*
+	* @access 	private
+	* @author	Ben Moody
+	*/
+	private function load_cufon_script() {
+		
+		//Init vars
+		$cufon_url 	= NULL;
+		$args		= array();
+		
+		$defaults = array(
+			'handle'		=>	'cufon',
+			'script_cdn'	=>	'http://cdnjs.cloudflare.com/ajax/libs/cufon/1.09i/cufon-yui.js',
+			'script'		=>	get_template_directory_uri() . '/javascripts/cufon-yui.js',
+			'version'		=>	'1.09i'
+		);
+		
+		//If config var isset then load cufon
+		if( isset($this->theme_cufon_script_args) ) {
+			
+			//Parse args
+			$args = wp_parse_args( $this->theme_cufon_script_args, $defaults );
+			
+			extract($args);
+			
+			//First try and open the cdn script
+			$cufon_url = @fopen( $script_cdn, 'r' );
+			
+			if( $cufon_url !== FALSE ) {
+				
+				//Register cdn version
+				wp_register_script( $handle, 
+					$script_cdn, 
+					array('jquery'), 
+					$version, 
+					true 
+				);
+				
+			} else {
+				
+				//Register framework version
+				wp_register_script( $handle, 
+					$script, 
+					array('jquery'), 
+					$version, 
+					true 
+				);
+				
+			}
+			
+			//Enqueue script
+			wp_enqueue_script( $handle );
 		}
 		
 	}

@@ -29,7 +29,8 @@ class PrsoThemeConfig {
  * 11. Merge stylesheets
  * 12. Add main nav search box
  * 13. Custom pagination
- * 14. Theme Admin Page Options		- IMPORTANT MUST USE!
+ * 14. Cufon font replacement
+ * 15. Theme Admin Page Options		- IMPORTANT MUST USE!
  *
  */
  
@@ -448,7 +449,27 @@ class PrsoThemeConfig {
 	protected $theme_custom_pagination_override = NULL;
 
 /******************************************************************
- * 14. 	Theme Admin Page Options - IMPORTANT
+ * 14. 	Cufon font replacement
+ *		
+ *****************************************************************/
+
+ 	/**
+ 	* $this->theme_cufon_script_args
+ 	*
+ 	* NOTE :: Comment out to disable cufon script OR leave empty to use defaults
+ 	*
+ 	* array(
+			'handle'		=>	'cufon',
+			'script_cdn'	=>	'http://cdnjs.cloudflare.com/ajax/libs/cufon/1.09i/cufon-yui.js',
+			'script'		=>	get_template_directory_uri() . '/javascripts/cufon-yui.js',
+			'version'		=>	'1.09i'
+		);
+ 	*
+	*/
+	//protected $theme_cufon_script_args = array();
+
+/******************************************************************
+ * 15. 	Theme Admin Page Options - IMPORTANT
  *		Define some core values required to setup your theme's 
  *		admin options page
  *****************************************************************/ 
