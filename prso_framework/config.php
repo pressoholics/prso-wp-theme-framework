@@ -30,7 +30,8 @@ class PrsoThemeConfig {
  * 12. Add main nav search box
  * 13. Custom pagination
  * 14. Cufon font replacement
- * 15. Theme Admin Page Options		- IMPORTANT MUST USE!
+ * 15. Backstretch image background
+ * 16. Theme Admin Page Options		- IMPORTANT MUST USE!
  *
  */
  
@@ -366,6 +367,7 @@ class PrsoThemeConfig {
 	*	- 'handles' Array of script handles to merge, if empty ALL theme AND plugin scripts will be merged
 	*	- 'enqueue_handle' Shouldn't need to change this as default should work fine without conflict
 	*/
+	/*
 	protected $theme_script_merge_args = array(
 		'merged_path' 		=> '/javascripts/app.min.js',
 		'depends'			=> array( 'jquery' ),
@@ -375,7 +377,7 @@ class PrsoThemeConfig {
 			'foundation-joyride', 'foundation-magellan', 'foundation-mediaQueryToggle', 'foundation-navigation', 'foundation-orbit', 
 			'foundation-reveal', 'foundation-tabs', 'foundation-tooltips', 'foundation-topbar', 'foundation-placeholder', 'jquery-cookie', 'jquery-offcanvas', 'jquery-event-move', 'jquery-event-swipe',
 		)
-	);
+	);*/
 	
 	/**
  	* $this->theme_script_merge_exceptions
@@ -469,7 +471,27 @@ class PrsoThemeConfig {
 	//protected $theme_cufon_script_args = array();
 
 /******************************************************************
- * 15. 	Theme Admin Page Options - IMPORTANT
+ * 15. 	Backstretch background image script
+ *		
+ *****************************************************************/
+
+ 	/**
+ 	* $this->theme_backstretch_script_args
+ 	*
+ 	* NOTE :: Comment out to disable script OR leave empty to use defaults
+ 	*
+ 	* array(
+			'handle'		=>	'backstretch',
+			'script_cdn'	=>	'http://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.3/jquery.backstretch.min.js ',
+			'script'		=>	get_template_directory_uri() . '/javascripts/jquery/jquery.backstretch.min.js',
+			'version'		=>	'2.0.3'
+		);
+ 	*
+	*/
+	//protected $theme_backstretch_script_args = array();
+
+/******************************************************************
+ * 16. 	Theme Admin Page Options - IMPORTANT
  *		Define some core values required to setup your theme's 
  *		admin options page
  *****************************************************************/ 

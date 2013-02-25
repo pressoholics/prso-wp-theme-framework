@@ -48,6 +48,7 @@
  * 34. post_class_filter	-	Filter post classes printed by worpdress via post_class();
  * 35. gravity_forms_customizer		-	Includes gravity_forms_custom.php from inc folder
  * 36. load_cufon_script	-	Registers and enqueues Cufon font replacement script based on args from config.php
+ * 37. load_backstretch_script	=	Register and enqueue script for Backstretch background image script
  *
  */
 class PrsoThemeFunctions extends PrsoThemeAppController {
@@ -231,6 +232,9 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 	 		
 	 		//Enqueue Cufon font replacement script if requested in config
 	 		$this->load_cufon_script();
+	 		
+	 		//Enqueue Backstretch script for background images
+	 		$this->load_backstretch_script();
 	 		
 	 		//Load Modernizr script from Zurb Foundation
  			wp_register_script( 'modernizr', get_template_directory_uri() . '/javascripts/foundation/modernizr.foundation.js', NULL, '3.2.5' ); 
@@ -1399,6 +1403,80 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 					array('jquery'), 
 					$version, 
 					FALSE 
+				);
+				
+			}
+			
+			//Enqueue script
+			wp_enqueue_script( $handle );
+		}
+		
+	}
+	
+	/**
+	* load_backstretch_script - http://srobbin.com/jquery-plugins/backstretch/
+	* 
+	* Registers and enqueues Backstretch script. Will try to load the CDN version
+	* if that fails then will try to load the local version.
+	*
+	* NOTE: args are set in $theme_backstretch_script_args array in config.php, comment out this
+	*		array to disable backstretch script enqueue
+	*
+	* How to use:
+	*	Basic: $.backstretch("http://dl.dropbox.com/u/515046/www/garfield-interior.jpg");
+	*	Block-level: $("#demo").backstretch("http://dl.dropbox.com/u/515046/www/garfield-interior.jpg");
+	*	Slideshow: 
+	*				 $.backstretch([
+						"http://dl.dropbox.com/u/515046/www/outside.jpg"
+						, "http://dl.dropbox.com/u/515046/www/garfield-interior.jpg"
+						, "http://dl.dropbox.com/u/515046/www/cheers.jpg"
+					], {duration: 3000, fade: 750});
+	*
+	* @access 	private
+	* @author	Ben Moody
+	*/
+	private function load_backstretch_script() {
+		
+		//Init vars
+		$backstretch_url 	= NULL;
+		$args				= array();
+		
+		$defaults = array(
+			'handle'		=>	'backstretch',
+			'script_cdn'	=>	'http://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.3/jquery.backstretch.min.js ',
+			'script'		=>	get_template_directory_uri() . '/javascripts/jquery/jquery.backstretch.min.js',
+			'version'		=>	'2.0.3'
+		);
+		
+		//If config var isset then load cufon
+		if( isset($this->theme_backstretch_script_args) ) {
+			
+			//Parse args
+			$args = wp_parse_args( $this->theme_backstretch_script_args, $defaults );
+			
+			extract($args);
+			
+			//First try and open the cdn script
+			$backstretch_url = @fopen( $script_cdn, 'r' );
+			
+			if( $backstretch_url !== FALSE ) {
+				
+				//Register cdn version
+				wp_register_script( $handle, 
+					$script_cdn, 
+					array('jquery'), 
+					$version, 
+					TRUE 
+				);
+				
+			} else {
+				
+				//Register framework version
+				wp_register_script( $handle, 
+					$script, 
+					array('jquery'), 
+					$version, 
+					TRUE 
 				);
 				
 			}
