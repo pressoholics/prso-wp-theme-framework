@@ -1388,7 +1388,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 					$script_cdn, 
 					array('jquery'), 
 					$version, 
-					true 
+					FALSE 
 				);
 				
 			} else {
@@ -1398,7 +1398,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 					$script, 
 					array('jquery'), 
 					$version, 
-					true 
+					FALSE 
 				);
 				
 			}
