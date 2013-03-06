@@ -3,7 +3,25 @@
 	<div class="panel">
 	
 	<!-- Select the correct sidebar for this page type !-->
-	<?php if( is_home() ): ?>
+	<?php if( wp_is_mobile() ): ?>
+		
+		<?php if ( is_active_sidebar( 'sidebar_mobile' ) ) : ?>
+
+			<?php dynamic_sidebar( 'sidebar_mobile' ); ?>
+		
+		<?php elseif( is_active_sidebar( 'sidebar_main' ) ) : ?>
+			
+			<?php dynamic_sidebar( 'sidebar_main' ); ?>
+			
+		<?php else : ?>
+
+			<!-- This content shows up if there are no widgets defined in the backend. -->
+			
+			<div class="alert-box">Please activate some Widgets.</div>
+
+		<?php endif; ?>
+		
+	<?php elseif( is_home() ): ?>
 		
 		<?php if ( is_active_sidebar( 'sidebar_blog_home' ) ) : ?>
 
@@ -74,7 +92,7 @@
 			<div class="alert-box">Please activate some Widgets.</div>
 
 		<?php endif; ?>
-		
+
 	<?php endif; ?>	
 
 	</div>

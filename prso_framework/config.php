@@ -29,7 +29,9 @@ class PrsoThemeConfig {
  * 11. Merge stylesheets
  * 12. Add main nav search box
  * 13. Custom pagination
- * 14. Theme Admin Page Options		- IMPORTANT MUST USE!
+ * 14. Cufon font replacement
+ * 15. Backstretch image background
+ * 16. Theme Admin Page Options		- IMPORTANT MUST USE!
  *
  */
  
@@ -95,7 +97,8 @@ class PrsoThemeConfig {
 	*/
  	protected $theme_nav_menus = array( 
 		'main_nav' => 'The Main Menu',   // main nav in header
-		'footer_links' => 'Footer Links' // secondary nav in footer
+		'footer_links' => 'Footer Links', // secondary nav in footer
+		'mobile_nav' => 'Mobile Menu' // menu for mobile devices
 	);
  
  
@@ -113,6 +116,7 @@ class PrsoThemeConfig {
 	*  		'id' => 'sidebar1',
 	*    	'name' => 'Main Sidebar',
 	*    	'description' => 'Used on every page BUT the homepage page template.',
+	*		'class'         => '',
 	*    	'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 	*    	'after_widget' => '</aside>',
 	*    	'before_title' => '<h4 class="widgettitle">',
@@ -161,6 +165,15 @@ class PrsoThemeConfig {
 	    	'name' => 'Search Sidebar',
 	    	'description' => 'Used only on the search results archive template.',
 	    	'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+	    	'after_widget' => '</aside>',
+	    	'before_title' => '<h4 class="widgettitle">',
+	    	'after_title' => '</h4>',
+	    ),
+	    'sidebar_mobile' => array(
+	    	'id' => 'sidebar_mobile',
+	    	'name' => 'Mobile Sidebar',
+	    	'description' => 'Used only for visitors on Mobile and Tablet.',
+	    	'before_widget' => '<aside id="%1$s" class="widget widget-mobile %2$s">',
 	    	'after_widget' => '</aside>',
 	    	'before_title' => '<h4 class="widgettitle">',
 	    	'after_title' => '</h4>',
@@ -316,14 +329,26 @@ class PrsoThemeConfig {
 			'number'	=>	20,		// show less tags
 			'largest'	=>	9.75,	// make largest and smallest the same - i don't like the varying font-size look
 			'smallest'	=>	9.75,	// make largest and smallest the same - i don't like the varying font-size look
-			'unit'		=>	'px'
+			'unit'		=>	'px',
+			'is_mobile'	=> array(	//Change sizes for mobile if requested
+				'number'	=>	5,		
+				'largest'	=>	2,	
+				'smallest'	=>	2,	
+				'unit'		=>	'rem',
+			)
 		);
 	*/
 	protected $theme_tag_cloud_args = array(
 		'number'	=>	20,		// show less tags
 		'largest'	=>	9.75,	// make largest and smallest the same - i don't like the varying font-size look
 		'smallest'	=>	9.75,	// make largest and smallest the same - i don't like the varying font-size look
-		'unit'		=>	'px'
+		'unit'		=>	'px',
+		'is_mobile'	=> array(	//Change sizes for mobile if requested
+			'number'	=>	10,		
+			'largest'	=>	1.5,	
+			'smallest'	=>	1.5,	
+			'unit'		=>	'rem',
+		)
 	);
 
 /******************************************************************
@@ -342,15 +367,17 @@ class PrsoThemeConfig {
 	*	- 'handles' Array of script handles to merge, if empty ALL theme AND plugin scripts will be merged
 	*	- 'enqueue_handle' Shouldn't need to change this as default should work fine without conflict
 	*/
+	/*
 	protected $theme_script_merge_args = array(
 		'merged_path' 		=> '/javascripts/app.min.js',
 		'depends'			=> array( 'jquery' ),
 		'handles'			=> array( 
-			'modernizr', 'foundation-reveal', 'foundation-orbit', 
-			'foundation-custom-forms', 'foundation-placeholder', 'foundation-tooltips', 
-			'foundation-off-canvas', 'foundation-app' 
+			'modernizr', 'foundation-app',
+			'foundation-accordion', 'foundation-alerts', 'foundation-buttons', 'foundation-clearing', 'foundation-forms', 
+			'foundation-joyride', 'foundation-magellan', 'foundation-mediaQueryToggle', 'foundation-navigation', 'foundation-orbit', 
+			'foundation-reveal', 'foundation-tabs', 'foundation-tooltips', 'foundation-topbar', 'foundation-placeholder', 'jquery-cookie', 'jquery-offcanvas', 'jquery-event-move', 'jquery-event-swipe',
 		)
-	);
+	);*/
 	
 	/**
  	* $this->theme_script_merge_exceptions
@@ -378,6 +405,15 @@ class PrsoThemeConfig {
 	protected $theme_style_merge_args = array(
 		'merged_path' 	=> '/stylesheets/app-min.css'
 	);
+	
+	/**
+ 	* $this->theme_style_merge_exceptions
+ 	*
+ 	* NOTE: To ignore a stylesheet add it's enqueue handle to $theme_style_merge_exceptions array
+ 	*
+ 	* e.g. array('gforms_css');
+	*/
+	protected $theme_style_merge_exceptions = array();
 
 /******************************************************************
  * 12. 	Merge Stylesheets
@@ -415,7 +451,47 @@ class PrsoThemeConfig {
 	protected $theme_custom_pagination_override = NULL;
 
 /******************************************************************
- * 14. 	Theme Admin Page Options - IMPORTANT
+ * 14. 	Cufon font replacement
+ *		
+ *****************************************************************/
+
+ 	/**
+ 	* $this->theme_cufon_script_args
+ 	*
+ 	* NOTE :: Comment out to disable cufon script OR leave empty to use defaults
+ 	*
+ 	* array(
+			'handle'		=>	'cufon',
+			'script_cdn'	=>	'http://cdnjs.cloudflare.com/ajax/libs/cufon/1.09i/cufon-yui.js',
+			'script'		=>	get_template_directory_uri() . '/javascripts/cufon-yui.js',
+			'version'		=>	'1.09i'
+		);
+ 	*
+	*/
+	//protected $theme_cufon_script_args = array();
+
+/******************************************************************
+ * 15. 	Backstretch background image script
+ *		
+ *****************************************************************/
+
+ 	/**
+ 	* $this->theme_backstretch_script_args
+ 	*
+ 	* NOTE :: Comment out to disable script OR leave empty to use defaults
+ 	*
+ 	* array(
+			'handle'		=>	'backstretch',
+			'script_cdn'	=>	'http://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.3/jquery.backstretch.min.js ',
+			'script'		=>	get_template_directory_uri() . '/javascripts/jquery/jquery.backstretch.min.js',
+			'version'		=>	'2.0.3'
+		);
+ 	*
+	*/
+	//protected $theme_backstretch_script_args = array();
+
+/******************************************************************
+ * 16. 	Theme Admin Page Options - IMPORTANT
  *		Define some core values required to setup your theme's 
  *		admin options page
  *****************************************************************/ 

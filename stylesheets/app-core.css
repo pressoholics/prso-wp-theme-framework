@@ -9,9 +9,83 @@
 * @author	Ben Moody
 */
 
-/* Footer */
+/* -----------------------------------------
+   Shared Styles
+----------------------------------------- */
+/* IE7 box sizing fix - comment out if you don't need ie7 :) */
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  *behavior: url('/wp-content/themes/pressotheme/javascripts/boxsizing.htc');
+}
+
+.clear {
+	clear: both;
+}
+
+
+/**** Gravity Forms - Adjust any gforms dom elements to meet foundation style */
+
+span.gform_description {
+	display: block;
+	line-height: 1.6;
+    margin-bottom: 17px;
+}
+
+.gform_wrapper li {
+	list-style: none;
+}
+
+/* Hide input counter */
+.ginput_counter {
+	display: none;
+}
+
+/* Validation */
+.gfield_required,
+.gfield_error label {
+	color: #C60F13;
+}
+
+.gfield_error input {
+	background-color: rgba(198, 15, 19, 0.1);
+    border-color: #C60F13;
+}
+
+
+/**** Footer */
 
 /* Hide 'flyout' menu items in footer menu */
 .footer-links ul.flyout {
 	display: none;
+}
+
+
+/**** Media Queries */
+
+/* Medium Screens AND Landscape - iPad */
+@media only screen and (max-width: 1279px) and (min-width: 768px) and (orientation: landscape) {
+
+	.show-for-medium-landscape {
+		display: inherit !important;
+	}
+	
+	.hide-for-medium-landscape {
+		display: none !important;
+	}
+	
+}
+
+/* Medium Screens AND Portrait - iPad */
+@media only screen and (max-width: 1279px) and (min-width: 768px) and (orientation: portrait) {
+	
+	.show-for-medium-portrait {
+		display: inherit !important;
+	}
+	
+	.hide-for-medium-portrait {
+		display: none !important;
+	}
+	
 }

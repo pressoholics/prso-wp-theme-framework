@@ -45,6 +45,12 @@
  * 31. merge_styles	-	Merges and minifies stlyesheets, define options via $theme_style_merge_args in config.php
  * 32. add_search_to_nav	-	Adds a wp search field to the end of the main nav, enable via $theme_nav_search in config.php
  * 33. custom_pagination	-	Outputs custom pagination to template files via 'prso_pagination' action
+ * 34. post_class_filter	-	Filter post classes printed by worpdress via post_class();
+ * 35. gravity_forms_customizer		-	Includes gravity_forms_custom.php from inc folder
+ * 36. load_cufon_script	-	Registers and enqueues Cufon font replacement script based on args from config.php
+ * 37. load_backstretch_script	=	Register and enqueue script for Backstretch background image script
+ * 38. wp_head	-	Add calls to method you want to run during wp_head action
+ * 39. update_post_views	-	Adds a view counter to posts/pages
  *
  */
 class PrsoThemeFunctions extends PrsoThemeAppController {
@@ -146,6 +152,15 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  		//Custom prso theme framework pagination
  		add_action( 'prso_pagination', array($this, 'custom_pagination'), 10, 2 );
  		
+ 		//Add filter to alter the array of classes used by post_class()
+ 		add_filter( 'post_class', array($this, 'post_class_filter'), 10, 1 );
+ 		
+ 		//Add method for 'wp_head' action
+ 		add_action( 'wp_head', array($this, 'wp_head') );
+ 		
+ 		//Call method to include Pro Gravity Forms Customizer
+ 		$this->gravity_forms_customizer();
+ 		
  	}
  	
  	/**
@@ -220,8 +235,14 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		 		}
 	 		}
 	 		
+	 		//Enqueue Cufon font replacement script if requested in config
+	 		$this->load_cufon_script();
+	 		
+	 		//Enqueue Backstretch script for background images
+	 		$this->load_backstretch_script();
+	 		
 	 		//Load Modernizr script from Zurb Foundation
- 			wp_register_script( 'modernizr', get_template_directory_uri() . '/javascripts/foundation/modernizr.foundation.js' ); 
+ 			wp_register_script( 'modernizr', get_template_directory_uri() . '/javascripts/foundation/modernizr.foundation.js', NULL, '3.2.5' ); 
     		wp_enqueue_script( 'modernizr' );
  			
  			//Load Zurb Foundation scripts
@@ -243,23 +264,160 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 	*/
  	private function enqueue_zurb_foundation_scripts() {
  		
- 		wp_register_script( 'foundation-reveal', get_template_directory_uri() . '/javascripts/foundation/jquery.reveal.js', 'jQuery', '1.1', true ); 
-	    wp_enqueue_script( 'foundation-reveal' );
-	    
-	    wp_register_script( 'foundation-orbit', get_template_directory_uri() . '/javascripts/foundation/jquery.orbit-1.4.0.js', 'jQuery', '1.4.0', true ); 
-	    wp_enqueue_script( 'foundation-orbit' );
-	    
-	    wp_register_script( 'foundation-custom-forms', get_template_directory_uri() . '/javascripts/foundation/jquery.customforms.js', 'jQuery', '1.0', true ); 
-	    wp_enqueue_script( 'foundation-custom-forms' );
-	    
-	    wp_register_script( 'foundation-placeholder', get_template_directory_uri() . '/javascripts/foundation/jquery.placeholder.min.js', 'jQuery', '2.0.7', true ); 
-	    wp_enqueue_script( 'foundation-placeholder' );
-	    
-	    wp_register_script( 'foundation-tooltips', get_template_directory_uri() . '/javascripts/foundation/jquery.tooltips.js', 'jQuery', '2.0.1', true ); 
-	    wp_enqueue_script( 'foundation-tooltips' );
-	    
-	    wp_register_script( 'foundation-off-canvas', get_template_directory_uri() . '/javascripts/foundation/off-canvas.js', 'jQuery', '1.0', true ); 
-	    wp_enqueue_script( 'foundation-off-canvas' );
+ 		/** Foundation v3.2.5 **/
+ 		
+ 		wp_register_script( 'foundation-accordion', 
+ 			get_template_directory_uri() . '/javascripts/foundation/jquery.foundation.accordion.js', 
+ 			array('jquery'), 
+ 			'3.2.5', 
+ 			true 
+ 		);
+ 		wp_enqueue_script( 'foundation-accordion' );
+ 		
+ 		wp_register_script( 'foundation-alerts', 
+ 			get_template_directory_uri() . '/javascripts/foundation/jquery.foundation.alerts.js', 
+ 			array('jquery'), 
+ 			'3.2.5', 
+ 			true 
+ 		);
+ 		wp_enqueue_script( 'foundation-alerts' );
+ 		
+ 		wp_register_script( 'foundation-buttons', 
+ 			get_template_directory_uri() . '/javascripts/foundation/jquery.foundation.buttons.js', 
+ 			array('jquery'), 
+ 			'3.2.5', 
+ 			true 
+ 		);
+ 		wp_enqueue_script( 'foundation-buttons' );
+ 		
+ 		wp_register_script( 'foundation-clearing', 
+ 			get_template_directory_uri() . '/javascripts/foundation/jquery.foundation.clearing.js', 
+ 			array('jquery'), 
+ 			'3.2.5', 
+ 			true 
+ 		);
+ 		wp_enqueue_script( 'foundation-clearing' );
+ 		
+ 		wp_register_script( 'foundation-forms', 
+ 			get_template_directory_uri() . '/javascripts/foundation/jquery.foundation.forms.js', 
+ 			array('jquery'), 
+ 			'3.2.5', 
+ 			true 
+ 		);
+ 		wp_enqueue_script( 'foundation-forms' );
+ 		
+ 		wp_register_script( 'foundation-joyride', 
+ 			get_template_directory_uri() . '/javascripts/foundation/jquery.foundation.joyride.js', 
+ 			array('jquery'), 
+ 			'3.2.5', 
+ 			true 
+ 		);
+ 		wp_enqueue_script( 'foundation-joyride' );
+ 		
+ 		wp_register_script( 'foundation-magellan', 
+ 			get_template_directory_uri() . '/javascripts/foundation/jquery.foundation.magellan.js', 
+ 			array('jquery'), 
+ 			'3.2.5', 
+ 			true 
+ 		);
+ 		wp_enqueue_script( 'foundation-magellan' );
+ 		
+ 		wp_register_script( 'foundation-mediaQueryToggle', 
+ 			get_template_directory_uri() . '/javascripts/foundation/jquery.foundation.mediaQueryToggle.js', 
+ 			array('jquery'), 
+ 			'3.2.5', 
+ 			true 
+ 		);
+ 		wp_enqueue_script( 'foundation-mediaQueryToggle' );
+ 		
+ 		wp_register_script( 'foundation-navigation', 
+ 			get_template_directory_uri() . '/javascripts/foundation/jquery.foundation.navigation.js', 
+ 			array('jquery'), 
+ 			'3.2.5', 
+ 			true 
+ 		);
+ 		wp_enqueue_script( 'foundation-navigation' );
+ 		
+ 		wp_register_script( 'foundation-orbit', 
+ 			get_template_directory_uri() . '/javascripts/foundation/jquery.foundation.orbit.js', 
+ 			array('jquery'), 
+ 			'3.2.5', 
+ 			true 
+ 		);
+ 		wp_enqueue_script( 'foundation-orbit' );
+ 		
+ 		wp_register_script( 'foundation-reveal', 
+ 			get_template_directory_uri() . '/javascripts/foundation/jquery.foundation.reveal.js', 
+ 			array('jquery'), 
+ 			'3.2.5', 
+ 			true 
+ 		);
+ 		wp_enqueue_script( 'foundation-reveal' );
+ 		
+ 		wp_register_script( 'foundation-tabs', 
+ 			get_template_directory_uri() . '/javascripts/foundation/jquery.foundation.tabs.js', 
+ 			array('jquery'), 
+ 			'3.2.5', 
+ 			true 
+ 		);
+ 		wp_enqueue_script( 'foundation-tabs' );
+ 		
+ 		wp_register_script( 'foundation-tooltips', 
+ 			get_template_directory_uri() . '/javascripts/foundation/jquery.foundation.tooltips.js', 
+ 			array('jquery'), 
+ 			'3.2.5', 
+ 			true 
+ 		);
+ 		wp_enqueue_script( 'foundation-tooltips' );
+ 		
+ 		wp_register_script( 'foundation-topbar', 
+ 			get_template_directory_uri() . '/javascripts/foundation/jquery.foundation.topbar.js', 
+ 			array('jquery'), 
+ 			'3.2.5', 
+ 			true 
+ 		);
+ 		wp_enqueue_script( 'foundation-topbar' );
+ 		
+ 		wp_register_script( 'foundation-placeholder', 
+ 			get_template_directory_uri() . '/javascripts/foundation/jquery.placeholder.js', 
+ 			array('jquery'), 
+ 			'3.2.5', 
+ 			true 
+ 		);
+ 		wp_enqueue_script( 'foundation-placeholder' );
+ 		
+ 		wp_register_script( 'jquery-offcanvas', 
+ 			get_template_directory_uri() . '/javascripts/jquery/jquery.offcanvas.js', 
+ 			array('jquery'), 
+ 			'3.2.5', 
+ 			true 
+ 		);
+ 		wp_enqueue_script( 'jquery-offcanvas' );
+ 		
+ 		wp_register_script( 'jquery-cookie', 
+ 			get_template_directory_uri() . '/javascripts/jquery/jquery.cookie.js', 
+ 			array('jquery'), 
+ 			'3.2.5', 
+ 			true 
+ 		);
+ 		wp_enqueue_script( 'jquery-cookie' );
+ 		
+ 		wp_register_script( 'jquery-event-move', 
+ 			get_template_directory_uri() . '/javascripts/jquery/jquery.event.move.js', 
+ 			array('jquery'), 
+ 			'1.2', 
+ 			true 
+ 		);
+ 		wp_enqueue_script( 'jquery-event-move' );
+ 		
+ 		wp_register_script( 'jquery-event-swipe', 
+ 			get_template_directory_uri() . '/javascripts/jquery/jquery.event.swipe.js', 
+ 			array('jquery-event-move'), 
+ 			'0.5', 
+ 			true 
+ 		);
+ 		wp_enqueue_script( 'jquery-event-swipe' );
+ 		
 	    
 	    //NOTE if detected Child-Theme app.js will override Parent app.js
 	    if( file_exists( get_stylesheet_directory() . '/javascripts/app.js' ) ) {
@@ -331,19 +489,19 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  	public function enqueue_theme_styles() {
  		
  		//Register Zurb Foundation Full CSS
-    	//wp_register_style( 'foundation-app', get_template_directory_uri() . '/stylesheets/foundation.css', array(), '3.0', 'all' );
+    	//wp_register_style( 'foundation-app', get_template_directory_uri() . '/stylesheets/foundation.css', array(), '3.2.5', 'all' );
     	
     	//Register Zurb Foundation Min CSS
-    	wp_register_style( 'foundation-app', get_template_directory_uri() . '/stylesheets/foundation.min.css', array(), '3.0', 'all' );
+    	wp_register_style( 'foundation-app', get_template_directory_uri() . '/stylesheets/foundation.min.css', array(), '3.2.5', 'all' );
    		
    		//Register Theme Stylsheet - req by wordpress, use app.css for custom styles
  		wp_register_style( 'presso-theme-base', get_stylesheet_directory_uri() . '/style.css', array( 'foundation-app' ), filemtime( get_stylesheet_directory() . '/style.css' ), 'all' );
    		
-   		//Register the Prso Theme Core stylesheet
-	    wp_register_style( 'presso-theme-core', get_template_directory_uri() . '/stylesheets/app-core.css', array( 'foundation-app' ), filemtime( get_template_directory() . '/stylesheets/app-core.css' ), 'all' );
-   		
    		//Register Wordpress Specific Stylsheet
  		wp_register_style( 'presso-theme-wp', get_template_directory_uri() . '/stylesheets/app-wordpress.css', array( 'presso-theme-base' ), filemtime( get_template_directory() . '/stylesheets/app-wordpress.css' ), 'all' );
+ 		
+ 		//Register the Prso Theme Core stylesheet
+	    wp_register_style( 'presso-theme-core', get_template_directory_uri() . '/stylesheets/app-core.css', array( 'presso-theme-wp' ), filemtime( get_template_directory() . '/stylesheets/app-core.css' ), 'all' );
  		
  		//Register the App's specific stylesheet - NOTE if child theme is used will try to find app.css in child dir
 	    if( file_exists( get_stylesheet_directory() . '/stylesheets/app.css' ) ) {
@@ -353,6 +511,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
     	}
     	
     	//Enqueue App's specific stylesheet - will enqueue all required styles as well :)
+    	wp_enqueue_style( 'presso-theme-core' );
     	wp_enqueue_style( 'presso-theme-app' );
  		
  	}
@@ -495,8 +654,8 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		
 		//Init vars
 		$sidebar_defaults = array(
-			'name'          => 'Sidebar',
-			'id'            => 'sidebar',
+			'id'            => '',
+			'name'          => '',
 			'description'   => '',
 		    'class'         => '',
 			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
@@ -512,18 +671,24 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 				
 				$sidebar_args = wp_parse_args( $sidebar_args, $sidebar_defaults );
 				
-				register_sidebar(
-					array(
-						'name'          => $sidebar_args['name'],
-						'id'            => $sidebar_args['id'],
-						'description'   => $sidebar_args['description'],
-					    'class'         => $sidebar_args['class'],
-						'before_widget' => $sidebar_args['before_widget'],
-						'after_widget'  => $sidebar_args['after_widget'],
-						'before_title'  => $sidebar_args['before_widget'],
-						'after_title'   => $sidebar_args['after_title']
-					)
-				);
+				extract($sidebar_args);
+				
+				if( !empty($id) && !empty($name) ) {
+					
+					register_sidebar(
+						array(
+							'id'            => $id,
+							'name'          => $name,
+							'description'   => $description,
+						    'class'         => $class,
+							'before_widget' => $before_widget,
+							'after_widget'  => $after_widget,
+							'before_title'  => $before_title,
+							'after_title'   => $after_title
+						)
+					);
+					
+				}
 				
 			}
 			
@@ -736,14 +901,22 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 			'number'	=>	20,		// show less tags
 			'largest'	=>	9.75,	// make largest and smallest the same - i don't like the varying font-size look
 			'smallest'	=>	9.75,	// make largest and smallest the same - i don't like the varying font-size look
-			'unit'		=>	'px'
+			'unit'		=>	'px',
+			'is_mobile'	=> array(	//Change sizes for mobile if requested
+				'number'	=>	5,		
+				'largest'	=>	2,	
+				'smallest'	=>	2,	
+				'unit'		=>	'rem',
+			)
 		);
 		
 		//Parse args from config.php
-		if( isset($this->theme_tag_cloud_args) ) {
-			$args = wp_parse_args( $defaults, $this->theme_tag_cloud_args );
+		if( wp_is_mobile() && isset($this->theme_tag_cloud_args['is_mobile']) && !empty($this->theme_tag_cloud_args['is_mobile']) ) {
+			$args = wp_parse_args( $this->theme_tag_cloud_args['is_mobile'], $defaults['is_mobile'] );
+		} elseif( isset($this->theme_tag_cloud_args) ) {
+			$args = wp_parse_args( $this->theme_tag_cloud_args, $defaults  );
 		} else {
-			$args = wp_parse_args( $args, $this->theme_tag_cloud_args );
+			$args = wp_parse_args( $args, $defaults );
 		}
 		
 		return $args;
@@ -930,10 +1103,15 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		
 		//Init vars
 		$args = array();
+		$exceptions = array();
 		
 		//Get vars from config.php
 		if( isset($this->theme_style_merge_args) ) {
 			$args = $this->theme_style_merge_args;
+		}
+		
+		if( isset($this->theme_style_merge_exceptions) ) {
+			$exceptions = $this->theme_style_merge_exceptions;
 		}
 		
 		if( isset($args['merged_path']) && !empty($args['merged_path']) ) {
@@ -942,7 +1120,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 			$args['merged_url'] = get_stylesheet_directory_uri() . $args['merged_path'];
 			$args['merged_path'] = get_stylesheet_directory() . $args['merged_path'];
 			
-			do_action( 'prso_minify_merge_styles', $args );
+			do_action( 'prso_minify_merge_styles', $args, $exceptions );
 			
 		}
 		
@@ -1121,6 +1299,257 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		if( !empty($override_function) && function_exists($override_function) ) {
 			//Call the override function
 			call_user_func_array($override_function);
+		}
+		
+	}
+	
+	/**
+	* post_class_filter
+	* 
+	* Used to filter the classes returned to the page by post_class()
+	*
+	* @param	array	$classes	-	Array of class names for a post
+	* @access 	public
+	* @author	Ben Moody
+	*/
+	public function post_class_filter( $classes = array() ) {
+		
+		if( !empty($classes) ) {
+			
+			// Change 'sticky' class to 'sticky-post', avoid conflict with .sticky used by zurb topbar
+			// to make nav bars stick to the top of the page
+			foreach( $classes as $key => $class ) {
+				if( $class === 'sticky' ) {
+					$classes[$key] = 'sticky-post';
+				}
+			}
+			
+		}
+		
+		return $classes;
+	}
+	
+	/**
+	* gravity_forms_customizer
+	* 
+	* Includes the Prso Gravity Forms Customizer inc file
+	* This file alters how gravity forms renders some key form fields so that
+	* they conform to Zurb Foundation standards.
+	*
+	* It also provides some custom filters/actions for you to use in your child theme
+	* to customize forms further than gravity forms allows by default.
+	*
+	* @access 	private
+	* @author	Ben Moody
+	*/
+	private function gravity_forms_customizer() {
+		
+		//Init vars
+		$file_path = get_template_directory() . "/prso_framework/includes/gravity_forms_custom.php";
+		
+		if( file_exists($file_path) ) {
+			require_once( $file_path );
+		}
+		
+	}
+	
+	/**
+	* load_cufon_script
+	* 
+	* Registers and enqueues Cufon font replacement script using args from config.php
+	* Will try to load the CDN version using the url set in args['script_cdn'], will
+	* fallback to the local script url set in args['script']
+	*
+	* NOTE: args are set in $theme_cufon_script_args array in config.php, comment out this
+	*		array to disable cufon script enqueue
+	*
+	* @access 	private
+	* @author	Ben Moody
+	*/
+	private function load_cufon_script() {
+		
+		//Init vars
+		$cufon_url 	= NULL;
+		$args		= array();
+		
+		$defaults = array(
+			'handle'		=>	'cufon',
+			'script_cdn'	=>	'http://cdnjs.cloudflare.com/ajax/libs/cufon/1.09i/cufon-yui.js',
+			'script'		=>	get_template_directory_uri() . '/javascripts/cufon-yui.js',
+			'version'		=>	'1.09i'
+		);
+		
+		//If config var isset then load cufon
+		if( isset($this->theme_cufon_script_args) ) {
+			
+			//Parse args
+			$args = wp_parse_args( $this->theme_cufon_script_args, $defaults );
+			
+			extract($args);
+			
+			//First try and open the cdn script
+			$cufon_url = @fopen( $script_cdn, 'r' );
+			
+			if( $cufon_url !== FALSE ) {
+				
+				//Register cdn version
+				wp_register_script( $handle, 
+					$script_cdn, 
+					array('jquery'), 
+					$version, 
+					FALSE 
+				);
+				
+			} else {
+				
+				//Register framework version
+				wp_register_script( $handle, 
+					$script, 
+					array('jquery'), 
+					$version, 
+					FALSE 
+				);
+				
+			}
+			
+			//Enqueue script
+			wp_enqueue_script( $handle );
+		}
+		
+	}
+	
+	/**
+	* load_backstretch_script - http://srobbin.com/jquery-plugins/backstretch/
+	* 
+	* Registers and enqueues Backstretch script. Will try to load the CDN version
+	* if that fails then will try to load the local version.
+	*
+	* NOTE: args are set in $theme_backstretch_script_args array in config.php, comment out this
+	*		array to disable backstretch script enqueue
+	*
+	* How to use:
+	*	Basic: $.backstretch("http://dl.dropbox.com/u/515046/www/garfield-interior.jpg");
+	*	Block-level: $("#demo").backstretch("http://dl.dropbox.com/u/515046/www/garfield-interior.jpg");
+	*	Slideshow: 
+	*				 $.backstretch([
+						"http://dl.dropbox.com/u/515046/www/outside.jpg"
+						, "http://dl.dropbox.com/u/515046/www/garfield-interior.jpg"
+						, "http://dl.dropbox.com/u/515046/www/cheers.jpg"
+					], {duration: 3000, fade: 750});
+	*
+	* @access 	private
+	* @author	Ben Moody
+	*/
+	private function load_backstretch_script() {
+		
+		//Init vars
+		$backstretch_url 	= NULL;
+		$args				= array();
+		
+		$defaults = array(
+			'handle'		=>	'backstretch',
+			'script_cdn'	=>	'http://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.3/jquery.backstretch.min.js ',
+			'script'		=>	get_template_directory_uri() . '/javascripts/jquery/jquery.backstretch.min.js',
+			'version'		=>	'2.0.3'
+		);
+		
+		//If config var isset then load cufon
+		if( isset($this->theme_backstretch_script_args) ) {
+			
+			//Parse args
+			$args = wp_parse_args( $this->theme_backstretch_script_args, $defaults );
+			
+			extract($args);
+			
+			//First try and open the cdn script
+			$backstretch_url = @fopen( $script_cdn, 'r' );
+			
+			if( $backstretch_url !== FALSE ) {
+				
+				//Register cdn version
+				wp_register_script( $handle, 
+					$script_cdn, 
+					array('jquery'), 
+					$version, 
+					TRUE 
+				);
+				
+			} else {
+				
+				//Register framework version
+				wp_register_script( $handle, 
+					$script, 
+					array('jquery'), 
+					$version, 
+					TRUE 
+				);
+				
+			}
+			
+			//Enqueue script
+			wp_enqueue_script( $handle );
+		}
+		
+	}
+	
+	/**
+	* wp_head
+	* 
+	* Call methods to run during wordpress 'wp_head' action
+	* 
+	* @access 	public
+	* @author	Ben Moody
+	*/
+	public function wp_head() {
+		
+		//Update post/page view counter
+		$this->update_post_views();
+		
+	}
+	
+	/**
+	* update_post_views
+	* 
+	* Adds post meta for posts and pages tracking the number of views, incremented each view
+	* NOTE:: Ignores home page
+	* 
+	* @access 	public
+	* @author	Ben Moody
+	*/
+	private function update_post_views() {
+		
+		//Init vars
+		global $post;
+		$count_meta_key = '_prso_theme_view_count';
+		$count			= NULL;
+		
+		if( isset($post->ID) && !is_admin() && !is_front_page() && !is_home() && !is_user_logged_in() ) {
+			
+			$count = get_post_meta( $post->ID, $count_meta_key, TRUE );
+			
+			if( empty($count) ) {
+				
+				$count = 1;
+				
+				//Ensure old meta value is deleted - just incase
+				delete_post_meta( $post->ID, $count_meta_key );
+				
+				//Add our new zeroed count
+				add_post_meta( $post->ID, $count_meta_key, $count );
+				
+			} else {
+				
+				//Sanitize count var
+				$count = (int) $count;
+				
+				//Increase by 1
+				$count++;
+				
+				//Update our meta value for the post
+				update_post_meta( $post->ID, $count_meta_key, $count );
+				
+			}
+			
 		}
 		
 	}

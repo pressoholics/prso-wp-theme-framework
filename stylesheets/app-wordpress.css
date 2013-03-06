@@ -37,26 +37,79 @@ header .menu-action .button.small svg {
     opacity: 0.5;
 }
 
+/* Mobile off canvas Navigation */
+body {
+   /*Causes problem with Backstrectch jquery plugin -webkit-transform: translate3d(0, 0, 0); */
+   top: 0;
+   left: 0;
+}
+
 .mobile-nav-container{
-	margin-left: -100%;
 	float: left;
-	width: 50%;
+	width: 55%;
+	height: 100%;
 	position: absolute;
-	top: 150px;
+	top: 0;
+	background: none repeat scroll 0 0 #F2F2F2;
+	box-shadow: -1.5em 0 1.5em -0.75em rgba(0, 0, 0, 0.25) inset;
+	-webkit-box-shadow: inset -1.5em 0 1.5em -0.75em rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: inset -1.5em 0 1.5em -0.75em rgba(0, 0, 0, 0.25);
+	
+	-webkit-transform: translate3d(-100%, 0, 0);
+    -moz-transform: translate3d(-100%, 0, 0);
+    -ms-transform: translate3d(-100%, 0, 0);
+    -o-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    
+    transform-origin: -100% 0 0;
 }
 
 .active .mobile-nav-container{
 	display: block;
-	margin-left: 0;
+	-webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
 }
 
-.active #main{
-	margin-left: 55%;
+.active #content{
+    -webkit-transform: translate3d(55%, 0, 0);
+    -moz-transform: translate3d(55%, 0, 0);
+    -ms-transform: translate3d(55%, 0, 0);
+    -o-transform: translate3d(55%, 0, 0);
+    transform: translate3d(55%, 0, 0);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
 }
 
 .mobile-nav-container,
-#main{
-	-moz-transition: all 0.25s ease-in 0s;
+#content{
+	-webkit-transition: -webkit-transform 500ms ease;
+    -moz-transition: -moz-transform 500ms ease;
+    -o-transition: -o-transform 500ms ease;
+    transition: transform 500ms ease;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 .side-nav{
@@ -77,7 +130,7 @@ ul.tabs {
 }
 
 ul.tabs.vertical li {
-    border-left: 3px solid #CCCCCC;
+    border-left: 0px;
 }
 
 ul.tabs.vertical li, ul.tabs.vertical li {
@@ -97,15 +150,8 @@ ul.tabs li {
 }
 
 ul.tabs.vertical li a {
-    -moz-border-bottom-colors: none;
-    -moz-border-image: none;
-    -moz-border-left-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-top-colors: none;
-    background: none repeat scroll 0 0 #F2F2F2;
-    border-color: #E6E6E6;
-    border-style: solid;
-    border-width: 1px 1px 0 0;
+    background: transparent;
+    border: 0 none;
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
     color: #555555;
     display: block;
@@ -152,7 +198,6 @@ div[id*='attachment_']{
 
 #main article img{
 	max-width: 100%;
-	width: 100%;
 	margin-bottom: 18px;
 }
 
@@ -372,6 +417,7 @@ li.next{
 
 .widget li{
 	margin-bottom: 2px;
+	list-style: none;
 }
 
 .widget ul.children{
@@ -384,10 +430,127 @@ li.next{
 
 #tag-cloud{
 	margin-bottom: 18px;
+	margin-top: 5px;
 }
 
 a[class^='tag-link-']:hover{
 	color: #f0f0f0;
+}
+
+/* archives dropdown widget */
+.widget_archive select {
+	margin-top: 6px;
+}
+
+/* calendar widget */
+.widget_calendar {}
+#wp-calendar {width: 100%; }
+#wp-calendar caption { text-align: right; color: #333; font-size: 12px; margin-top: 10px; margin-bottom: 15px; }
+#wp-calendar thead { font-size: 1.0rem; font-size: 10px; }
+#wp-calendar thead th { padding-bottom: 10px; }
+#wp-calendar tbody { color: #aaa; }
+#wp-calendar tbody td { background: #f5f5f5; border: 1px solid #fff; text-align: center; padding:6px;}
+#wp-calendar tbody td:hover { background: #fff; }
+#wp-calendar tbody .pad { background: none; }
+#wp-calendar tfoot #next { font-size: 1.0rem; font-size: 10px; text-transform: uppercase; text-align: right; }
+#wp-calendar tfoot #prev { font-size: 1.0rem; font-size: 10px; text-transform: uppercase; padding-top: 10px; }
+
+
+
+
+/* Small Device Styles Here */
+@media only screen and (max-width: 768px) {
+	
+	/* widget styles */
+	ul.children {
+		display: none;
+	}
+	
+	.widget li a{
+		display: block;
+		color: #ffffff;
+		text-align: center;
+		border-radius: 3px 3px 3px 3px;
+		padding: 5px;
+		background: none repeat scroll 0 0 #2BA6CB;
+	}
+	
+	.widget li .prso-post-count {
+		display: none;
+	}
+
+	.widget_archive ul {
+		margin-top: 6px;
+	}
+	
+	.widget_archive > aside > ul > li,
+	.widget_categories > aside > ul > li {
+		height: 35px;
+	}
+	
+	.widget_nav_menu {
+		display: none;
+	}
+	
+	#tag-cloud > p > a.label {
+		line-height: 2;
+	}
+	
+}
+
+/* Medium screens */
+@media only screen and (max-width: 1279px) and (min-width: 768px) {
+	
+	/* widget styles */
+	ul.children {
+		display: none;
+	}
+	
+	.widget li a{
+		display: block;
+		color: #ffffff;
+		text-align: center;
+		border-radius: 3px 3px 3px 3px;
+		padding: 5px;
+		background: none repeat scroll 0 0 #2BA6CB;
+	}
+	
+	.widget li .prso-post-count {
+		display: none;
+	}
+
+	.widget_archive ul {
+		margin-top: 6px;
+	}
+	
+	.widget_archive > aside > ul > li,
+	.widget_categories > aside > ul > li {
+		height: 35px;
+	}
+	
+	.widget_nav_menu {
+		display: none;
+	}
+	
+	#tag-cloud > p > a.label {
+		line-height: 2;
+	}
+	
+}
+
+/* Medium Screens AND Landscape - iPad */
+@media only screen and (max-width: 1279px) and (min-width: 768px) and (orientation: landscape) {
+
+	
+}
+
+/* Medium Screens AND Portrait - iPad */
+@media only screen and (max-width: 1279px) and (min-width: 768px) and (orientation: portrait) {
+	
+	.widget_calendar > aside {
+		display: none;
+	}
+		
 }
 
 @media only screen and (min-width: 768px) {
@@ -412,14 +575,11 @@ a[class^='tag-link-']:hover{
 	#featured p{
 		width: 66%;
 	}
+	
 }
 
 @media only screen and (min-width: 940px) {
 	/* desktop specific styles */
-	
-	#main{
-		margin-bottom: 0;
-	}
 	
 	ol.commentlist div.avatar{
 		margin-right: 0;
