@@ -56,6 +56,13 @@ class PostHelper {
  		*/
  		$this->add_action( 'prso_prev_next_permalink', 'prev_next_pagination', 10, 1 );
  		
+ 		/**
+ 		* 4. prso_user_recent_post
+ 		* 	 Returns the most recent post of the user based on supplied user_id
+ 		*	 can also return custom post types vis post_type in $args array
+ 		*/
+ 		$this->add_filter( 'prso_user_recent_post', 'get_most_recent_post_of_user', 10, 2 );
+ 		
  	}
 	
 	/**
@@ -446,7 +453,56 @@ class PostHelper {
 		
 	}
 	
+	/**
+	* get_most_recent_post_of_user
+	* 
+	* apply_filters('prso_user_recent_post', $user_id, $args);
+	* 
+	* Returns the post object for the users most recent post.
+	* Can also return other post types by setting the post_type in $args array
+	*
+	* @param	array		args
+	* @access 	public
+	* @author	Ben Moody
+	*/
+	function get_most_recent_post_of_user( $user_id = NULL, $args ) {
 	
+		//Init vars
+		global $wpdb;
+		$most_recent_post 	= array();
+		
+		$defaults = array(
+			'post_type' => 'post'
+		);
+		
+		if( isset($user_id) ) {
+			
+			$args = wp_parse_args( $args, $defaults );
+		
+			extract( $args );
+			
+			//Sanitize vars
+			$user_id = (int) $user_id;
+			$post_type = esc_attr( $post_type );
+			
+			$recent_post = $wpdb->get_row( $wpdb->prepare("SELECT ID, post_date_gmt FROM {$wpdb->posts} WHERE post_author = %d AND post_type = '{$post_type}' AND post_status = 'publish' ORDER BY post_date_gmt DESC LIMIT 1", $user_id ), ARRAY_A);
+		
+			// Make sure we found a post
+			if ( isset($recent_post['ID']) ) {
+				$post_gmt_ts = strtotime($recent_post['post_date_gmt']);
+		
+				// If this is the first post checked or if this post is
+				// newer than the current recent post, make it the new
+				// most recent post.
+				if ( !isset($most_recent_post['post_gmt_ts']) || ( $post_gmt_ts > $most_recent_post['post_gmt_ts'] ) ) {
+					$most_recent_post = get_post( $recent_post['ID'] );
+				}
+			}
+			
+		}
+	
+		return $most_recent_post;
+	}
 	
 	
 	
