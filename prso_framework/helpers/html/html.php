@@ -8,7 +8,9 @@
  *
  * 1. center_thumbnail		- filter 'prso_center_thumbnail'
  * 2. get_the_excerpt		- action 'prso_get_the_excerpt'
- * 
+ * 3. trim_string			- filter 'prso_trim_string' 
+ * 4. get_social_button		- filter 'prso_share_button'
+ *
  */
  
 class HtmlHelper {
@@ -48,6 +50,12 @@ class HtmlHelper {
  		* 	 Filter a string and trim it to a number of words
  		*/
  		$this->add_filter( 'prso_trim_string', 'trim_string', 10, 3 );
+ 		
+ 		/**
+ 		* 4. get_social_button
+ 		* 	 Returns html and JS required to output the requested social media share button
+ 		*/
+ 		$this->add_filter( 'prso_share_button', 'get_social_button', 10, 1 );
  		
  	}
  	
@@ -180,6 +188,76 @@ class HtmlHelper {
 	    
 	    return wp_kses_post( $string );
 	}
+	
+	/**
+	* get_social_button
+	* 
+	* Returns html and js required to display either 'Twitter' or 'Facebook'
+	* Like buttons
+	*
+	* @param	string	$type	-	'facebook', 'twitter'
+	* @return	string
+	* @access 	public
+	* @author	Ben Moody
+	*/
+	function get_social_button( $type = NULL ) {
+		
+		//Init vars
+		$path 	= NULL;
+		$url  	= NULL;
+		$output	= NULL;
+		
+		//Cache path of current page
+		if( isset($_SERVER['REQUEST_URI']) ) {
+			$path = $_SERVER['REQUEST_URI'];
+			$url = get_site_url() . $path;
+		}
+		
+		if( $type === 'twitter' && isset($url) ) {
+			
+			ob_start()
+			?>
+			<div id="twitter" class="social-button">
+				<a href="https://twitter.com/share" class="twitter-share-button" data-url="<?php echo $url; ?>" data-via="pressoholics"></a>
+				<script>
+				jQuery(window).load(function(){
+					!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+				});
+				</script>
+			</div>
+			<?php
+			$output = ob_get_contents();
+			ob_end_clean();
+			
+		} elseif( $type === 'facebook' && isset($url) ) {
+			
+			ob_start()
+			?>
+			<div id="facebook" class="social-button">
+				<div id="fb-root"></div>
+				<script>
+					jQuery(window).load(function(){
+						(function(d, s, id) {
+						  var js, fjs = d.getElementsByTagName(s)[0];
+						  if (d.getElementById(id)) return;
+						  js = d.createElement(s); js.id = id;
+						  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+						  fjs.parentNode.insertBefore(js, fjs);
+						}(document, 'script', 'facebook-jssdk'));
+					});
+				</script>
+				<div class="fb-like" data-href="<?php echo $url; ?>" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"></div>
+			</div>
+			<?php
+			$output = ob_get_contents();
+			ob_end_clean();
+			
+		}
+		
+		return $output;
+	}
+	
+	
 	
 	
 	
