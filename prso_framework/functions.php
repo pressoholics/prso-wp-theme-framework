@@ -49,6 +49,8 @@
  * 35. gravity_forms_customizer		-	Includes gravity_forms_custom.php from inc folder
  * 36. load_cufon_script	-	Registers and enqueues Cufon font replacement script based on args from config.php
  * 37. load_backstretch_script	=	Register and enqueue script for Backstretch background image script
+ * 38. wp_head	-	Add calls to method you want to run during wp_head action
+ * 39. update_post_views	-	Adds a view counter to posts/pages
  *
  */
 class PrsoThemeFunctions extends PrsoThemeAppController {
@@ -152,6 +154,9 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  		
  		//Add filter to alter the array of classes used by post_class()
  		add_filter( 'post_class', array($this, 'post_class_filter'), 10, 1 );
+ 		
+ 		//Add method for 'wp_head' action
+ 		add_action( 'wp_head', array($this, 'wp_head') );
  		
  		//Call method to include Pro Gravity Forms Customizer
  		$this->gravity_forms_customizer();
@@ -1483,6 +1488,68 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 			
 			//Enqueue script
 			wp_enqueue_script( $handle );
+		}
+		
+	}
+	
+	/**
+	* wp_head
+	* 
+	* Call methods to run during wordpress 'wp_head' action
+	* 
+	* @access 	public
+	* @author	Ben Moody
+	*/
+	public function wp_head() {
+		
+		//Update post/page view counter
+		$this->update_post_views();
+		
+	}
+	
+	/**
+	* update_post_views
+	* 
+	* Adds post meta for posts and pages tracking the number of views, incremented each view
+	* NOTE:: Ignores home page
+	* 
+	* @access 	public
+	* @author	Ben Moody
+	*/
+	private function update_post_views() {
+		
+		//Init vars
+		global $post;
+		$count_meta_key = '_prso_theme_view_count';
+		$count			= NULL;
+		
+		if( isset($post->ID) && !is_admin() && !is_front_page() && !is_home() && !is_user_logged_in() ) {
+			
+			$count = get_post_meta( $post->ID, $count_meta_key, TRUE );
+			
+			if( empty($count) ) {
+				
+				$count = 1;
+				
+				//Ensure old meta value is deleted - just incase
+				delete_post_meta( $post->ID, $count_meta_key );
+				
+				//Add our new zeroed count
+				add_post_meta( $post->ID, $count_meta_key, $count );
+				
+			} else {
+				
+				//Sanitize count var
+				$count = (int) $count;
+				
+				//Increase by 1
+				$count++;
+				
+				//Update our meta value for the post
+				update_post_meta( $post->ID, $count_meta_key, $count );
+				
+			}
+			
 		}
 		
 	}
