@@ -164,7 +164,7 @@ function prso_theme_gform_field_content( $content, $field, $value, $lead_id, $fo
 			</div>
 			<?php
 			$validation_message = ob_get_contents();
-			ob_end_clean();
+			ob_end_flush();
 			
 			$validation_message = (rgget("failed_validation", $field) && !empty($field["validation_message"])) ? sprintf($validation_message, $field["validation_message"]) : "";
 			

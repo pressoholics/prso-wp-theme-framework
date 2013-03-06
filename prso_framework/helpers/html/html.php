@@ -124,7 +124,7 @@ class HtmlHelper {
 				
 				$_dom_style = ob_get_contents();
 				
-				ob_end_clean();
+				ob_end_flush();
 			}
 		}
 		

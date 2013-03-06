@@ -374,7 +374,7 @@ function prso_orbit_banner_output( $args = array() ) {
 		</div>
 		<?php
 		$output = ob_get_contents();
-		ob_end_clean();
+		ob_end_flush();
 	}
 	
 	//Detect the requested output type - return or echo
@@ -493,7 +493,7 @@ function prso_orbit_banner_html( $banner = array(), $has_thumbnail = false, $has
 			<span class="orbit-caption" id="<?php echo "caption" . strtolower( esc_attr($banner->post_name) ); ?>"><?php echo esc_attr($banner->post_excerpt); ?></span>
 			<?php
 			$output['caption'] = ob_get_contents();
-			ob_end_clean();
+			ob_end_flush();
 		}
 		
 		//There are four banner variations - image only, image + caption, image + content
@@ -508,7 +508,7 @@ function prso_orbit_banner_html( $banner = array(), $has_thumbnail = false, $has
 			<img src="<?php echo $image_src[0]; ?>" alt="<?php echo esc_attr($banner->post_title); ?>" data-caption="<?php echo $data_caption; ?>" />
 			<?php
 			$output['banner'] = ob_get_contents();
-			ob_end_clean();
+			ob_end_flush();
 			
 		} elseif( !$has_thumbnail && $has_content ) {
 			
@@ -520,7 +520,7 @@ function prso_orbit_banner_html( $banner = array(), $has_thumbnail = false, $has
 			</div>
 			<?php
 			$output['banner'] = ob_get_contents();
-			ob_end_clean();
+			ob_end_flush();
 			
 		} elseif( $has_thumbnail && $has_content ) {
 			
@@ -535,7 +535,7 @@ function prso_orbit_banner_html( $banner = array(), $has_thumbnail = false, $has
 			</div>
 			<?php
 			$output['banner'] = ob_get_contents();
-			ob_end_clean();
+			ob_end_flush();
 			
 		}
 		

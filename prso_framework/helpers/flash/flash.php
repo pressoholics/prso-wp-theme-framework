@@ -209,7 +209,7 @@ class FlashHelper {
 				</script>
 				<?php
 				$output_script = ob_get_contents();
-				ob_end_clean();
+				ob_end_flush();
 				
 				//Destroy session
 				unset( $_SESSION[$name] );

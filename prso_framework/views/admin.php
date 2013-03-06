@@ -391,7 +391,7 @@ class PrsoThemeAdminView extends PrsoThemeAppController {
 		
 		<?php
 		$output = ob_get_contents();
-		ob_end_clean();
+		ob_end_flush();
 		
 		echo $output;
 	}
@@ -416,7 +416,7 @@ class PrsoThemeAdminView extends PrsoThemeAppController {
 		
 		<?php
 		$output = ob_get_contents();
-		ob_end_clean();
+		ob_end_flush();
 		
 		echo $output;
 	}
@@ -441,7 +441,7 @@ class PrsoThemeAdminView extends PrsoThemeAppController {
 		
 		<?php
 		$output = ob_get_contents();
-		ob_end_clean();
+		ob_end_flush();
 		
 		echo $output;
 	}

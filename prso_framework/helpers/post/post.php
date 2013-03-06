@@ -210,7 +210,7 @@ class PostHelper {
 				</li>
 				<?php
 				$output.= ob_get_contents();
-				ob_end_clean();
+				ob_end_flush();
 			}
 			
 		} else {
@@ -224,7 +224,7 @@ class PostHelper {
 				</li>
 				<?php
 				$output.= ob_get_contents();
-				ob_end_clean();
+				ob_end_flush();
 			}
 			
 		}

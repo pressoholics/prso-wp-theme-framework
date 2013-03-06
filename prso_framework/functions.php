@@ -1289,7 +1289,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 			</nav>
 			<?php
 			$output = ob_get_contents();
-			ob_end_clean();
+			ob_end_flush();
 			
 			echo $output;
 			
