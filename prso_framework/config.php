@@ -402,9 +402,11 @@ class PrsoThemeConfig {
 	*	- 'merged_path' REQUIRED, PATH to your new merged stylesheet file, RELATIVE to stylesheet_directory, e.g. '/css/app-min.css'
 	*	- 'enqueue_handle' Shouldn't need to change this as default should work fine without conflict
 	*/
+	/*
 	protected $theme_style_merge_args = array(
 		'merged_path' 	=> '/stylesheets/app-min.css'
 	);
+	*/
 	
 	/**
  	* $this->theme_style_merge_exceptions
