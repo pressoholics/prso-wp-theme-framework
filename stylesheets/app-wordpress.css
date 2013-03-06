@@ -39,7 +39,9 @@ header .menu-action .button.small svg {
 
 /* Mobile off canvas Navigation */
 body {
-    -webkit-transform: translate3d(0, 0, 0);
+   /*Causes problem with Backstrectch jquery plugin -webkit-transform: translate3d(0, 0, 0); */
+   top: 0;
+   left: 0;
 }
 
 .mobile-nav-container{
