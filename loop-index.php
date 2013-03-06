@@ -15,8 +15,7 @@
 		</header> <!-- end article header -->
 	
 		<section class="post_content clearfix">
-			<?php the_content('Read more &raquo;'); ?>
-	
+			<?php do_action( 'prso_get_the_excerpt' ); ?>
 		</section> <!-- end article section -->
 		
 		<footer>

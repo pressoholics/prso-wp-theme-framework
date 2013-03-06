@@ -6,9 +6,8 @@
  *
  * CONTENTS:
  *
- * center_thumbnail( $Post = null, $dom_size = array(), $unit = 'px' )
- * trim_text($input, $length, $ellipses = true, $strip_html = true)
- * subpages_menu( $post = null )
+ * 1. center_thumbnail		- filter 'prso_center_thumbnail'
+ * 2. get_the_excerpt		- action 'prso_get_the_excerpt'
  * 
  */
  
@@ -16,10 +15,34 @@ class HtmlHelper {
  	
  	function __construct() {
  		
+ 		//Add custom action hooks for post helpers
+ 		$this->custom_action_hooks();
+ 		
  	}
  	
- 	function test() {
- 		echo 'HTMLTEST';
+ 	/**
+	* custom_action_hooks
+	* 
+	* Create any custom WP Action Hooks here for post helpers
+	* 
+	* @access 	private
+	* @author	Ben Moody
+	*/
+ 	private function custom_action_hooks() {
+ 		
+ 		/**
+ 		* 1. center_thumbnail
+ 		* 	 Returns contents for style attr for img
+ 		*/
+ 		$this->add_filter( 'prso_center_thumbnail', 'center_thumbnail', 10, 3 );
+ 		
+ 		/**
+ 		* 2. get_the_excerpt
+ 		* 	 Detects if post content is using 'more' tag and echos the_content OR
+ 		*	 if 'more' tag is not used then defaults to calling the_excerpt()
+ 		*/
+ 		$this->add_action( 'prso_get_the_excerpt', 'get_the_excerpt', 10 );
+ 		
  	}
  	
 	/**
@@ -102,259 +125,58 @@ class HtmlHelper {
 		return $_dom_style;
 	}
 	
-	/**
-	* trims text to a space then adds ellipses if desired
-	* @param string $input text to trim
-	* @param int $length in characters to trim to
-	* @param bool $ellipses if ellipses (...) are to be added
-	* @param bool $strip_html if html tags are to be stripped
-	* @return string 
-	*/
-	public function trim_text($input, $length, $ellipses = true, $strip_html = true) {
-	    //strip tags, if desired
-	    if ($strip_html) {
-	        $input = strip_tags($input);
-	    }
-	  
-	    //no need to trim, already shorter than trim length
-	    if (strlen($input) <= $length) {
-	        return $input;
-	    }
-	  
-	    //find last space within length
-	    $last_space = strrpos(substr($input, 0, $length), ' ');
-	    $trimmed_text = substr($input, 0, $last_space);
-	  
-	    //add ellipses (...)
-	    if ($ellipses) {
-	        $trimmed_text .= '...';
-	    }
-	  
-	    return $trimmed_text;
-	}
- 
-	/**
-	* subpages_menu
-	* 
-	* Return a list of subpages for the page provided
-	* 
-	* @param	obj		$post
-	* @return	string	output
-	* @access 	public
-	* @author	Ben Moody
-	*/
-	public function subpages_menu( $post = null ) {
 	
-		//Init vars
-		$page_list 		= null; //Cache html string if subpages found
-		$current_page	= null;
-		$output			= null;
-		
-		if( isset($post) ) {
-			
-			//Check if this page is a parent or child
-			if( !empty($post->post_parent) ) {
-				$post_id = $post->post_parent;
-			} else {
-				$post_id = $post->ID;
-				//Cache class for current page as this is parent page
-				$current_page = 'current_page_item';
-			}
-			
-			//Get list of subpages
-			$page_list = wp_list_pages(
-				array(
-					'sort_column'	=> 'menu_order',
-					'title_li'		=> null,
-					'child_of' 		=> $post_id,
-					'echo'			=> false
-				)
-			);
-			
-			//Check if string is empty
-			if( !empty($page_list) ) {
-				?>
-				<div class="row">
-					<div class="twelve columns">
-						<ul id="page-submenu" class="submenu">
-							<li class="page_item page-item-<?php echo $post_id; ?> <?php echo $current_page; ?>">
-								<a href="<?php echo get_permalink( $post_id ); ?>"><?php echo get_the_title( $post_id ); ?></a>
-							</li>
-							<?php echo $page_list; ?>
-							<div class="clear"></div>
-						</ul>
-					</div>
-				</div>
-				<?php
-			}
-		}
-	}
-	
-	/**
-	* get_page_title
-	* 
-	* Returns the current page/post title wrapped in requested header tag and/or link if requested
-	* 
-	* @access 	public
-	* @author	Ben Moody
-	*/
-	public function get_page_title( $args = array() ) {
-		
-		//Init vars
-		global $post;
-		$post_id	= null;
-		$permalink	= null;
-		$title		= null;
-		$output 	= null;
-		
-		//Set arg defaults
-		$defaults 	= array(
-			'id' 	=> null,
-			'class'	=> null,
-			'type'	=> 'h1',
-			'link'	=> false	
-		);
-		
-		$args = wp_parse_args( $args, $defaults );
-		
-		extract( $args );
-
-		//Get current post title data
-		if( isset($post->ID) ) {
-			$post_id = $post->ID;
-			
-			$permalink 	= get_permalink( $post_id );
-			$title		= get_the_title( $post_id );
-			
-			//Form title html
-			if( $link ) {
-				ob_start();
-				?>
-				<<?php echo $type; ?> id="<?php echo $id; ?>" class="<?php echo $class; ?>">
-					<a href="<?php echo $permalink; ?>" rel="bookmark" title="Permanent Link to <?php echo $title; ?>"><?php echo $title; ?></a>
-				</<?php echo $type; ?>>
-				<?php
-				$output = ob_get_contents();
-				ob_end_clean();
-			} else {
-				ob_start();
-				?>
-				<<?php echo $type; ?> id="<?php echo $id; ?>" class="<?php echo $class; ?>"><?php echo $title; ?></<?php echo $type; ?>>
-				<?php
-				$output = ob_get_contents();
-				ob_end_clean();
-			}
-			
-		}
-		
-		return $output;
-	}
-	
-	/**
-	* orbit_banner
-	* 
-	* Output post featured image or orbit content
-	*
-	* Detect if post has a page banner category id set, if not then see if there is a featured image
-	* 
-	* @param	int		post_id
-	* @access 	public
-	* @author	Ben Moody
-	*/
-	function orbit_banner( $post_id = null, $cat_slug_exclude = array() ) {
-		
+	public function get_the_excerpt() {
 		global $post;
 		
-		//Init vars
-		$banner_tax_slug 	= 'orbit_page_banner_cat';
-		$banner_thumb_slug	= 'orbit_banner-thumb';
-		
-		$banner_cat_id 	= null;
-		$thumbnail		= null;
-		$post_cat_slug	= null;
-		$exclude		= false;
-		$output 		= null;
-		
-		//Check if this post should have an orbit banner
-		if( !is_home() && !is_category() && !is_tag() && !is_tax() && !is_archive() && !is_search() ) {
-			
-			//Cache current post cat id
-			$post_cat_slug = get_the_category( $post->ID );
-			$post_cat_slug = $post_cat_slug[0]->slug;
-			
-			//Loop the cat slug exclude array and see if the current post should be excluded
-			if( !empty( $cat_slug_exclude ) ) {
-				foreach( $cat_slug_exclude as $slug ) {
-					if( $post_cat_slug === $slug ) {
-						$exclude = true;
-						break;
-					}
-				}
-			}
-			
+		//Detect if current post content contains a more tag if not then use excerpt
+		if( isset($post->post_content) && preg_match('/<!--more(.*?)?-->/', $post->post_content) ) {
+			the_content('', TRUE);
 		} else {
-			
-			//Current page is a type or template we need to exclude
-			$exclude = true;
-			
-		}
-		
-		if( !empty($post_id) && !$exclude ) {
-			
-			//Check if this post has a page banner category
-			$banner_cat_id = get_post_meta( $post_id, $banner_tax_slug, true );
-			if( !empty($banner_cat_id) && is_numeric($banner_cat_id) ) {
-				
-				//Post has a orbit page banner so let's get it
-				ob_start();
-				?>
-				<!-- Desktop Orbit !-->
-				<div class="row hide-on-phones">
-					<div class="tweleve columns" id="orbit">
-						<div id="featured-desktop">
-							<?php echo SliderContent( array( 'cat' => $banner_cat_id, 'banner_slug' => $banner_thumb_slug ) ); ?>
-						</div>
-					</div>
-				</div>
-				<!-- Phone Orbit (reduced height) !-->
-				<div class="row show-on-phones">
-					<div class="tweleve columns" id="orbit">
-						<div id="featured-phone">
-							<?php echo SliderContent( array( 'cat' => $banner_cat_id, 'banner_slug' => $banner_thumb_slug ) ); ?>
-						</div>
-					</div>
-				</div>
-				<?php
-				$output = ob_get_contents();
-				ob_end_clean();
-				
-				echo $output;
-				
-			} else {
-			
-				//Output post thumbnail
-				$thumbnail = get_the_post_thumbnail( $post_id, 'full' );
-				if( !empty($thumbnail) ) {
-					
-					ob_start();
-					?>
-					<div class="row">
-						<div class="tweleve columns" id="orbit">
-						<?php echo $thumbnail; ?>
-						</div>
-					</div>
-					<?php
-					$output = ob_get_contents();
-					ob_end_clean();
-					
-					echo $output;
-					
-				}
-			
-			}
-			
+			the_excerpt();
 		}
 		
 	}
+
+	
+	
+	/**
+	* add_action
+	* 
+	* Helper to deal with Wordpress add_action requests. Checks to make sure that the action is not
+	* duplicated if a class is instantiated multiple times.
+	* 
+	* @access 	protected
+	* @author	Ben Moody
+	*/
+	private function add_action( $tag = NULL, $method = NULL, $priority = 10, $accepted_args = NULL ) {
 		
+		if( isset($tag,$method) ) {
+			//Check that action has not already been added
+			if( !has_action($tag) ) {
+				add_action( $tag, array($this, $method), $priority, $accepted_args );
+			}
+		}
+		
+	}
+	
+	/**
+	* add_filter
+	* 
+	* Helper to deal with Wordpress add_filter requests. Checks to make sure that the filter is not
+	* duplicated if a class is instantiated multiple times.
+	* 
+	* @access 	protected
+	* @author	Ben Moody
+	*/
+	private function add_filter( $tag = NULL, $method = NULL, $priority = 10, $accepted_args = NULL ) {
+		
+		if( isset($tag,$method) ) {
+			//Check that action has not already been added
+			if( !has_filter($tag) ) {
+				add_filter( $tag, array($this, $method), $priority, $accepted_args );
+			}
+		}
+		
+	}
 }
