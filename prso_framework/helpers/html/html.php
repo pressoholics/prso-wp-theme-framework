@@ -43,6 +43,12 @@ class HtmlHelper {
  		*/
  		$this->add_action( 'prso_get_the_excerpt', 'get_the_excerpt', 10 );
  		
+ 		/**
+ 		* 3. trim_string
+ 		* 	 Filter a string and trim it to a number of words
+ 		*/
+ 		$this->add_filter( 'prso_trim_string', 'trim_string', 10, 3 );
+ 		
  	}
  	
 	/**
@@ -125,7 +131,18 @@ class HtmlHelper {
 		return $_dom_style;
 	}
 	
-	
+	/**
+	* get_the_excerpt()
+	*
+	* Action:: 'prso_get_the_excerpt'
+	*
+	* Allows users to make use of the 'more' tag in post content to
+	* set where the excerpt should end.
+	*
+	* If a post doesn't use 'more' tag then the_excerpt will be used as a backup
+	*
+	* @access	public
+	*/
 	public function get_the_excerpt() {
 		global $post;
 		
@@ -137,7 +154,33 @@ class HtmlHelper {
 		}
 		
 	}
-
+	
+	/**
+	* trim_string
+	*
+	* Filter:: 'prso_trim_string'
+	* 
+	* Trims a string to the number of words set by max_length arg.
+	* Can also pass html to place a the end of the string via end_cap
+	* 
+	* @access 	public
+	* @author	Ben Moody
+	*/
+	public function trim_string( $string, $max_length = 75, $end_cap = ' &hellip;' ) {
+    
+	    //Init vars
+	    $length 	= 0;
+	    $max_length	= 42;
+		    
+	    $length = strlen( $string );
+    
+	    if( $length >= $max_length ) {
+		    $string = substr( $string, 0, $max_length ) . $end_cap;
+	    }
+	    
+	    return wp_kses_post( $string );
+	}
+	
 	
 	
 	/**
