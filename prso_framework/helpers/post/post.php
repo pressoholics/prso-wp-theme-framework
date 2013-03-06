@@ -15,9 +15,6 @@
  */
 class PostHelper {
 	
-	//Cache parent cat id - Set by method loop_category, Used by method loop_category_widget
-	private $loop_cat_parent_id = null;
-	
 	function __construct() {
 		
 		//Add custom action hooks for post helpers
@@ -54,13 +51,7 @@ class PostHelper {
  		$this->add_filter( 'prso_get_page_content', 'get_page_content', 1, 2 );
  		
  		/**
- 		* 4. prso_query_posts_by_category
- 		* 	 Alters the main loop to return posts in a specific category
- 		*/
- 		$this->add_action( 'prso_query_posts_by_category', 'loop_category', 10, 2 );
- 		
- 		/**
- 		* 5. prso_prev_next_permalink
+ 		* 4. prso_prev_next_permalink
  		* 	 Echo permalink to next/prev post in a loop of pages
  		*/
  		$this->add_action( 'prso_prev_next_permalink', 'prev_next_pagination', 10, 1 );
@@ -305,118 +296,6 @@ class PostHelper {
 		}
 		
 		return $content;
-	}
-	
-	/**
-	* loop_category
-	* 
-	* Uses custom wordpress query to prepare a loop for all posts/pages in the requested category. Will fetch all cat parent
-	* and cat child posts.
-	*
-	* HOW TO USE:
-	* Note that you can pass an array of std query_posts() args to for example select only pages or posts using post_type = 'page'
-	*
-	* Instantiate post helper then call function with parent cat slug and args if required, then query posts using query_posts()
-	* 
-	*	global $PrsoPost;
-	*		
-	*	//Call helper to set correct category args and call wp_query to fetch posts in requested category
-	*	$PrsoPost->loop_category( 'news' );
-	
-	*	while ( have_posts() ) : the_post();
-	*	
-	*	IMPORTANT!!!!!!!!
-	*   You MUST make sure to end your custom loop by reseting the worpdress query with wp_reset_query();
-	*
-	* 
-	* @param	string	$parent_cat_slug
-	* @param	array	args
-	* @return	obj		wp_query
-	* @access 	public
-	* @author	Ben Moody
-	*/
-	public function loop_category( $parent_cat_slug = null, $args = array() ) {
-		
-		$_CatObject 		= null; //Cache object for categories
-		$wp_query			= null;
-		$cat_query_str		= null;
-		$query_string		= null;
-		
-		//Default args
-		$defaults = array(
-			'posts_per_page' 	=> 5,
-			'paged'				=> true,
-			'post_type'			=> 'post'
-		);
-		
-		$args = wp_parse_args( $args, $defaults );
-		
-		if( !empty( $parent_cat_slug ) ) {
-			
-			//Get all child categories of 'news'parent cat
-			$child_cats = $this->get_cat_children(
-				array(
-					'child_of' => $parent_cat_slug
-				)
-			);
-			
-			//Loop child_cats and create query sting comprised of all cat id's
-			if( !empty($child_cats['children']) ) {
-				$i = 0;
-				foreach( $child_cats['children'] as $Cat ){
-					if( $i > 0 ) {	
-						
-						$cat_query_str.= ',' . $Cat->term_id;
-					} else {
-						//First in query sting add parent cat and first child
-						$cat_query_str.= $child_cats['args']['child_of'] . ',' . $Cat->term_id;
-					}
-					
-					$i ++;
-				}
-			} else {
-			
-				//No child cats found, just add the parent to the query string
-				$cat_query_str.= $child_cats['args']['child_of'];
-				
-			}
-			
-			//Build query string
-			$query_string.= "cat={$cat_query_str}";
-			foreach( $args as $key => $arg ) {
-				$query_string.= "&{$key}={$arg}";
-			}
-			
-			//Query posts using custom args
-			query_posts( $query_string );
-			
-			//Cache parent cat id
-			$this->loop_cat_parent_id = $child_cats['args']['child_of'];
-			
-			//Call method to filter the wordpress categories widget to display only current category's children
-			add_filter('widget_categories_args', array( &$this, 'loop_category_widget' ) );
-			
-		} else {
-			return false;
-		}
-		
-	}
-
-	/**
-	 * loop_category_widget
-	 *
-	 * Called by 'widget_categories_args' filter, setup by $this->loop_category
-	 * Filters the wordpress default category widget to show only categories which are children of
-	 * the parent category if current loop is a custom loop filtered by category.
-	 *
-	 */
-	public function loop_category_widget( $cat_args ) {
-		
-		if( isset($this->loop_cat_parent_id) ) {
-			$cat_args['child_of'] = $this->loop_cat_parent_id;
-		}
-		
-		return $cat_args;
 	}
 	
 	/**
