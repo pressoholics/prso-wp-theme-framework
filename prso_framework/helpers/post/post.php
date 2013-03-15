@@ -6,17 +6,14 @@
  *
  * CONTENTS:
  *
- *	1. do_action('prso_get_related_posts', $args); 
- *	2. apply_filters('prso_get_page_id_by_slug', NULL, $page_slug, $post_type);
- *  3. apply_filters('prso_get_page_content', NULL, $page_id_slug);
- *  4. do_action('prso_query_posts_by_category', $cat_slug, $args);
- *  5. do_action('prso_prev_next_permalink', $args);
+ *	1. get_related_posts			-	do_action('prso_get_related_posts', $args); 
+ *	2. get_ID_by_slug				-	apply_filters('prso_get_page_id_by_slug', NULL, $page_slug, $post_type);
+ *  3. get_page_content				-	apply_filters('prso_get_page_content', NULL, $page_id_slug);
+ *  4. prev_next_pagination			-	do_action('prso_query_posts_by_category', $cat_slug, $args);
+ *  5. get_most_recent_post_of_user	-	do_action('prso_prev_next_permalink', $args);
  * 
  */
 class PostHelper {
-	
-	//Cache parent cat id - Set by method loop_category, Used by method loop_category_widget
-	private $loop_cat_parent_id = null;
 	
 	function __construct() {
 		
@@ -37,9 +34,10 @@ class PostHelper {
  		
  		/**
  		* 1. prso_get_related_posts
- 		* 	 Returns/Echos a ul list of related posts.
+ 		* 	 Returns WP_Query object for any related posts found. Based on taxonomies
+ 		*	 passed via $args['tax_args']. Defaults to 'post_tag' and 'category'
  		*/
- 		$this->add_action( 'prso_get_related_posts', 'get_related_posts', 10, 1 );
+ 		$this->add_filter( 'prso_get_related_posts', 'get_related_posts', 10, 1 );
  		
  		/**
  		* 2. prso_get_page_id_by_slug
@@ -54,195 +52,212 @@ class PostHelper {
  		$this->add_filter( 'prso_get_page_content', 'get_page_content', 1, 2 );
  		
  		/**
- 		* 4. prso_query_posts_by_category
- 		* 	 Alters the main loop to return posts in a specific category
- 		*/
- 		$this->add_action( 'prso_query_posts_by_category', 'loop_category', 10, 2 );
- 		
- 		/**
- 		* 5. prso_prev_next_permalink
+ 		* 4. prso_prev_next_permalink
  		* 	 Echo permalink to next/prev post in a loop of pages
  		*/
  		$this->add_action( 'prso_prev_next_permalink', 'prev_next_pagination', 10, 1 );
+ 		
+ 		/**
+ 		* 4. prso_user_recent_post
+ 		* 	 Returns the most recent post of the user based on supplied user_id
+ 		*	 can also return custom post types vis post_type in $args array
+ 		*/
+ 		$this->add_filter( 'prso_user_recent_post', 'get_most_recent_post_of_user', 10, 2 );
  		
  	}
 	
 	/**
 	* get_related_posts
-	* 
-	* do_action('prso_get_related_posts', $args);
 	*
-	* Custom method which returns an ul list of related posts.
+	* Filter:: 'prso_get_related_posts'
 	*
-	* Use in theme via custom Action Hook 'prso_get_related_posts'
-	* 
-	* Use WP_Query args to adjust std query elements such as numberposts.
-	* Also accepts a number of custom args:
+	* Returns the WP_Query object for any related posts found.
+	* Uses taxonomies passed via $args['tax_args'] array to form the posts relationship
+	* You can pass custom taxonomies to form the relationship if you want
 	*
-	* 1. 'relation' - category/tag/category__and__tag/category__or__tag
-	*		Use this to adjust the relationship between tags and categories when
-	*		querying the post relationship, so you want tag/cat to be independent
-	*		or do you define related post as posts which share both cat and tag
-	*		or just on or the other.
+	* Also pass WP_Query args via $args
 	*
-	* 2. 'no_posts_msg'	- string or NULL
-	*		If you dont need a msg to output when no related posts found, set to NULL
-	*
-	*
-	* @param	array	$args (see above comments)
-	* @access 	public
+	* @param	array	$args	-	WP_Query args and 'tax_args'
+	* @access	public
 	* @author	Ben Moody
-	*/
+	*/ 
 	public function get_related_posts( $args = array() ) {
-		
+			
 		//Init vars
 		global $post;
-		$tags		= array();
-		$tag_ids	= array();
-		$cats		= array();
-		$cat_ids	= array();
-		$query 		= array();
-		$get_posts	= NULL;
-		$related_posts = NULL;
-		$output		= NULL;
-		$defaults = array(
-			'numberposts' => 5, 'offset' => 0,
-			'category' => 0, 'orderby' => 'post_date',
-			'order' => 'DESC', 'include' => array(),
-			'exclude' => array(), 'meta_key' => '',
-			'meta_value' =>'', 'post_type' => 'post',
-			'suppress_filters' => true,
-			'no_posts_msg'	=> 'No related posts',
-			'relation'		=> 'category__and__tag'
+		$output 	= NULL;
+		$taxes		= array();
+		$tax_query	= array();
+		$defaults	= array(
+			'showposts' 			=> 3,
+			'ignore_sticky_posts' 	=> 1,
+			'orderby'				=> 'post_date',
+			'order'					=> 'DESC',
+			'post_type'				=> NULL,
+			'post_status'			=> 'publish',
+			'tax_args'				=> array( 'post_tag', 'category' )
 		);
 		
 		//Parse args
-		$query = wp_parse_args( $args, $defaults );
+		$args = wp_parse_args( $args, $defaults );
 		
-		//First check the requested relationship between tag and catagories and set the wp_query tax_query arg
-		switch( $query['relation'] ) {
-			case 'category__and__tag':
-				$query['tax_query']['relation'] = 'AND';
-				break;
-			case 'category__or__tag':
-				$query['tax_query']['relation'] = 'OR';
-				break;
-		}
-		
-		//Check if we need categories
-		if( $query['relation'] === 'tag' || $query['relation'] === 'category__and__tag' || $query['relation'] === 'category__or__tag' ) {
+		if( isset($post->ID) ) {
 			
-			//Get all post tag id's
-			$tags = wp_get_post_tags($post->ID);
+			//Ignore current post
+			$args['post__not_in'] = array( $post->ID );		
 			
-			//Loop post tags and cache in query var
-			if( !empty($tags) ) {
-				foreach( $tags as $tag ) {
-					if( isset($tag->term_id) ) {
-						$tag_ids[] = $tag->term_id;
-					}
+			//Get post taxonomies
+			$taxes = wp_get_post_terms(
+	    		$post->ID,
+	    		$args['tax_args'],
+	    		array(
+	    			'orderby'		=> 'count',
+	    			'hide_empty'	=> true
+	    		)
+	    	);
+			
+			//Loop post taxonomies and cache tax query for wp_query
+			foreach( $taxes as $tax ) {
+				
+				if( isset($tax->taxonomy, $tax->term_taxonomy_id) ) {
+					$args['term_taxonomy_ids_in'][] = $tax->term_taxonomy_id;
 				}
 				
-				//Cache a wp_query tax_query arg
-				$query['tax_query'][] =	array(
-					'taxonomy'	=> 'post_tag',
-					'field'		=> 'id',
-					'terms'		=> $tag_ids
-				);
 			}
 			
-		}		
-		
-		
-		//Check if we need categories
-		if( $query['relation'] === 'category' || $query['relation'] === 'category__and__tag' || $query['relation'] === 'category__or__tag' ) {
+			//Filter the mysql query used by wp_query
+			add_filter( 'posts_join', 		array($this, 'tax_posts_join'), 10, 2 );
+			add_filter( 'posts_where', 		array($this, 'tax_posts_where'), 10, 2 );
+			add_filter( 'posts_groupby', 	array($this, 'tax_posts_group_by'), 10, 2 );
+			add_filter( 'posts_request', 	array($this, 'tax_posts_request') );
 			
-			//Get all post cat id's
-			$cats = wp_get_post_categories( $post->ID );
+			$output = new WP_Query( $args );
 			
-			//Loop post categories and cache in query var
-			if( !empty($cats) ) {
-				foreach( $cats as $cat ) {
-					//Get term data on current cat in loop
-					$term = get_category( $cat );
-					//Cache the terms term_id
-					if( isset($term->term_id) ) {
-						$cat_ids[] = $term->term_id;
-					}
-				}
-				
-				//Cache a wp_query tax_query arg
-				$query['tax_query'][] =	array(
-					'taxonomy' 			=> 'category',
-					'terms' 			=> $cat_ids,
-					'field' 			=> 'term_id',
-					'include_children' 	=> false
-				);
-				
-				//Do not relate posts via the 'uncategorized' category
-				$query['tax_query'][] = array(
-					'taxonomy'	=> 'category',
-					'terms'		=> array( 1 ),
-					'field'		=> 'term_id',
-					'operator'	=> 'NOT IN'
-				);
-			}
+			//REMOVE Filter the mysql query used by wp_query
+			remove_filter( 'posts_join', 	array($this, 'tax_posts_join'), 10, 2 );
+			remove_filter( 'posts_where', 	array($this, 'tax_posts_where'), 10, 2 );
+			remove_filter( 'posts_groupby', array($this, 'tax_posts_group_by'), 10, 2 );
+			remove_filter( 'posts_request', array($this, 'tax_posts_request') );
 			
 		}
 		
-		//Lets get all related posts using our new query
-		$query['post__not_in'] 	= array( $post->ID );
-		$get_posts 				= new WP_Query;
-		$related_posts 			= $get_posts->query( $query );
+		return $output;
 		
-		//Start the html to output unordered list
-		$output = '<ul id="prso-related-posts">';
+	}
+	
+	/**
+	* tax_posts_join
+	*
+	* Called By:: $this->get_related_posts()
+	*
+	* Filter is added by get_related_posts and filters the JOIN section
+	* of WP_Query's mysql query.
+	*
+	* This is nessessary to ensure a more effcient mysql query when
+	* there are many taxonomies
+	*
+	* @access	public
+	* @author	Ben Moody
+	*/ 
+	public function tax_posts_join( $sql, $wp_query ) {
 		
-		//Loop any posts found and add a list item for each to output html
-		if( !empty($related_posts) ) {
+		//Init vars
+		global $wpdb;
+		$tax_ids = array();
+		
+		//Confirm that our taxonomy id's are in the query object
+		if( $tax_ids = $wp_query->get('term_taxonomy_ids_in') ) {
 			
-			foreach( $related_posts as $post ) {
-				//Prepare global post data
-				setup_postdata( $post );
-				//Cache html
-				ob_start();
-				?>
-				<li class="related_post">
-					<a href="<?php the_permalink() ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a>
-				</li>
-				<?php
-				$output.= ob_get_contents();
-				ob_end_clean();
-			}
-			
-		} else {
-			
-			//No related posts found
-			if( isset($query['no_posts_msg']) ) {
-				ob_start();
-				?>
-				<li class="related_post">
-					<?php esc_attr_e( $query['no_posts_msg'] ); ?>
-				</li>
-				<?php
-				$output.= ob_get_contents();
-				ob_end_clean();
-			}
+			//Add the INNER JOIN here
+			$sql.= " INNER JOIN {$wpdb->term_relationships} ON ( {$wpdb->posts}.ID = {$wpdb->term_relationships}.object_id )";
 			
 		}
 		
-		//Reset wp query
-		wp_reset_query();
-		//Reset wp global post
-		wp_reset_postdata();
+		return $sql;
+	}
+	
+	/**
+	* tax_posts_where
+	*
+	* Called By:: $this->get_related_posts()
+	*
+	* Filter is added by get_related_posts and filters the WHERE section
+	* of WP_Query's mysql query.
+	*
+	* This is nessessary to ensure a more effcient mysql query when
+	* there are many taxonomies
+	*
+	* @access	public
+	* @author	Ben Moody
+	*/
+	function tax_posts_where( $sql, $wp_query ) {
 		
-		//Close output html
-		$output.= '</ul>';
+		//Init vars
+		global $wpdb;
+		$tax_ids = array();
 		
-		if( !empty($output) ) {
-			echo $output;
+		//Confirm that our taxonomy id's are in the query object
+		if( $tax_ids = $wp_query->get('term_taxonomy_ids_in') ) {
+			
+			//Implode the array of taxonomy ids for use in the mysql query
+			$tax_ids = implode(', ', $tax_ids);
+			
+			//Add the AND to the mysql query
+			$sql.= " AND ( {$wpdb->term_relationships}.term_taxonomy_id IN ({$tax_ids}) ) ";
+			
 		}
 		
+		return $sql;
+	}
+	
+	/**
+	* tax_posts_group_by
+	*
+	* Called By:: $this->get_related_posts()
+	*
+	* Filter is added by get_related_posts and filters the GROUP BY section
+	* of WP_Query's mysql query.
+	*
+	* This is nessessary to ensure a more effcient mysql query when
+	* there are many taxonomies
+	*
+	* @access	public
+	* @author	Ben Moody
+	*/
+	function tax_posts_group_by( $sql, $wp_query ) {
+		
+		//Init vars
+		global $wpdb;
+		$tax_ids = array();
+		
+		//Confirm that our taxonomy id's are in the query object
+		if( $tax_ids = $wp_query->get('term_taxonomy_ids_in') ) {
+			
+			//Add the AND to the mysql query
+			$sql.= " {$wpdb->posts}.ID ";
+			
+		}
+		
+		return $sql;
+	}
+	
+	/**
+	* tax_posts_request
+	*
+	* Called By:: $this->get_related_posts()
+	*
+	* Filter is added by get_related_posts and allows debugging the
+	* mysql query.
+	*
+	* @access	public
+	* @author	Ben Moody
+	*/
+	function tax_posts_request( $sql ) {
+		
+		//prso_debug($sql);
+		//exit();
+		
+		return $sql;
 	}
 	
 	/**
@@ -305,118 +320,6 @@ class PostHelper {
 		}
 		
 		return $content;
-	}
-	
-	/**
-	* loop_category
-	* 
-	* Uses custom wordpress query to prepare a loop for all posts/pages in the requested category. Will fetch all cat parent
-	* and cat child posts.
-	*
-	* HOW TO USE:
-	* Note that you can pass an array of std query_posts() args to for example select only pages or posts using post_type = 'page'
-	*
-	* Instantiate post helper then call function with parent cat slug and args if required, then query posts using query_posts()
-	* 
-	*	global $PrsoPost;
-	*		
-	*	//Call helper to set correct category args and call wp_query to fetch posts in requested category
-	*	$PrsoPost->loop_category( 'news' );
-	
-	*	while ( have_posts() ) : the_post();
-	*	
-	*	IMPORTANT!!!!!!!!
-	*   You MUST make sure to end your custom loop by reseting the worpdress query with wp_reset_query();
-	*
-	* 
-	* @param	string	$parent_cat_slug
-	* @param	array	args
-	* @return	obj		wp_query
-	* @access 	public
-	* @author	Ben Moody
-	*/
-	public function loop_category( $parent_cat_slug = null, $args = array() ) {
-		
-		$_CatObject 		= null; //Cache object for categories
-		$wp_query			= null;
-		$cat_query_str		= null;
-		$query_string		= null;
-		
-		//Default args
-		$defaults = array(
-			'posts_per_page' 	=> 5,
-			'paged'				=> true,
-			'post_type'			=> 'post'
-		);
-		
-		$args = wp_parse_args( $args, $defaults );
-		
-		if( !empty( $parent_cat_slug ) ) {
-			
-			//Get all child categories of 'news'parent cat
-			$child_cats = $this->get_cat_children(
-				array(
-					'child_of' => $parent_cat_slug
-				)
-			);
-			
-			//Loop child_cats and create query sting comprised of all cat id's
-			if( !empty($child_cats['children']) ) {
-				$i = 0;
-				foreach( $child_cats['children'] as $Cat ){
-					if( $i > 0 ) {	
-						
-						$cat_query_str.= ',' . $Cat->term_id;
-					} else {
-						//First in query sting add parent cat and first child
-						$cat_query_str.= $child_cats['args']['child_of'] . ',' . $Cat->term_id;
-					}
-					
-					$i ++;
-				}
-			} else {
-			
-				//No child cats found, just add the parent to the query string
-				$cat_query_str.= $child_cats['args']['child_of'];
-				
-			}
-			
-			//Build query string
-			$query_string.= "cat={$cat_query_str}";
-			foreach( $args as $key => $arg ) {
-				$query_string.= "&{$key}={$arg}";
-			}
-			
-			//Query posts using custom args
-			query_posts( $query_string );
-			
-			//Cache parent cat id
-			$this->loop_cat_parent_id = $child_cats['args']['child_of'];
-			
-			//Call method to filter the wordpress categories widget to display only current category's children
-			add_filter('widget_categories_args', array( &$this, 'loop_category_widget' ) );
-			
-		} else {
-			return false;
-		}
-		
-	}
-
-	/**
-	 * loop_category_widget
-	 *
-	 * Called by 'widget_categories_args' filter, setup by $this->loop_category
-	 * Filters the wordpress default category widget to show only categories which are children of
-	 * the parent category if current loop is a custom loop filtered by category.
-	 *
-	 */
-	public function loop_category_widget( $cat_args ) {
-		
-		if( isset($this->loop_cat_parent_id) ) {
-			$cat_args['child_of'] = $this->loop_cat_parent_id;
-		}
-		
-		return $cat_args;
 	}
 	
 	/**
@@ -567,7 +470,56 @@ class PostHelper {
 		
 	}
 	
+	/**
+	* get_most_recent_post_of_user
+	* 
+	* apply_filters('prso_user_recent_post', $user_id, $args);
+	* 
+	* Returns the post object for the users most recent post.
+	* Can also return other post types by setting the post_type in $args array
+	*
+	* @param	array		args
+	* @access 	public
+	* @author	Ben Moody
+	*/
+	function get_most_recent_post_of_user( $user_id = NULL, $args ) {
 	
+		//Init vars
+		global $wpdb;
+		$most_recent_post 	= array();
+		
+		$defaults = array(
+			'post_type' => 'post'
+		);
+		
+		if( isset($user_id) ) {
+			
+			$args = wp_parse_args( $args, $defaults );
+		
+			extract( $args );
+			
+			//Sanitize vars
+			$user_id = (int) $user_id;
+			$post_type = esc_attr( $post_type );
+			
+			$recent_post = $wpdb->get_row( $wpdb->prepare("SELECT ID, post_date_gmt FROM {$wpdb->posts} WHERE post_author = %d AND post_type = '{$post_type}' AND post_status = 'publish' ORDER BY post_date_gmt DESC LIMIT 1", $user_id ), ARRAY_A);
+		
+			// Make sure we found a post
+			if ( isset($recent_post['ID']) ) {
+				$post_gmt_ts = strtotime($recent_post['post_date_gmt']);
+		
+				// If this is the first post checked or if this post is
+				// newer than the current recent post, make it the new
+				// most recent post.
+				if ( !isset($most_recent_post['post_gmt_ts']) || ( $post_gmt_ts > $most_recent_post['post_gmt_ts'] ) ) {
+					$most_recent_post = get_post( $recent_post['ID'] );
+				}
+			}
+			
+		}
+	
+		return $most_recent_post;
+	}
 	
 	
 	
