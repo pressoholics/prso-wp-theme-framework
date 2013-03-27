@@ -105,11 +105,6 @@ body {
     -moz-transition: -moz-transform 500ms ease;
     -o-transition: -o-transform 500ms ease;
     transition: transform 500ms ease;
-    -webkit-backface-visibility: hidden;
-    -moz-backface-visibility: hidden;
-    -ms-backface-visibility: hidden;
-    -o-backface-visibility: hidden;
-    backface-visibility: hidden;
 }
 
 .side-nav{
