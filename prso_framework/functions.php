@@ -51,6 +51,7 @@
  * 37. load_backstretch_script	=	Register and enqueue script for Backstretch background image script
  * 38. wp_head	-	Add calls to method you want to run during wp_head action
  * 39. update_post_views	-	Adds a view counter to posts/pages
+ * 40. init_cuztom_helper	-	Includes cuztom.php from inc/wordpress-cuztom-helper-master folder
  *
  */
 class PrsoThemeFunctions extends PrsoThemeAppController {
@@ -158,8 +159,11 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  		//Add method for 'wp_head' action
  		add_action( 'wp_head', array($this, 'wp_head') );
  		
- 		//Call method to include Pro Gravity Forms Customizer
+ 		//Call method to include Prso Gravity Forms Customizer
  		$this->gravity_forms_customizer();
+ 		
+ 		//Call method to include Wordpress Cuztom Helper
+ 		$this->init_cuztom_helper();
  		
  	}
  	
@@ -1534,6 +1538,28 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 				
 			}
 			
+		}
+		
+	}
+	
+	/**
+	* cuztom-helper
+	* 
+	* Includes the Wordpress Cuztom Helper inc file
+	* This helper class allows quick and easy creation of custom Post Types and Meta Fields
+	*
+	* See the template file in ThemeRoot/cusztom_post_types folder for example on how to use this
+	*
+	* @access 	private
+	* @author	Ben Moody
+	*/
+	private function init_cuztom_helper() {
+		
+		//Init vars
+		$file_path = get_template_directory() . "/prso_framework/includes/wordpress-cuztom-helper-master/cuztom.php";
+		
+		if( file_exists($file_path) ) {
+			require_once( $file_path );
 		}
 		
 	}
