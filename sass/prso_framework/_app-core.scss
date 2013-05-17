@@ -53,6 +53,13 @@ span.gform_description {
     border-color: #C60F13;
 }
 
+/* Main Content */
+article {
+	ul, ol, dl {
+		@include rem(padding-left,40px);
+	}
+}
+
 
 /**** Footer */
 
