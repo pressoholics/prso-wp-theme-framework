@@ -1,0 +1,51 @@
+/* Custom Sass Mixins */
+
+/* Convert PX units to REMs and add px fallback of property.
+Ex: @include rem(line-height, 25px);
+*/
+@mixin rem($property, $pxval) {
+	#{$property}: #{$pxval};
+	#{$property}: remCalc($pxval);
+}
+@function remCalc($pxWidth) {
+  @return $pxWidth / $em-base * 1rem;
+}
+
+/* Helper to add propoerty across browser vendors */
+@mixin vendorize($property, $value) {
+	-webkit-#{$property}: $value;
+	-moz-#{$property}: $value;
+	-ms-#{$property}: $value;
+	-o-#{$property}: $value;
+	#{$property}: $value;
+}
+
+/* Clear Fix Helper */
+@mixin clear() {
+    &:before, &:after {
+        content: "\0020";
+        display: block;
+        height: 0;
+        overflow: hidden;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+/* Helper to style all Link Hover/Active/Focus */
+@mixin hoverActiveFocus($property, $value) {
+    &:hover, &:active, &:focus {
+        #{$property}: $value;
+    }
+}
+
+/* Helper to return css required for left overlap browser bars */
+@mixin leftBrowserBar() {
+	bottom: 0;
+	content: "";
+	position: absolute;
+	top: 0;
+	width: 9999px;
+	right: 100%;
+}

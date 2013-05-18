@@ -51,6 +51,7 @@
  * 37. load_backstretch_script	=	Register and enqueue script for Backstretch background image script
  * 38. wp_head	-	Add calls to method you want to run during wp_head action
  * 39. update_post_views	-	Adds a view counter to posts/pages
+ * 40. init_cuztom_helper	-	Includes cuztom.php from inc/wordpress-cuztom-helper-master folder
  *
  */
 class PrsoThemeFunctions extends PrsoThemeAppController {
@@ -158,8 +159,11 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  		//Add method for 'wp_head' action
  		add_action( 'wp_head', array($this, 'wp_head') );
  		
- 		//Call method to include Pro Gravity Forms Customizer
+ 		//Call method to include Prso Gravity Forms Customizer
  		$this->gravity_forms_customizer();
+ 		
+ 		//Call method to include Wordpress Cuztom Helper
+ 		$this->init_cuztom_helper();
  		
  	}
  	
@@ -488,30 +492,14 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 	*/
  	public function enqueue_theme_styles() {
  		
- 		//Register Zurb Foundation Full CSS
-    	//wp_register_style( 'foundation-app', get_template_directory_uri() . '/stylesheets/foundation.css', array(), '3.2.5', 'all' );
-    	
-    	//Register Zurb Foundation Min CSS
-    	wp_register_style( 'foundation-app', get_template_directory_uri() . '/stylesheets/foundation.min.css', array(), '3.2.5', 'all' );
-   		
-   		//Register Theme Stylsheet - req by wordpress, use app.css for custom styles
- 		wp_register_style( 'presso-theme-base', get_stylesheet_directory_uri() . '/style.css', array( 'foundation-app' ), filemtime( get_stylesheet_directory() . '/style.css' ), 'all' );
-   		
-   		//Register Wordpress Specific Stylsheet
- 		wp_register_style( 'presso-theme-wp', get_template_directory_uri() . '/stylesheets/app-wordpress.css', array( 'presso-theme-base' ), filemtime( get_template_directory() . '/stylesheets/app-wordpress.css' ), 'all' );
- 		
- 		//Register the Prso Theme Core stylesheet
-	    wp_register_style( 'presso-theme-core', get_template_directory_uri() . '/stylesheets/app-core.css', array( 'presso-theme-wp' ), filemtime( get_template_directory() . '/stylesheets/app-core.css' ), 'all' );
- 		
  		//Register the App's specific stylesheet - NOTE if child theme is used will try to find app.css in child dir
 	    if( file_exists( get_stylesheet_directory() . '/stylesheets/app.css' ) ) {
-	    	wp_register_style( 'presso-theme-app', get_stylesheet_directory_uri() . '/stylesheets/app.css', array( 'presso-theme-wp' ), filemtime( get_stylesheet_directory() . '/stylesheets/app.css' ), 'all' );
+	    	wp_register_style( 'presso-theme-app', get_stylesheet_directory_uri() . '/stylesheets/app.css', array(), filemtime( get_stylesheet_directory() . '/stylesheets/app.css' ), 'all' );
     	} else {
-    		wp_register_style( 'presso-theme-app', get_template_directory_uri() . '/stylesheets/app.css', array( 'presso-theme-wp' ), filemtime( get_template_directory() . '/stylesheets/app.css' ), 'all' );
+    		wp_register_style( 'presso-theme-app', get_template_directory_uri() . '/stylesheets/app.css', array(), filemtime( get_template_directory() . '/stylesheets/app.css' ), 'all' );
     	}
     	
     	//Enqueue App's specific stylesheet - will enqueue all required styles as well :)
-    	wp_enqueue_style( 'presso-theme-core' );
     	wp_enqueue_style( 'presso-theme-app' );
  		
  	}
@@ -1550,6 +1538,28 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 				
 			}
 			
+		}
+		
+	}
+	
+	/**
+	* cuztom-helper
+	* 
+	* Includes the Wordpress Cuztom Helper inc file
+	* This helper class allows quick and easy creation of custom Post Types and Meta Fields
+	*
+	* See the template file in ThemeRoot/cusztom_post_types folder for example on how to use this
+	*
+	* @access 	private
+	* @author	Ben Moody
+	*/
+	private function init_cuztom_helper() {
+		
+		//Init vars
+		$file_path = get_template_directory() . "/prso_framework/includes/wordpress-cuztom-helper-master/cuztom.php";
+		
+		if( file_exists($file_path) ) {
+			require_once( $file_path );
 		}
 		
 	}

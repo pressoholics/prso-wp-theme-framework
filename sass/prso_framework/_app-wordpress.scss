@@ -46,57 +46,29 @@ body {
 
 .mobile-nav-container{
 	float: left;
-	width: 55%;
+	width: 90%;
 	height: 100%;
 	position: absolute;
 	top: 0;
 	background: none repeat scroll 0 0 #F2F2F2;
-	box-shadow: -1.5em 0 1.5em -0.75em rgba(0, 0, 0, 0.25) inset;
-	-webkit-box-shadow: inset -1.5em 0 1.5em -0.75em rgba(0, 0, 0, 0.25);
-    -moz-box-shadow: inset -1.5em 0 1.5em -0.75em rgba(0, 0, 0, 0.25);
-	
-	-webkit-transform: translate3d(-100%, 0, 0);
-    -moz-transform: translate3d(-100%, 0, 0);
-    -ms-transform: translate3d(-100%, 0, 0);
-    -o-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0);
-    -webkit-backface-visibility: hidden;
-    -moz-backface-visibility: hidden;
-    -ms-backface-visibility: hidden;
-    -o-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-perspective: 1000;
-    
-    transform-origin: -100% 0 0;
+	@include vendorize(box-shadow,-1.5em 0 1.5em -0.75em rgba(0, 0, 0, 0.25) inset);  
+    @include vendorize(transform,translate3d(-100%, 0, 0));
+	@include vendorize(backface-visibility,hidden);
+    @include vendorize(perspective,1000);
+    @include vendorize(transform-origin,-100% 0 0);
 }
 
 .active .mobile-nav-container{
 	display: block;
-	-webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-    -ms-transform: translate3d(0, 0, 0);
-    -o-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-    -webkit-backface-visibility: hidden;
-    -moz-backface-visibility: hidden;
-    -ms-backface-visibility: hidden;
-    -o-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-perspective: 1000;
+    @include vendorize(transform,translate3d(0, 0, 0));
+	@include vendorize(backface-visibility,hidden);
+    @include vendorize(perspective,1000);
 }
 
 .active #content{
-    -webkit-transform: translate3d(55%, 0, 0);
-    -moz-transform: translate3d(55%, 0, 0);
-    -ms-transform: translate3d(55%, 0, 0);
-    -o-transform: translate3d(55%, 0, 0);
-    transform: translate3d(55%, 0, 0);
-    -webkit-backface-visibility: hidden;
-    -moz-backface-visibility: hidden;
-    -ms-backface-visibility: hidden;
-    -o-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-perspective: 1000;
+	@include vendorize(transform,translate3d(90%, 0, 0));
+	@include vendorize(backface-visibility,hidden);
+    @include vendorize(perspective,1000);
 }
 
 .mobile-nav-container,
@@ -313,10 +285,7 @@ code, pre {
 
 .featured-banner .content {
 	background-color: #ffffff;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
+	@include vendorize(background-size,cover);
 }
 
 /* page styling */
@@ -385,6 +354,10 @@ a.comment-reply-link{
 #comment-form-elements{
 	list-style-type: none;
 	margin: 0;
+}
+
+.comment-author {
+	width: 100%;
 }
 
 /* specific post-type styles */
