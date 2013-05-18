@@ -11,6 +11,7 @@
  *  3. get_page_content				-	apply_filters('prso_get_page_content', NULL, $page_id_slug);
  *  4. prev_next_pagination			-	do_action('prso_query_posts_by_category', $cat_slug, $args);
  *  5. get_most_recent_post_of_user	-	do_action('prso_prev_next_permalink', $args);
+ *	6. deep_mobile_nav				-	do_action('prso_deep_mobile_nav', $args);
  * 
  */
 class PostHelper {
