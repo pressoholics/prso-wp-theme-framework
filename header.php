@@ -104,6 +104,6 @@
 				</div>
 				
 				<!-- Mobile nav for deep (Teriary) pages if page has any !-->
-				<div id="mobile-deep-nav-container" class="twelve columns show-for-small">
+				<div id="mobile-deep-nav-container" class="twelve columns show-for-small show-for-medium-portrait">
 					<?php do_action( 'prso_deep_mobile_nav' ); ?>
 				</div>
