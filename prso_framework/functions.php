@@ -52,6 +52,7 @@
  * 38. wp_head	-	Add calls to method you want to run during wp_head action
  * 39. update_post_views	-	Adds a view counter to posts/pages
  * 40. init_cuztom_helper	-	Includes cuztom.php from inc/wordpress-cuztom-helper-master folder
+ * 41. add_nav_parent_child_classes	-	Filter to add nav depth specific css classes to nav items
  *
  */
 class PrsoThemeFunctions extends PrsoThemeAppController {
@@ -164,6 +165,9 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  		
  		//Call method to include Wordpress Cuztom Helper
  		$this->init_cuztom_helper();
+ 		
+ 		//Add filter to apply parent/child classes to nav menu items
+ 		add_filter( 'walker_nav_menu_start_el', array($this, 'add_nav_parent_child_classes'), 10, 4 );
  		
  	}
  	
@@ -1562,6 +1566,61 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 			require_once( $file_path );
 		}
 		
+	}
+	
+	/**
+	* add_nav_parent_child_classes
+	* 
+	* Called by wp filter: 'walker_nav_menu_start_el'
+	*
+	* Adds nav depth specific classes to nav links - parent/child/grandchild
+	*
+	* CSS Classes: 'parent-nav-item', 'child-nav-item', 'grandchild-nav-item'
+	*
+	* @access 	private
+	* @author	Ben Moody
+	*/
+	public function add_nav_parent_child_classes( $item_output, $item, $depth = 0, $args ) {
+		
+		if( isset($item->ID, $item->title, $item->url) ) {
+			
+			//Loop nav items and detect if parent or child
+			if( $depth === 0 ) {
+				
+				//Parent nav element with children
+				ob_start();
+				?>
+				<a class="parent-nav-item" href="<?php echo $item->url; ?>"><?php echo $item->title; ?></a>
+				<?php
+				$item_output = ob_get_contents();
+				ob_end_clean();
+				
+			} elseif( $depth === 1 ) {
+				
+				//Child nav element
+				ob_start();
+				?>
+				<a class="child-nav-item" href="<?php echo $item->url; ?>"><?php echo $item->title; ?></a>
+				<?php
+				$item_output = ob_get_contents();
+				ob_end_clean();
+				
+			} elseif( $depth === 2 ) {
+				
+				//GrandChild nav element
+				ob_start();
+				?>
+				<a class="grandchild-nav-item" href="<?php echo $item->url; ?>"><?php echo $item->title; ?></a>
+				<?php
+				$item_output = ob_get_contents();
+				ob_end_clean();
+				
+			}
+			
+		}
+		
+		
+		return $item_output;
 	}
 	
 }
