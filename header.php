@@ -53,9 +53,9 @@
 			    	array( 
 			    		'menu' 				=> 'mobile_nav', /* menu name */
 			    		'menu_class' 		=> 'side-nav tabs vertical',
-			    		'theme_location' 	=> 'main_nav', /* where in the theme it's assigned */
+			    		'theme_location' 	=> 'mobile_nav', /* where in the theme it's assigned */
 			    		'container_class' 	=> 'show-for-small show-for-medium-portrait mobile-nav-container', /* container tag */
-			    		'depth' 			=> '1',
+			    		'depth' 			=> '2',
 			    		'fallback_cb'		=> false
 			    	)
 			    );
@@ -99,5 +99,11 @@
 							}
 						?>
 						
+						
 					</header> <!-- end header -->
+				</div>
+				
+				<!-- Mobile nav for deep (Teriary) pages if page has any !-->
+				<div id="mobile-deep-nav-container" class="twelve columns show-for-small">
+					<?php do_action( 'prso_deep_mobile_nav' ); ?>
 				</div>

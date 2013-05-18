@@ -58,11 +58,18 @@ class PostHelper {
  		$this->add_action( 'prso_prev_next_permalink', 'prev_next_pagination', 10, 1 );
  		
  		/**
- 		* 4. prso_user_recent_post
+ 		* 5. prso_user_recent_post
  		* 	 Returns the most recent post of the user based on supplied user_id
  		*	 can also return custom post types vis post_type in $args array
  		*/
  		$this->add_filter( 'prso_user_recent_post', 'get_most_recent_post_of_user', 10, 2 );
+ 		
+ 		/**
+ 		* 6. prso_deep_mobile_nav
+ 		* 	 Detects if current post/page is a child page itself and then detects if it
+ 		*	 has any children of it's own. If so it then builds a tertiary nav dropdown
+ 		*/
+ 		$this->add_action( 'prso_deep_mobile_nav', 'deep_mobile_nav', 10, 1 );
  		
  	}
 	
@@ -482,7 +489,7 @@ class PostHelper {
 	* @access 	public
 	* @author	Ben Moody
 	*/
-	function get_most_recent_post_of_user( $user_id = NULL, $args ) {
+	public function get_most_recent_post_of_user( $user_id = NULL, $args ) {
 	
 		//Init vars
 		global $wpdb;
@@ -521,7 +528,96 @@ class PostHelper {
 		return $most_recent_post;
 	}
 	
-	
+	/**
+	* deep_mobile_nav
+	* 
+	* do_action('prso_deep_mobile_nav', $args);
+	* 
+	* Detects if current page/post has a parent (is at least one level deep).
+	* If so, it then detects if the page/post has any children, if it does then
+	* the function will build a select dropdown of all the child pages and output
+	* some jquery to redirect users to tertiary pages when selected.
+	*
+	* @param	array		args
+	* @access 	public
+	* @author	Ben Moody
+	*/
+	public function deep_mobile_nav( $args ) {
+		
+		//Init vars
+		global $post;
+		$child_posts 	= array();
+		$html_output	= NULL;
+		$defaults 		= array(
+			'post_parent'	=>	$post->ID,
+			'post_type'		=>	'any',
+			'numberposts'	=> -1,
+			'post_status'	=> 'published',
+			'order'			=> 'ASC'
+		);
+		
+		$args = wp_parse_args( $args, $defaults );
+		
+		//First check if current page has a parent (is at least one page deep)
+		if( isset($post->post_parent) && !empty($post->post_parent) ) {
+		
+			//Get current post/page children
+			$child_posts = get_children( $args );
+			
+			//Loop any child posts and build html for drop down menu
+			if( !empty($child_posts) && is_array($child_posts) ) {
+				
+				//Start html
+				$html_output = '<select id="prso-mobile-deep-nav">';
+				
+				ob_start();
+				
+				//Loop posts and build dropdown html
+				foreach( $child_posts as $post_id => $PostObj ) {
+					
+					?>
+					<option value="<?php echo get_permalink( $post_id ); ?>"><?php esc_attr_e( $PostObj->post_title ); ?></option>
+					<?php
+					
+				}
+				
+				//Add jquery for menu
+				?>
+				<script type="text/javascript">
+					jQuery.noConflict();
+					(function($) {
+					
+						$(document).ready(function(){
+							var prsoDeepNav = $('#prso-mobile-deep-nav');
+							
+							//Detect change on mobile deep nav and redirect user to that page url
+							if( prsoDeepNav.length > 0 ) {
+								prsoDeepNav.change(function(){
+									window.location = $(this).find('option:selected').val();
+								});
+							}
+							
+						});
+					
+					})(jQuery);
+				</script>
+				<?php
+				
+				$html_output.= ob_get_contents();
+				ob_end_clean();
+				
+				//End html
+				$html_output.= '</select>';
+				
+			}
+			
+		}
+		
+		//Echo out the html
+		if( !empty($html_output) ) {
+			echo $html_output;
+		}
+	}
 	
 	
 	
