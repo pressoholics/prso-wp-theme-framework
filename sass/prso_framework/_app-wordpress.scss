@@ -79,6 +79,48 @@ body {
     transition: transform 500ms ease;
 }
 
+#mobile-nav-action {
+	background: $black;
+	.menu-action {
+		width: 40px;
+		margin: 5px 0;
+	}
+	.button.small {
+		padding: 7px 10px 8px;
+	}
+}
+
+.mobile-nav-container {
+	.tabs.vertical {
+		li {
+			a {
+				border-bottom: 1px solid #F8F8F8;
+			}
+		}
+		li.active {
+			border-top: none;
+			border-left: none;
+		}
+		li ul {
+			li {
+				a.child-nav-item {
+					background: none;
+					border-left: 1px solid #E6E6E6;
+					border-top: 1px solid #E6E6E6;
+					color: #4D4D4D;
+				}
+			}
+			li.active {
+				a.child-nav-item {
+					border-top: none;
+					border-left: 3px solid $black;
+					background: none;
+				}
+			}
+		}
+	}
+}
+
 .side-nav{
 	height: auto;
 }

@@ -64,20 +64,23 @@
 			<!-- Content Div !-->
 			<div id="content">
 				
+				<div id="mobile-nav-action" class="twelve columns show-for-small show-for-medium-portrait">
+					<div class="menu-action">
+				  	    <a href="#sidebar" id="sidebarButton" class="sidebar-button small secondary button">
+							<svg xml:space="preserve" enable-background="new 0 0 48 48" viewBox="0 0 48 48" height="18px" width="18px" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" id="Layer_1" version="1.1">
+								<line y2="8.907" x2="48" y1="8.907" x1="0" stroke-miterlimit="10" stroke-width="8" stroke="#000000" fill="none"/>
+								<line y2="24.173" x2="48" y1="24.173" x1="0" stroke-miterlimit="10" stroke-width="8" stroke="#000000" fill="none"/>
+								<line y2="39.439" x2="48" y1="39.439" x1="0" stroke-miterlimit="10" stroke-width="8" stroke="#000000" fill="none"/>
+								Menu
+							</svg>
+						</a>
+					</div>
+				</div>
+				
 				<div class="twelve columns">
 					<header role="banner" id="top-header">
 						
 						<div class="siteinfo">
-							<div class="show-for-small show-for-medium-portrait menu-action">
-						  	    <a href="#sidebar" id="sidebarButton" class="sidebar-button small secondary button">
-									<svg xml:space="preserve" enable-background="new 0 0 48 48" viewBox="0 0 48 48" height="18px" width="18px" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" id="Layer_1" version="1.1">
-										<line y2="8.907" x2="48" y1="8.907" x1="0" stroke-miterlimit="10" stroke-width="8" stroke="#000000" fill="none"/>
-										<line y2="24.173" x2="48" y1="24.173" x1="0" stroke-miterlimit="10" stroke-width="8" stroke="#000000" fill="none"/>
-										<line y2="39.439" x2="48" y1="39.439" x1="0" stroke-miterlimit="10" stroke-width="8" stroke="#000000" fill="none"/>
-										Menu
-									</svg>
-								</a>
-							</div>
 							<h1><a class="brand" id="logo" href="<?php echo get_bloginfo('url'); ?>"><?php bloginfo('name'); ?></a></h1>
 							<h4 class="subhead"><?php echo get_bloginfo ( 'description' ); ?></h4>
 						</div>
