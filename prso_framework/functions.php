@@ -132,9 +132,9 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  		add_filter( 'image_send_to_editor', array($this, 'remove_thumbnail_dimensions'), 10 );
  		
  		//Deletes all CSS classes and id's, except for those listed in the array
- 		add_filter( 'nav_menu_css_class', array($this, 'custom_wp_nav_menu') );
- 		add_filter( 'nav_menu_item_id', array($this, 'custom_wp_nav_menu') );
- 		add_filter( 'page_css_class', array($this, 'custom_wp_nav_menu') );
+ 		//add_filter( 'nav_menu_css_class', array($this, 'custom_wp_nav_menu') );
+ 		//add_filter( 'nav_menu_item_id', array($this, 'custom_wp_nav_menu') );
+ 		//add_filter( 'page_css_class', array($this, 'custom_wp_nav_menu') );
  		
  		//change the standard class that wordpress puts on the active menu item in the nav bar
  		add_filter( 'wp_nav_menu', array($this, 'current_to_active') );
