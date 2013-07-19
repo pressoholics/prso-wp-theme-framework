@@ -6917,6 +6917,5248 @@ article ul.accordion, article ol.accordion, article dl.accordion {
     display: none !important;
   }
 }
+/**
+* app-animate.scss
+* 
+* Provides CSS 3 based animation classes
+* 
+* @author	Ben Moody
+*/
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\0000310}}
+.animated {
+  -webkit-animation-duration: 2s;
+  -moz-animation-duration: 2s;
+  -o-animation-duration: 2s;
+  animation-duration: 2s;
+  -webkit-animation-fill-mode: both;
+  -moz-animation-fill-mode: both;
+  -o-animation-fill-mode: both;
+  animation-fill-mode: both;
+  visibility: visible !important;
+  zoom: 1;
+  filter: alpha(opacity=100);
+  opacity: 1;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\0000324}}
+.animated-quick {
+  -webkit-animation-duration: 1s;
+  -moz-animation-duration: 1s;
+  -o-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  -moz-animation-fill-mode: both;
+  -o-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+/*
+Animate.css - http://daneden.me/animate
+Licensed under the MIT license
+
+Copyright (c) 2013 Daniel Eden
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+/*
+Modified by UNITED THEMES 2013
+http://unitedthemes.com 
+
+Big thanks to Daniel Eden
+*/
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\0000356}}
+.animated.hinge {
+  -webkit-animation-duration: 2s;
+  -moz-animation-duration: 2s;
+  -o-animation-duration: 2s;
+  animation-duration: 2s;
+}
+
+@-webkit-keyframes flash {
+  /* line 64, ../sass/prso_framework/_app-animate.scss */
+  0%, 50%, 100% {
+    opacity: 1;
+  }
+
+  /* line 65, ../sass/prso_framework/_app-animate.scss */
+  25%, 75% {
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes flash {
+  /* line 69, ../sass/prso_framework/_app-animate.scss */
+  0%, 50%, 100% {
+    opacity: 1;
+  }
+
+  /* line 70, ../sass/prso_framework/_app-animate.scss */
+  25%, 75% {
+    opacity: 0;
+  }
+}
+
+@-o-keyframes flash {
+  /* line 74, ../sass/prso_framework/_app-animate.scss */
+  0%, 50%, 100% {
+    opacity: 1;
+  }
+
+  /* line 75, ../sass/prso_framework/_app-animate.scss */
+  25%, 75% {
+    opacity: 0;
+  }
+}
+
+@keyframes flash {
+  /* line 79, ../sass/prso_framework/_app-animate.scss */
+  0%, 50%, 100% {
+    opacity: 1;
+  }
+
+  /* line 80, ../sass/prso_framework/_app-animate.scss */
+  25%, 75% {
+    opacity: 0;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\0000383}}
+.flash {
+  -webkit-animation-name: flash;
+  -moz-animation-name: flash;
+  -o-animation-name: flash;
+  animation-name: flash;
+}
+
+@-webkit-keyframes shake {
+  /* line 90, ../sass/prso_framework/_app-animate.scss */
+  0%, 100% {
+    -webkit-transform: translateX(0);
+  }
+
+  /* line 91, ../sass/prso_framework/_app-animate.scss */
+  10%, 30%, 50%, 70%, 90% {
+    -webkit-transform: translateX(-10px);
+  }
+
+  /* line 92, ../sass/prso_framework/_app-animate.scss */
+  20%, 40%, 60%, 80% {
+    -webkit-transform: translateX(10px);
+  }
+}
+
+@-moz-keyframes shake {
+  /* line 96, ../sass/prso_framework/_app-animate.scss */
+  0%, 100% {
+    -moz-transform: translateX(0);
+  }
+
+  /* line 97, ../sass/prso_framework/_app-animate.scss */
+  10%, 30%, 50%, 70%, 90% {
+    -moz-transform: translateX(-10px);
+  }
+
+  /* line 98, ../sass/prso_framework/_app-animate.scss */
+  20%, 40%, 60%, 80% {
+    -moz-transform: translateX(10px);
+  }
+}
+
+@-o-keyframes shake {
+  /* line 102, ../sass/prso_framework/_app-animate.scss */
+  0%, 100% {
+    -o-transform: translateX(0);
+  }
+
+  /* line 103, ../sass/prso_framework/_app-animate.scss */
+  10%, 30%, 50%, 70%, 90% {
+    -o-transform: translateX(-10px);
+  }
+
+  /* line 104, ../sass/prso_framework/_app-animate.scss */
+  20%, 40%, 60%, 80% {
+    -o-transform: translateX(10px);
+  }
+}
+
+@keyframes shake {
+  /* line 108, ../sass/prso_framework/_app-animate.scss */
+  0%, 100% {
+    transform: translateX(0);
+  }
+
+  /* line 109, ../sass/prso_framework/_app-animate.scss */
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-10px);
+  }
+
+  /* line 110, ../sass/prso_framework/_app-animate.scss */
+  20%, 40%, 60%, 80% {
+    transform: translateX(10px);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\00003113}}
+.shake {
+  -webkit-animation-name: shake;
+  -moz-animation-name: shake;
+  -o-animation-name: shake;
+  animation-name: shake;
+}
+
+@-webkit-keyframes bounce {
+  /* line 120, ../sass/prso_framework/_app-animate.scss */
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateY(0);
+  }
+
+  /* line 121, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    -webkit-transform: translateY(-30px);
+  }
+
+  /* line 122, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    -webkit-transform: translateY(-15px);
+  }
+}
+
+@-moz-keyframes bounce {
+  /* line 126, ../sass/prso_framework/_app-animate.scss */
+  0%, 20%, 50%, 80%, 100% {
+    -moz-transform: translateY(0);
+  }
+
+  /* line 127, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    -moz-transform: translateY(-30px);
+  }
+
+  /* line 128, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    -moz-transform: translateY(-15px);
+  }
+}
+
+@-o-keyframes bounce {
+  /* line 132, ../sass/prso_framework/_app-animate.scss */
+  0%, 20%, 50%, 80%, 100% {
+    -o-transform: translateY(0);
+  }
+
+  /* line 133, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    -o-transform: translateY(-30px);
+  }
+
+  /* line 134, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    -o-transform: translateY(-15px);
+  }
+}
+
+@keyframes bounce {
+  /* line 137, ../sass/prso_framework/_app-animate.scss */
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+
+  /* line 138, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    transform: translateY(-30px);
+  }
+
+  /* line 139, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    transform: translateY(-15px);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\00003142}}
+.bounce {
+  -webkit-animation-name: bounce;
+  -moz-animation-name: bounce;
+  -o-animation-name: bounce;
+  animation-name: bounce;
+}
+
+@-webkit-keyframes tada {
+  /* line 149, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform: scale(1);
+  }
+
+  /* line 150, ../sass/prso_framework/_app-animate.scss */
+  10%, 20% {
+    -webkit-transform: scale(0.9) rotate(-3deg);
+  }
+
+  /* line 151, ../sass/prso_framework/_app-animate.scss */
+  30%, 50%, 70%, 90% {
+    -webkit-transform: scale(1.1) rotate(3deg);
+  }
+
+  /* line 152, ../sass/prso_framework/_app-animate.scss */
+  40%, 60%, 80% {
+    -webkit-transform: scale(1.1) rotate(-3deg);
+  }
+
+  /* line 153, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform: scale(1) rotate(0);
+  }
+}
+
+@-moz-keyframes tada {
+  /* line 157, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform: scale(1);
+  }
+
+  /* line 158, ../sass/prso_framework/_app-animate.scss */
+  10%, 20% {
+    -moz-transform: scale(0.9) rotate(-3deg);
+  }
+
+  /* line 159, ../sass/prso_framework/_app-animate.scss */
+  30%, 50%, 70%, 90% {
+    -moz-transform: scale(1.1) rotate(3deg);
+  }
+
+  /* line 160, ../sass/prso_framework/_app-animate.scss */
+  40%, 60%, 80% {
+    -moz-transform: scale(1.1) rotate(-3deg);
+  }
+
+  /* line 161, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform: scale(1) rotate(0);
+  }
+}
+
+@-o-keyframes tada {
+  /* line 165, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform: scale(1);
+  }
+
+  /* line 166, ../sass/prso_framework/_app-animate.scss */
+  10%, 20% {
+    -o-transform: scale(0.9) rotate(-3deg);
+  }
+
+  /* line 167, ../sass/prso_framework/_app-animate.scss */
+  30%, 50%, 70%, 90% {
+    -o-transform: scale(1.1) rotate(3deg);
+  }
+
+  /* line 168, ../sass/prso_framework/_app-animate.scss */
+  40%, 60%, 80% {
+    -o-transform: scale(1.1) rotate(-3deg);
+  }
+
+  /* line 169, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes tada {
+  /* line 173, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform: scale(1);
+  }
+
+  /* line 174, ../sass/prso_framework/_app-animate.scss */
+  10%, 20% {
+    transform: scale(0.9) rotate(-3deg);
+  }
+
+  /* line 175, ../sass/prso_framework/_app-animate.scss */
+  30%, 50%, 70%, 90% {
+    transform: scale(1.1) rotate(3deg);
+  }
+
+  /* line 176, ../sass/prso_framework/_app-animate.scss */
+  40%, 60%, 80% {
+    transform: scale(1.1) rotate(-3deg);
+  }
+
+  /* line 177, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\00003180}}
+.tada {
+  -webkit-animation-name: tada;
+  -moz-animation-name: tada;
+  -o-animation-name: tada;
+  animation-name: tada;
+}
+
+@-webkit-keyframes swing {
+  /* line 187, ../sass/prso_framework/_app-animate.scss */
+  20%, 40%, 60%, 80%, 100% {
+    -webkit-transform-origin: top center;
+  }
+
+  /* line 188, ../sass/prso_framework/_app-animate.scss */
+  20% {
+    -webkit-transform: rotate(15deg);
+  }
+
+  /* line 189, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    -webkit-transform: rotate(-10deg);
+  }
+
+  /* line 190, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    -webkit-transform: rotate(5deg);
+  }
+
+  /* line 191, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -webkit-transform: rotate(-5deg);
+  }
+
+  /* line 192, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform: rotate(0deg);
+  }
+}
+
+@-moz-keyframes swing {
+  /* line 196, ../sass/prso_framework/_app-animate.scss */
+  20% {
+    -moz-transform: rotate(15deg);
+  }
+
+  /* line 197, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    -moz-transform: rotate(-10deg);
+  }
+
+  /* line 198, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    -moz-transform: rotate(5deg);
+  }
+
+  /* line 199, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -moz-transform: rotate(-5deg);
+  }
+
+  /* line 200, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform: rotate(0deg);
+  }
+}
+
+@-o-keyframes swing {
+  /* line 204, ../sass/prso_framework/_app-animate.scss */
+  20% {
+    -o-transform: rotate(15deg);
+  }
+
+  /* line 205, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    -o-transform: rotate(-10deg);
+  }
+
+  /* line 206, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    -o-transform: rotate(5deg);
+  }
+
+  /* line 207, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -o-transform: rotate(-5deg);
+  }
+
+  /* line 208, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform: rotate(0deg);
+  }
+}
+
+@keyframes swing {
+  /* line 212, ../sass/prso_framework/_app-animate.scss */
+  20% {
+    transform: rotate(15deg);
+  }
+
+  /* line 213, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    transform: rotate(-10deg);
+  }
+
+  /* line 214, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    transform: rotate(5deg);
+  }
+
+  /* line 215, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    transform: rotate(-5deg);
+  }
+
+  /* line 216, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\00003219}}
+.swing {
+  -webkit-transform-origin: top center;
+  -moz-transform-origin: top center;
+  -o-transform-origin: top center;
+  transform-origin: top center;
+  -webkit-animation-name: swing;
+  -moz-animation-name: swing;
+  -o-animation-name: swing;
+  animation-name: swing;
+}
+
+/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
+@-webkit-keyframes wobble {
+  /* line 232, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform: translateX(0%);
+  }
+
+  /* line 233, ../sass/prso_framework/_app-animate.scss */
+  15% {
+    -webkit-transform: translateX(-25%) rotate(-5deg);
+  }
+
+  /* line 234, ../sass/prso_framework/_app-animate.scss */
+  30% {
+    -webkit-transform: translateX(20%) rotate(3deg);
+  }
+
+  /* line 235, ../sass/prso_framework/_app-animate.scss */
+  45% {
+    -webkit-transform: translateX(-15%) rotate(-3deg);
+  }
+
+  /* line 236, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    -webkit-transform: translateX(10%) rotate(2deg);
+  }
+
+  /* line 237, ../sass/prso_framework/_app-animate.scss */
+  75% {
+    -webkit-transform: translateX(-5%) rotate(-1deg);
+  }
+
+  /* line 238, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform: translateX(0%);
+  }
+}
+
+@-moz-keyframes wobble {
+  /* line 242, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform: translateX(0%);
+  }
+
+  /* line 243, ../sass/prso_framework/_app-animate.scss */
+  15% {
+    -moz-transform: translateX(-25%) rotate(-5deg);
+  }
+
+  /* line 244, ../sass/prso_framework/_app-animate.scss */
+  30% {
+    -moz-transform: translateX(20%) rotate(3deg);
+  }
+
+  /* line 245, ../sass/prso_framework/_app-animate.scss */
+  45% {
+    -moz-transform: translateX(-15%) rotate(-3deg);
+  }
+
+  /* line 246, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    -moz-transform: translateX(10%) rotate(2deg);
+  }
+
+  /* line 247, ../sass/prso_framework/_app-animate.scss */
+  75% {
+    -moz-transform: translateX(-5%) rotate(-1deg);
+  }
+
+  /* line 248, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform: translateX(0%);
+  }
+}
+
+@-o-keyframes wobble {
+  /* line 252, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform: translateX(0%);
+  }
+
+  /* line 253, ../sass/prso_framework/_app-animate.scss */
+  15% {
+    -o-transform: translateX(-25%) rotate(-5deg);
+  }
+
+  /* line 254, ../sass/prso_framework/_app-animate.scss */
+  30% {
+    -o-transform: translateX(20%) rotate(3deg);
+  }
+
+  /* line 255, ../sass/prso_framework/_app-animate.scss */
+  45% {
+    -o-transform: translateX(-15%) rotate(-3deg);
+  }
+
+  /* line 256, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    -o-transform: translateX(10%) rotate(2deg);
+  }
+
+  /* line 257, ../sass/prso_framework/_app-animate.scss */
+  75% {
+    -o-transform: translateX(-5%) rotate(-1deg);
+  }
+
+  /* line 258, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform: translateX(0%);
+  }
+}
+
+@keyframes wobble {
+  /* line 262, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform: translateX(0%);
+  }
+
+  /* line 263, ../sass/prso_framework/_app-animate.scss */
+  15% {
+    transform: translateX(-25%) rotate(-5deg);
+  }
+
+  /* line 264, ../sass/prso_framework/_app-animate.scss */
+  30% {
+    transform: translateX(20%) rotate(3deg);
+  }
+
+  /* line 265, ../sass/prso_framework/_app-animate.scss */
+  45% {
+    transform: translateX(-15%) rotate(-3deg);
+  }
+
+  /* line 266, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    transform: translateX(10%) rotate(2deg);
+  }
+
+  /* line 267, ../sass/prso_framework/_app-animate.scss */
+  75% {
+    transform: translateX(-5%) rotate(-1deg);
+  }
+
+  /* line 268, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\00003271}}
+.wobble {
+  -webkit-animation-name: wobble;
+  -moz-animation-name: wobble;
+  -o-animation-name: wobble;
+  animation-name: wobble;
+}
+
+/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
+@-webkit-keyframes pulse {
+  /* line 280, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform: scale(1);
+  }
+
+  /* line 281, ../sass/prso_framework/_app-animate.scss */
+  50% {
+    -webkit-transform: scale(1.1);
+  }
+
+  /* line 282, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform: scale(1);
+  }
+}
+
+@-moz-keyframes pulse {
+  /* line 285, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform: scale(1);
+  }
+
+  /* line 286, ../sass/prso_framework/_app-animate.scss */
+  50% {
+    -moz-transform: scale(1.1);
+  }
+
+  /* line 287, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform: scale(1);
+  }
+}
+
+@-o-keyframes pulse {
+  /* line 290, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform: scale(1);
+  }
+
+  /* line 291, ../sass/prso_framework/_app-animate.scss */
+  50% {
+    -o-transform: scale(1.1);
+  }
+
+  /* line 292, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  /* line 295, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform: scale(1);
+  }
+
+  /* line 296, ../sass/prso_framework/_app-animate.scss */
+  50% {
+    transform: scale(1.1);
+  }
+
+  /* line 297, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\00003300}}
+.pulse {
+  -webkit-animation-name: pulse;
+  -moz-animation-name: pulse;
+  -o-animation-name: pulse;
+  animation-name: pulse;
+}
+
+@-webkit-keyframes flip {
+  /* line 307, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform: perspective(400px) rotateY(0);
+    -webkit-animation-timing-function: ease-out;
+  }
+
+  /* line 311, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    -webkit-transform: perspective(400px) translateZ(150px) rotateY(170deg);
+    -webkit-animation-timing-function: ease-out;
+  }
+
+  /* line 315, ../sass/prso_framework/_app-animate.scss */
+  50% {
+    -webkit-transform: perspective(400px) translateZ(150px) rotateY(190deg) scale(1);
+    -webkit-animation-timing-function: ease-in;
+  }
+
+  /* line 319, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -webkit-transform: perspective(400px) rotateY(360deg) scale(0.95);
+    -webkit-animation-timing-function: ease-in;
+  }
+
+  /* line 323, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform: perspective(400px) scale(1);
+    -webkit-animation-timing-function: ease-in;
+  }
+}
+
+@-moz-keyframes flip {
+  /* line 329, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform: perspective(400px) rotateY(0);
+    -moz-animation-timing-function: ease-out;
+  }
+
+  /* line 333, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    -moz-transform: perspective(400px) translateZ(150px) rotateY(170deg);
+    -moz-animation-timing-function: ease-out;
+  }
+
+  /* line 337, ../sass/prso_framework/_app-animate.scss */
+  50% {
+    -moz-transform: perspective(400px) translateZ(150px) rotateY(190deg) scale(1);
+    -moz-animation-timing-function: ease-in;
+  }
+
+  /* line 341, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -moz-transform: perspective(400px) rotateY(360deg) scale(0.95);
+    -moz-animation-timing-function: ease-in;
+  }
+
+  /* line 345, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform: perspective(400px) scale(1);
+    -moz-animation-timing-function: ease-in;
+  }
+}
+
+@-o-keyframes flip {
+  /* line 351, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform: perspective(400px) rotateY(0);
+    -o-animation-timing-function: ease-out;
+  }
+
+  /* line 355, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    -o-transform: perspective(400px) translateZ(150px) rotateY(170deg);
+    -o-animation-timing-function: ease-out;
+  }
+
+  /* line 359, ../sass/prso_framework/_app-animate.scss */
+  50% {
+    -o-transform: perspective(400px) translateZ(150px) rotateY(190deg) scale(1);
+    -o-animation-timing-function: ease-in;
+  }
+
+  /* line 363, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -o-transform: perspective(400px) rotateY(360deg) scale(0.95);
+    -o-animation-timing-function: ease-in;
+  }
+
+  /* line 367, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform: perspective(400px) scale(1);
+    -o-animation-timing-function: ease-in;
+  }
+}
+
+@keyframes flip {
+  /* line 373, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform: perspective(400px) rotateY(0);
+    animation-timing-function: ease-out;
+  }
+
+  /* line 377, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    transform: perspective(400px) translateZ(150px) rotateY(170deg);
+    animation-timing-function: ease-out;
+  }
+
+  /* line 381, ../sass/prso_framework/_app-animate.scss */
+  50% {
+    transform: perspective(400px) translateZ(150px) rotateY(190deg) scale(1);
+    animation-timing-function: ease-in;
+  }
+
+  /* line 385, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    transform: perspective(400px) rotateY(360deg) scale(0.95);
+    animation-timing-function: ease-in;
+  }
+
+  /* line 389, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform: perspective(400px) scale(1);
+    animation-timing-function: ease-in;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\00003395}}
+.flip {
+  -webkit-backface-visibility: visible !important;
+  -webkit-animation-name: flip;
+  -moz-backface-visibility: visible !important;
+  -moz-animation-name: flip;
+  -o-backface-visibility: visible !important;
+  -o-animation-name: flip;
+  backface-visibility: visible !important;
+  animation-name: flip;
+}
+
+@-webkit-keyframes flipInX {
+  /* line 406, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform: perspective(400px) rotateX(90deg);
+    opacity: 0;
+  }
+
+  /* line 411, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    -webkit-transform: perspective(400px) rotateX(-10deg);
+  }
+
+  /* line 415, ../sass/prso_framework/_app-animate.scss */
+  70% {
+    -webkit-transform: perspective(400px) rotateX(10deg);
+  }
+
+  /* line 419, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform: perspective(400px) rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes flipInX {
+  /* line 425, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform: perspective(400px) rotateX(90deg);
+    opacity: 0;
+  }
+
+  /* line 430, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    -moz-transform: perspective(400px) rotateX(-10deg);
+  }
+
+  /* line 434, ../sass/prso_framework/_app-animate.scss */
+  70% {
+    -moz-transform: perspective(400px) rotateX(10deg);
+  }
+
+  /* line 438, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform: perspective(400px) rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+@-o-keyframes flipInX {
+  /* line 444, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform: perspective(400px) rotateX(90deg);
+    opacity: 0;
+  }
+
+  /* line 449, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    -o-transform: perspective(400px) rotateX(-10deg);
+  }
+
+  /* line 453, ../sass/prso_framework/_app-animate.scss */
+  70% {
+    -o-transform: perspective(400px) rotateX(10deg);
+  }
+
+  /* line 457, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform: perspective(400px) rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes flipInX {
+  /* line 463, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform: perspective(400px) rotateX(90deg);
+    opacity: 0;
+  }
+
+  /* line 468, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    transform: perspective(400px) rotateX(-10deg);
+  }
+
+  /* line 472, ../sass/prso_framework/_app-animate.scss */
+  70% {
+    transform: perspective(400px) rotateX(10deg);
+  }
+
+  /* line 476, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform: perspective(400px) rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\00003482}}
+.flipInX {
+  -webkit-backface-visibility: visible !important;
+  -webkit-animation-name: flipInX;
+  -moz-backface-visibility: visible !important;
+  -moz-animation-name: flipInX;
+  -o-backface-visibility: visible !important;
+  -o-animation-name: flipInX;
+  backface-visibility: visible !important;
+  animation-name: flipInX;
+}
+
+@-webkit-keyframes flipOutX {
+  /* line 493, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform: perspective(400px) rotateX(0deg);
+    opacity: 1;
+  }
+
+  /* line 497, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform: perspective(400px) rotateX(90deg);
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes flipOutX {
+  /* line 504, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform: perspective(400px) rotateX(0deg);
+    opacity: 1;
+  }
+
+  /* line 508, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform: perspective(400px) rotateX(90deg);
+    opacity: 0;
+  }
+}
+
+@-o-keyframes flipOutX {
+  /* line 515, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform: perspective(400px) rotateX(0deg);
+    opacity: 1;
+  }
+
+  /* line 519, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform: perspective(400px) rotateX(90deg);
+    opacity: 0;
+  }
+}
+
+@keyframes flipOutX {
+  /* line 526, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform: perspective(400px) rotateX(0deg);
+    opacity: 1;
+  }
+
+  /* line 530, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform: perspective(400px) rotateX(90deg);
+    opacity: 0;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\00003536}}
+.flipOutX {
+  -webkit-animation-name: flipOutX;
+  -webkit-backface-visibility: visible !important;
+  -moz-animation-name: flipOutX;
+  -moz-backface-visibility: visible !important;
+  -o-animation-name: flipOutX;
+  -o-backface-visibility: visible !important;
+  animation-name: flipOutX;
+  backface-visibility: visible !important;
+}
+
+@-webkit-keyframes flipInY {
+  /* line 547, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform: perspective(400px) rotateY(90deg);
+    opacity: 0;
+  }
+
+  /* line 552, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    -webkit-transform: perspective(400px) rotateY(-10deg);
+  }
+
+  /* line 556, ../sass/prso_framework/_app-animate.scss */
+  70% {
+    -webkit-transform: perspective(400px) rotateY(10deg);
+  }
+
+  /* line 560, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform: perspective(400px) rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes flipInY {
+  /* line 566, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform: perspective(400px) rotateY(90deg);
+    opacity: 0;
+  }
+
+  /* line 571, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    -moz-transform: perspective(400px) rotateY(-10deg);
+  }
+
+  /* line 575, ../sass/prso_framework/_app-animate.scss */
+  70% {
+    -moz-transform: perspective(400px) rotateY(10deg);
+  }
+
+  /* line 579, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform: perspective(400px) rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+@-o-keyframes flipInY {
+  /* line 585, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform: perspective(400px) rotateY(90deg);
+    opacity: 0;
+  }
+
+  /* line 590, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    -o-transform: perspective(400px) rotateY(-10deg);
+  }
+
+  /* line 594, ../sass/prso_framework/_app-animate.scss */
+  70% {
+    -o-transform: perspective(400px) rotateY(10deg);
+  }
+
+  /* line 598, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform: perspective(400px) rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes flipInY {
+  /* line 604, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform: perspective(400px) rotateY(90deg);
+    opacity: 0;
+  }
+
+  /* line 609, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    transform: perspective(400px) rotateY(-10deg);
+  }
+
+  /* line 613, ../sass/prso_framework/_app-animate.scss */
+  70% {
+    transform: perspective(400px) rotateY(10deg);
+  }
+
+  /* line 617, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform: perspective(400px) rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\00003623}}
+.flipInY {
+  -webkit-backface-visibility: visible !important;
+  -webkit-animation-name: flipInY;
+  -moz-backface-visibility: visible !important;
+  -moz-animation-name: flipInY;
+  -o-backface-visibility: visible !important;
+  -o-animation-name: flipInY;
+  backface-visibility: visible !important;
+  animation-name: flipInY;
+}
+
+@-webkit-keyframes flipOutY {
+  /* line 634, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform: perspective(400px) rotateY(0deg);
+    opacity: 1;
+  }
+
+  /* line 638, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform: perspective(400px) rotateY(90deg);
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes flipOutY {
+  /* line 644, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform: perspective(400px) rotateY(0deg);
+    opacity: 1;
+  }
+
+  /* line 648, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform: perspective(400px) rotateY(90deg);
+    opacity: 0;
+  }
+}
+
+@-o-keyframes flipOutY {
+  /* line 654, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform: perspective(400px) rotateY(0deg);
+    opacity: 1;
+  }
+
+  /* line 658, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform: perspective(400px) rotateY(90deg);
+    opacity: 0;
+  }
+}
+
+@keyframes flipOutY {
+  /* line 664, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform: perspective(400px) rotateY(0deg);
+    opacity: 1;
+  }
+
+  /* line 668, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform: perspective(400px) rotateY(90deg);
+    opacity: 0;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\00003674}}
+.flipOutY {
+  -webkit-backface-visibility: visible !important;
+  -webkit-animation-name: flipOutY;
+  -moz-backface-visibility: visible !important;
+  -moz-animation-name: flipOutY;
+  -o-backface-visibility: visible !important;
+  -o-animation-name: flipOutY;
+  backface-visibility: visible !important;
+  animation-name: flipOutY;
+}
+
+@-webkit-keyframes fadeIn {
+  /* line 685, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+  }
+
+  /* line 686, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes fadeIn {
+  /* line 690, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+  }
+
+  /* line 691, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes fadeIn {
+  /* line 695, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+  }
+
+  /* line 696, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  /* line 700, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+  }
+
+  /* line 701, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\00003704}}
+.fadeIn {
+  -webkit-animation-name: fadeIn;
+  -moz-animation-name: fadeIn;
+  -o-animation-name: fadeIn;
+  animation-name: fadeIn;
+}
+
+@-webkit-keyframes fadeInUp {
+  /* line 711, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(20px);
+  }
+
+  /* line 716, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+  }
+}
+
+@-moz-keyframes fadeInUp {
+  /* line 723, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -moz-transform: translateY(20px);
+  }
+
+  /* line 728, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -moz-transform: translateY(0);
+  }
+}
+
+@-o-keyframes fadeInUp {
+  /* line 735, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -o-transform: translateY(20px);
+  }
+
+  /* line 740, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -o-transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  /* line 747, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  /* line 752, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\00003758}}
+.fadeInUp {
+  -webkit-animation-name: fadeInUp;
+  -moz-animation-name: fadeInUp;
+  -o-animation-name: fadeInUp;
+  animation-name: fadeInUp;
+}
+
+@-webkit-keyframes fadeInDown {
+  /* line 765, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-20px);
+  }
+
+  /* line 770, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+  }
+}
+
+@-moz-keyframes fadeInDown {
+  /* line 777, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -moz-transform: translateY(-20px);
+  }
+
+  /* line 782, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -moz-transform: translateY(0);
+  }
+}
+
+@-o-keyframes fadeInDown {
+  /* line 789, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -o-transform: translateY(-20px);
+  }
+
+  /* line 794, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -o-transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  /* line 801, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  /* line 806, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\00003812}}
+.fadeInDown {
+  -webkit-animation-name: fadeInDown;
+  -moz-animation-name: fadeInDown;
+  -o-animation-name: fadeInDown;
+  animation-name: fadeInDown;
+}
+
+@-webkit-keyframes fadeInLeft {
+  /* line 819, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(-20px);
+  }
+
+  /* line 824, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+  }
+}
+
+@-moz-keyframes fadeInLeft {
+  /* line 831, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -moz-transform: translateX(-20px);
+  }
+
+  /* line 836, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -moz-transform: translateX(0);
+  }
+}
+
+@-o-keyframes fadeInLeft {
+  /* line 843, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -o-transform: translateX(-20px);
+  }
+
+  /* line 848, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -o-transform: translateX(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  /* line 855, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  /* line 860, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\00003866}}
+.fadeInLeft {
+  -webkit-animation-name: fadeInLeft;
+  -moz-animation-name: fadeInLeft;
+  -o-animation-name: fadeInLeft;
+  animation-name: fadeInLeft;
+}
+
+@-webkit-keyframes fadeInRight {
+  /* line 873, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(20px);
+  }
+
+  /* line 878, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+  }
+}
+
+@-moz-keyframes fadeInRight {
+  /* line 885, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -moz-transform: translateX(20px);
+  }
+
+  /* line 890, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -moz-transform: translateX(0);
+  }
+}
+
+@-o-keyframes fadeInRight {
+  /* line 897, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -o-transform: translateX(20px);
+  }
+
+  /* line 902, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -o-transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  /* line 909, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  /* line 914, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\00003920}}
+.fadeInRight {
+  -webkit-animation-name: fadeInRight;
+  -moz-animation-name: fadeInRight;
+  -o-animation-name: fadeInRight;
+  animation-name: fadeInRight;
+}
+
+@-webkit-keyframes fadeInUpBig {
+  /* line 927, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(2000px);
+  }
+
+  /* line 932, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+  }
+}
+
+@-moz-keyframes fadeInUpBig {
+  /* line 939, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -moz-transform: translateY(2000px);
+  }
+
+  /* line 944, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -moz-transform: translateY(0);
+  }
+}
+
+@-o-keyframes fadeInUpBig {
+  /* line 951, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -o-transform: translateY(2000px);
+  }
+
+  /* line 956, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -o-transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUpBig {
+  /* line 963, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    transform: translateY(2000px);
+  }
+
+  /* line 968, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\00003974}}
+.fadeInUpBig {
+  -webkit-animation-name: fadeInUpBig;
+  -moz-animation-name: fadeInUpBig;
+  -o-animation-name: fadeInUpBig;
+  animation-name: fadeInUpBig;
+}
+
+@-webkit-keyframes fadeInDownBig {
+  /* line 981, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-2000px);
+  }
+
+  /* line 986, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+  }
+}
+
+@-moz-keyframes fadeInDownBig {
+  /* line 993, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -moz-transform: translateY(-2000px);
+  }
+
+  /* line 998, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -moz-transform: translateY(0);
+  }
+}
+
+@-o-keyframes fadeInDownBig {
+  /* line 1005, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -o-transform: translateY(-2000px);
+  }
+
+  /* line 1010, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -o-transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDownBig {
+  /* line 1017, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    transform: translateY(-2000px);
+  }
+
+  /* line 1022, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000031028}}
+.fadeInDownBig {
+  -webkit-animation-name: fadeInDownBig;
+  -moz-animation-name: fadeInDownBig;
+  -o-animation-name: fadeInDownBig;
+  animation-name: fadeInDownBig;
+}
+
+@-webkit-keyframes fadeInLeftBig {
+  /* line 1035, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(-2000px);
+  }
+
+  /* line 1040, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+  }
+}
+
+@-moz-keyframes fadeInLeftBig {
+  /* line 1046, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -moz-transform: translateX(-2000px);
+  }
+
+  /* line 1051, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -moz-transform: translateX(0);
+  }
+}
+
+@-o-keyframes fadeInLeftBig {
+  /* line 1057, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -o-transform: translateX(-2000px);
+  }
+
+  /* line 1062, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -o-transform: translateX(0);
+  }
+}
+
+@keyframes fadeInLeftBig {
+  /* line 1068, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    transform: translateX(-2000px);
+  }
+
+  /* line 1073, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000031079}}
+.fadeInLeftBig {
+  -webkit-animation-name: fadeInLeftBig;
+  -moz-animation-name: fadeInLeftBig;
+  -o-animation-name: fadeInLeftBig;
+  animation-name: fadeInLeftBig;
+}
+
+@-webkit-keyframes fadeInRightBig {
+  /* line 1086, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(2000px);
+  }
+
+  /* line 1091, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+  }
+}
+
+@-moz-keyframes fadeInRightBig {
+  /* line 1098, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -moz-transform: translateX(2000px);
+  }
+
+  /* line 1103, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -moz-transform: translateX(0);
+  }
+}
+
+@-o-keyframes fadeInRightBig {
+  /* line 1110, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -o-transform: translateX(2000px);
+  }
+
+  /* line 1115, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -o-transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRightBig {
+  /* line 1122, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    transform: translateX(2000px);
+  }
+
+  /* line 1127, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000031133}}
+.fadeInRightBig {
+  -webkit-animation-name: fadeInRightBig;
+  -moz-animation-name: fadeInRightBig;
+  -o-animation-name: fadeInRightBig;
+  animation-name: fadeInRightBig;
+}
+
+@-webkit-keyframes fadeOut {
+  /* line 1140, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+  }
+
+  /* line 1141, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes fadeOut {
+  /* line 1145, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+  }
+
+  /* line 1146, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+  }
+}
+
+@-o-keyframes fadeOut {
+  /* line 1150, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+  }
+
+  /* line 1151, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  /* line 1155, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+  }
+
+  /* line 1156, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000031159}}
+.fadeOut {
+  -webkit-animation-name: fadeOut;
+  -moz-animation-name: fadeOut;
+  -o-animation-name: fadeOut;
+  animation-name: fadeOut;
+}
+
+@-webkit-keyframes fadeOutUp {
+  /* line 1166, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+  }
+
+  /* line 1171, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(-20px);
+  }
+}
+
+@-moz-keyframes fadeOutUp {
+  /* line 1177, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -moz-transform: translateY(0);
+  }
+
+  /* line 1182, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -moz-transform: translateY(-20px);
+  }
+}
+
+@-o-keyframes fadeOutUp {
+  /* line 1188, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -o-transform: translateY(0);
+  }
+
+  /* line 1193, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -o-transform: translateY(-20px);
+  }
+}
+
+@keyframes fadeOutUp {
+  /* line 1199, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* line 1204, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000031210}}
+.fadeOutUp {
+  -webkit-animation-name: fadeOutUp;
+  -moz-animation-name: fadeOutUp;
+  -o-animation-name: fadeOutUp;
+  animation-name: fadeOutUp;
+}
+
+@-webkit-keyframes fadeOutDown {
+  /* line 1217, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+  }
+
+  /* line 1222, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(20px);
+  }
+}
+
+@-moz-keyframes fadeOutDown {
+  /* line 1229, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -moz-transform: translateY(0);
+  }
+
+  /* line 1234, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -moz-transform: translateY(20px);
+  }
+}
+
+@-o-keyframes fadeOutDown {
+  /* line 1241, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -o-transform: translateY(0);
+  }
+
+  /* line 1246, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -o-transform: translateY(20px);
+  }
+}
+
+@keyframes fadeOutDown {
+  /* line 1253, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* line 1258, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000031264}}
+.fadeOutDown {
+  -webkit-animation-name: fadeOutDown;
+  -moz-animation-name: fadeOutDown;
+  -o-animation-name: fadeOutDown;
+  animation-name: fadeOutDown;
+}
+
+@-webkit-keyframes fadeOutLeft {
+  /* line 1271, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+  }
+
+  /* line 1276, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(-20px);
+  }
+}
+
+@-moz-keyframes fadeOutLeft {
+  /* line 1283, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -moz-transform: translateX(0);
+  }
+
+  /* line 1288, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -moz-transform: translateX(-20px);
+  }
+}
+
+@-o-keyframes fadeOutLeft {
+  /* line 1295, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -o-transform: translateX(0);
+  }
+
+  /* line 1300, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -o-transform: translateX(-20px);
+  }
+}
+
+@keyframes fadeOutLeft {
+  /* line 1307, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* line 1312, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000031318}}
+.fadeOutLeft {
+  -webkit-animation-name: fadeOutLeft;
+  -moz-animation-name: fadeOutLeft;
+  -o-animation-name: fadeOutLeft;
+  animation-name: fadeOutLeft;
+}
+
+@-webkit-keyframes fadeOutRight {
+  /* line 1325, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+  }
+
+  /* line 1330, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(20px);
+  }
+}
+
+@-moz-keyframes fadeOutRight {
+  /* line 1337, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -moz-transform: translateX(0);
+  }
+
+  /* line 1342, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -moz-transform: translateX(20px);
+  }
+}
+
+@-o-keyframes fadeOutRight {
+  /* line 1349, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -o-transform: translateX(0);
+  }
+
+  /* line 1354, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -o-transform: translateX(20px);
+  }
+}
+
+@keyframes fadeOutRight {
+  /* line 1361, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* line 1366, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000031372}}
+.fadeOutRight {
+  -webkit-animation-name: fadeOutRight;
+  -moz-animation-name: fadeOutRight;
+  -o-animation-name: fadeOutRight;
+  animation-name: fadeOutRight;
+}
+
+@-webkit-keyframes fadeOutUpBig {
+  /* line 1379, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+  }
+
+  /* line 1384, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(-2000px);
+  }
+}
+
+@-moz-keyframes fadeOutUpBig {
+  /* line 1391, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -moz-transform: translateY(0);
+  }
+
+  /* line 1396, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -moz-transform: translateY(-2000px);
+  }
+}
+
+@-o-keyframes fadeOutUpBig {
+  /* line 1403, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -o-transform: translateY(0);
+  }
+
+  /* line 1408, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -o-transform: translateY(-2000px);
+  }
+}
+
+@keyframes fadeOutUpBig {
+  /* line 1415, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* line 1420, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    transform: translateY(-2000px);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000031426}}
+.fadeOutUpBig {
+  -webkit-animation-name: fadeOutUpBig;
+  -moz-animation-name: fadeOutUpBig;
+  -o-animation-name: fadeOutUpBig;
+  animation-name: fadeOutUpBig;
+}
+
+@-webkit-keyframes fadeOutDownBig {
+  /* line 1433, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+  }
+
+  /* line 1438, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(2000px);
+  }
+}
+
+@-moz-keyframes fadeOutDownBig {
+  /* line 1445, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -moz-transform: translateY(0);
+  }
+
+  /* line 1450, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -moz-transform: translateY(2000px);
+  }
+}
+
+@-o-keyframes fadeOutDownBig {
+  /* line 1457, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -o-transform: translateY(0);
+  }
+
+  /* line 1462, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -o-transform: translateY(2000px);
+  }
+}
+
+@keyframes fadeOutDownBig {
+  /* line 1469, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* line 1474, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    transform: translateY(2000px);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000031480}}
+.fadeOutDownBig {
+  -webkit-animation-name: fadeOutDownBig;
+  -moz-animation-name: fadeOutDownBig;
+  -o-animation-name: fadeOutDownBig;
+  animation-name: fadeOutDownBig;
+}
+
+@-webkit-keyframes fadeOutLeftBig {
+  /* line 1487, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+  }
+
+  /* line 1492, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(-2000px);
+  }
+}
+
+@-moz-keyframes fadeOutLeftBig {
+  /* line 1499, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -moz-transform: translateX(0);
+  }
+
+  /* line 1504, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -moz-transform: translateX(-2000px);
+  }
+}
+
+@-o-keyframes fadeOutLeftBig {
+  /* line 1511, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -o-transform: translateX(0);
+  }
+
+  /* line 1516, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -o-transform: translateX(-2000px);
+  }
+}
+
+@keyframes fadeOutLeftBig {
+  /* line 1523, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* line 1528, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    transform: translateX(-2000px);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000031534}}
+.fadeOutLeftBig {
+  -webkit-animation-name: fadeOutLeftBig;
+  -moz-animation-name: fadeOutLeftBig;
+  -o-animation-name: fadeOutLeftBig;
+  animation-name: fadeOutLeftBig;
+}
+
+@-webkit-keyframes fadeOutRightBig {
+  /* line 1541, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+  }
+
+  /* line 1546, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(2000px);
+  }
+}
+
+@-moz-keyframes fadeOutRightBig {
+  /* line 1552, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -moz-transform: translateX(0);
+  }
+
+  /* line 1557, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -moz-transform: translateX(2000px);
+  }
+}
+
+@-o-keyframes fadeOutRightBig {
+  /* line 1563, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -o-transform: translateX(0);
+  }
+
+  /* line 1568, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -o-transform: translateX(2000px);
+  }
+}
+
+@keyframes fadeOutRightBig {
+  /* line 1574, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* line 1579, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    transform: translateX(2000px);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000031585}}
+.fadeOutRightBig {
+  -webkit-animation-name: fadeOutRightBig;
+  -moz-animation-name: fadeOutRightBig;
+  -o-animation-name: fadeOutRightBig;
+  animation-name: fadeOutRightBig;
+}
+
+@-webkit-keyframes bounceIn {
+  /* line 1592, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0.3);
+  }
+
+  /* line 1597, ../sass/prso_framework/_app-animate.scss */
+  50% {
+    opacity: 1;
+    -webkit-transform: scale(1.05);
+  }
+
+  /* line 1602, ../sass/prso_framework/_app-animate.scss */
+  70% {
+    -webkit-transform: scale(0.9);
+  }
+
+  /* line 1606, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes bounceIn {
+  /* line 1613, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -moz-transform: scale(0.3);
+  }
+
+  /* line 1618, ../sass/prso_framework/_app-animate.scss */
+  50% {
+    opacity: 1;
+    -moz-transform: scale(1.05);
+  }
+
+  /* line 1623, ../sass/prso_framework/_app-animate.scss */
+  70% {
+    -moz-transform: scale(0.9);
+  }
+
+  /* line 1627, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@-o-keyframes bounceIn {
+  /* line 1634, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -o-transform: scale(0.3);
+  }
+
+  /* line 1639, ../sass/prso_framework/_app-animate.scss */
+  50% {
+    opacity: 1;
+    -o-transform: scale(1.05);
+  }
+
+  /* line 1644, ../sass/prso_framework/_app-animate.scss */
+  70% {
+    -o-transform: scale(0.9);
+  }
+
+  /* line 1648, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceIn {
+  /* line 1655, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+
+  /* line 1660, ../sass/prso_framework/_app-animate.scss */
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  /* line 1665, ../sass/prso_framework/_app-animate.scss */
+  70% {
+    transform: scale(0.9);
+  }
+
+  /* line 1669, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000031675}}
+.bounceIn {
+  -webkit-animation-name: bounceIn;
+  -moz-animation-name: bounceIn;
+  -o-animation-name: bounceIn;
+  animation-name: bounceIn;
+}
+
+@-webkit-keyframes bounceInUp {
+  /* line 1682, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(2000px);
+  }
+
+  /* line 1687, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    -webkit-transform: translateY(-30px);
+  }
+
+  /* line 1692, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -webkit-transform: translateY(10px);
+  }
+
+  /* line 1696, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes bounceInUp {
+  /* line 1702, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -moz-transform: translateY(2000px);
+  }
+
+  /* line 1707, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    -moz-transform: translateY(-30px);
+  }
+
+  /* line 1712, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -moz-transform: translateY(10px);
+  }
+
+  /* line 1716, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@-o-keyframes bounceInUp {
+  /* line 1723, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -o-transform: translateY(2000px);
+  }
+
+  /* line 1728, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    -o-transform: translateY(-30px);
+  }
+
+  /* line 1733, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -o-transform: translateY(10px);
+  }
+
+  /* line 1737, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceInUp {
+  /* line 1744, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    transform: translateY(2000px);
+  }
+
+  /* line 1749, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    transform: translateY(-30px);
+  }
+
+  /* line 1754, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    transform: translateY(10px);
+  }
+
+  /* line 1758, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000031764}}
+.bounceInUp {
+  -webkit-animation-name: bounceInUp;
+  -moz-animation-name: bounceInUp;
+  -o-animation-name: bounceInUp;
+  animation-name: bounceInUp;
+}
+
+@-webkit-keyframes bounceInDown {
+  /* line 1771, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-2000px);
+  }
+
+  /* line 1776, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    -webkit-transform: translateY(30px);
+  }
+
+  /* line 1781, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -webkit-transform: translateY(-10px);
+  }
+
+  /* line 1785, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes bounceInDown {
+  /* line 1792, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -moz-transform: translateY(-2000px);
+  }
+
+  /* line 1797, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    -moz-transform: translateY(30px);
+  }
+
+  /* line 1802, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -moz-transform: translateY(-10px);
+  }
+
+  /* line 1806, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@-o-keyframes bounceInDown {
+  /* line 1813, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -o-transform: translateY(-2000px);
+  }
+
+  /* line 1818, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    -o-transform: translateY(30px);
+  }
+
+  /* line 1823, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -o-transform: translateY(-10px);
+  }
+
+  /* line 1827, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceInDown {
+  /* line 1834, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    transform: translateY(-2000px);
+  }
+
+  /* line 1839, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    transform: translateY(30px);
+  }
+
+  /* line 1844, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    transform: translateY(-10px);
+  }
+
+  /* line 1848, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000031854}}
+.bounceInDown {
+  -webkit-animation-name: bounceInDown;
+  -moz-animation-name: bounceInDown;
+  -o-animation-name: bounceInDown;
+  animation-name: bounceInDown;
+}
+
+@-webkit-keyframes bounceInLeft {
+  /* line 1861, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(-2000px);
+  }
+
+  /* line 1866, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    -webkit-transform: translateX(30px);
+  }
+
+  /* line 1871, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -webkit-transform: translateX(-10px);
+  }
+
+  /* line 1875, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes bounceInLeft {
+  /* line 1882, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -moz-transform: translateX(-2000px);
+  }
+
+  /* line 1887, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    -moz-transform: translateX(30px);
+  }
+
+  /* line 1892, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -moz-transform: translateX(-10px);
+  }
+
+  /* line 1896, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@-o-keyframes bounceInLeft {
+  /* line 1903, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -o-transform: translateX(-2000px);
+  }
+
+  /* line 1908, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    -o-transform: translateX(30px);
+  }
+
+  /* line 1913, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -o-transform: translateX(-10px);
+  }
+
+  /* line 1917, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceInLeft {
+  /* line 1924, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    transform: translateX(-2000px);
+  }
+
+  /* line 1929, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    transform: translateX(30px);
+  }
+
+  /* line 1934, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    transform: translateX(-10px);
+  }
+
+  /* line 1938, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000031944}}
+.bounceInLeft {
+  -webkit-animation-name: bounceInLeft;
+  -moz-animation-name: bounceInLeft;
+  -o-animation-name: bounceInLeft;
+  animation-name: bounceInLeft;
+}
+
+@-webkit-keyframes bounceInRight {
+  /* line 1951, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(2000px);
+  }
+
+  /* line 1956, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    -webkit-transform: translateX(-30px);
+  }
+
+  /* line 1961, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -webkit-transform: translateX(10px);
+  }
+
+  /* line 1965, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes bounceInRight {
+  /* line 1972, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -moz-transform: translateX(2000px);
+  }
+
+  /* line 1977, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    -moz-transform: translateX(-30px);
+  }
+
+  /* line 1982, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -moz-transform: translateX(10px);
+  }
+
+  /* line 1986, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@-o-keyframes bounceInRight {
+  /* line 1993, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -o-transform: translateX(2000px);
+  }
+
+  /* line 1998, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    -o-transform: translateX(-30px);
+  }
+
+  /* line 2003, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -o-transform: translateX(10px);
+  }
+
+  /* line 2007, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceInRight {
+  /* line 2014, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    transform: translateX(2000px);
+  }
+
+  /* line 2019, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    transform: translateX(-30px);
+  }
+
+  /* line 2024, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    transform: translateX(10px);
+  }
+
+  /* line 2028, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000032034}}
+.bounceInRight {
+  -webkit-animation-name: bounceInRight;
+  -moz-animation-name: bounceInRight;
+  -o-animation-name: bounceInRight;
+  animation-name: bounceInRight;
+}
+
+@-webkit-keyframes bounceOut {
+  /* line 2041, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform: scale(1);
+  }
+
+  /* line 2045, ../sass/prso_framework/_app-animate.scss */
+  25% {
+    -webkit-transform: scale(0.95);
+  }
+
+  /* line 2049, ../sass/prso_framework/_app-animate.scss */
+  50% {
+    opacity: 1;
+    -webkit-transform: scale(1.1);
+  }
+
+  /* line 2054, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(0.3);
+  }
+}
+
+@-moz-keyframes bounceOut {
+  /* line 2061, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform: scale(1);
+  }
+
+  /* line 2065, ../sass/prso_framework/_app-animate.scss */
+  25% {
+    -moz-transform: scale(0.95);
+  }
+
+  /* line 2069, ../sass/prso_framework/_app-animate.scss */
+  50% {
+    opacity: 1;
+    -moz-transform: scale(1.1);
+  }
+
+  /* line 2074, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -moz-transform: scale(0.3);
+  }
+}
+
+@-o-keyframes bounceOut {
+  /* line 2081, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform: scale(1);
+  }
+
+  /* line 2085, ../sass/prso_framework/_app-animate.scss */
+  25% {
+    -o-transform: scale(0.95);
+  }
+
+  /* line 2089, ../sass/prso_framework/_app-animate.scss */
+  50% {
+    opacity: 1;
+    -o-transform: scale(1.1);
+  }
+
+  /* line 2094, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -o-transform: scale(0.3);
+  }
+}
+
+@keyframes bounceOut {
+  /* line 2101, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform: scale(1);
+  }
+
+  /* line 2105, ../sass/prso_framework/_app-animate.scss */
+  25% {
+    transform: scale(0.95);
+  }
+
+  /* line 2109, ../sass/prso_framework/_app-animate.scss */
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
+  /* line 2114, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000032120}}
+.bounceOut {
+  -webkit-animation-name: bounceOut;
+  -moz-animation-name: bounceOut;
+  -o-animation-name: bounceOut;
+  animation-name: bounceOut;
+}
+
+@-webkit-keyframes bounceOutUp {
+  /* line 2127, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform: translateY(0);
+  }
+
+  /* line 2131, ../sass/prso_framework/_app-animate.scss */
+  20% {
+    opacity: 1;
+    -webkit-transform: translateY(20px);
+  }
+
+  /* line 2136, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(-2000px);
+  }
+}
+
+@-moz-keyframes bounceOutUp {
+  /* line 2143, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform: translateY(0);
+  }
+
+  /* line 2147, ../sass/prso_framework/_app-animate.scss */
+  20% {
+    opacity: 1;
+    -moz-transform: translateY(20px);
+  }
+
+  /* line 2152, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -moz-transform: translateY(-2000px);
+  }
+}
+
+@-o-keyframes bounceOutUp {
+  /* line 2159, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform: translateY(0);
+  }
+
+  /* line 2163, ../sass/prso_framework/_app-animate.scss */
+  20% {
+    opacity: 1;
+    -o-transform: translateY(20px);
+  }
+
+  /* line 2168, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -o-transform: translateY(-2000px);
+  }
+}
+
+@keyframes bounceOutUp {
+  /* line 2175, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform: translateY(0);
+  }
+
+  /* line 2179, ../sass/prso_framework/_app-animate.scss */
+  20% {
+    opacity: 1;
+    transform: translateY(20px);
+  }
+
+  /* line 2184, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    transform: translateY(-2000px);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000032190}}
+.bounceOutUp {
+  -webkit-animation-name: bounceOutUp;
+  -moz-animation-name: bounceOutUp;
+  -o-animation-name: bounceOutUp;
+  animation-name: bounceOutUp;
+}
+
+@-webkit-keyframes bounceOutDown {
+  /* line 2197, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform: translateY(0);
+  }
+
+  /* line 2201, ../sass/prso_framework/_app-animate.scss */
+  20% {
+    opacity: 1;
+    -webkit-transform: translateY(-20px);
+  }
+
+  /* line 2206, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(2000px);
+  }
+}
+
+@-moz-keyframes bounceOutDown {
+  /* line 2213, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform: translateY(0);
+  }
+
+  /* line 2217, ../sass/prso_framework/_app-animate.scss */
+  20% {
+    opacity: 1;
+    -moz-transform: translateY(-20px);
+  }
+
+  /* line 2222, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -moz-transform: translateY(2000px);
+  }
+}
+
+@-o-keyframes bounceOutDown {
+  /* line 2229, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform: translateY(0);
+  }
+
+  /* line 2233, ../sass/prso_framework/_app-animate.scss */
+  20% {
+    opacity: 1;
+    -o-transform: translateY(-20px);
+  }
+
+  /* line 2238, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -o-transform: translateY(2000px);
+  }
+}
+
+@keyframes bounceOutDown {
+  /* line 2245, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform: translateY(0);
+  }
+
+  /* line 2249, ../sass/prso_framework/_app-animate.scss */
+  20% {
+    opacity: 1;
+    transform: translateY(-20px);
+  }
+
+  /* line 2254, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    transform: translateY(2000px);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000032260}}
+.bounceOutDown {
+  -webkit-animation-name: bounceOutDown;
+  -moz-animation-name: bounceOutDown;
+  -o-animation-name: bounceOutDown;
+  animation-name: bounceOutDown;
+}
+
+@-webkit-keyframes bounceOutLeft {
+  /* line 2267, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform: translateX(0);
+  }
+
+  /* line 2271, ../sass/prso_framework/_app-animate.scss */
+  20% {
+    opacity: 1;
+    -webkit-transform: translateX(20px);
+  }
+
+  /* line 2276, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(-2000px);
+  }
+}
+
+@-moz-keyframes bounceOutLeft {
+  /* line 2283, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform: translateX(0);
+  }
+
+  /* line 2287, ../sass/prso_framework/_app-animate.scss */
+  20% {
+    opacity: 1;
+    -moz-transform: translateX(20px);
+  }
+
+  /* line 2292, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -moz-transform: translateX(-2000px);
+  }
+}
+
+@-o-keyframes bounceOutLeft {
+  /* line 2299, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform: translateX(0);
+  }
+
+  /* line 2303, ../sass/prso_framework/_app-animate.scss */
+  20% {
+    opacity: 1;
+    -o-transform: translateX(20px);
+  }
+
+  /* line 2308, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -o-transform: translateX(-2000px);
+  }
+}
+
+@keyframes bounceOutLeft {
+  /* line 2315, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform: translateX(0);
+  }
+
+  /* line 2319, ../sass/prso_framework/_app-animate.scss */
+  20% {
+    opacity: 1;
+    transform: translateX(20px);
+  }
+
+  /* line 2324, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    transform: translateX(-2000px);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000032330}}
+.bounceOutLeft {
+  -webkit-animation-name: bounceOutLeft;
+  -moz-animation-name: bounceOutLeft;
+  -o-animation-name: bounceOutLeft;
+  animation-name: bounceOutLeft;
+}
+
+@-webkit-keyframes bounceOutRight {
+  /* line 2337, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform: translateX(0);
+  }
+
+  /* line 2341, ../sass/prso_framework/_app-animate.scss */
+  20% {
+    opacity: 1;
+    -webkit-transform: translateX(-20px);
+  }
+
+  /* line 2346, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(2000px);
+  }
+}
+
+@-moz-keyframes bounceOutRight {
+  /* line 2353, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform: translateX(0);
+  }
+
+  /* line 2357, ../sass/prso_framework/_app-animate.scss */
+  20% {
+    opacity: 1;
+    -moz-transform: translateX(-20px);
+  }
+
+  /* line 2362, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -moz-transform: translateX(2000px);
+  }
+}
+
+@-o-keyframes bounceOutRight {
+  /* line 2369, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform: translateX(0);
+  }
+
+  /* line 2373, ../sass/prso_framework/_app-animate.scss */
+  20% {
+    opacity: 1;
+    -o-transform: translateX(-20px);
+  }
+
+  /* line 2378, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -o-transform: translateX(2000px);
+  }
+}
+
+@keyframes bounceOutRight {
+  /* line 2385, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform: translateX(0);
+  }
+
+  /* line 2389, ../sass/prso_framework/_app-animate.scss */
+  20% {
+    opacity: 1;
+    transform: translateX(-20px);
+  }
+
+  /* line 2394, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    transform: translateX(2000px);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000032400}}
+.bounceOutRight {
+  -webkit-animation-name: bounceOutRight;
+  -moz-animation-name: bounceOutRight;
+  -o-animation-name: bounceOutRight;
+  animation-name: bounceOutRight;
+}
+
+@-webkit-keyframes rotateIn {
+  /* line 2407, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform-origin: center center;
+    -webkit-transform: rotate(-200deg);
+    opacity: 0;
+  }
+
+  /* line 2413, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform-origin: center center;
+    -webkit-transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes rotateIn {
+  /* line 2420, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform-origin: center center;
+    -moz-transform: rotate(-200deg);
+    opacity: 0;
+  }
+
+  /* line 2426, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform-origin: center center;
+    -moz-transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+@-o-keyframes rotateIn {
+  /* line 2433, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform-origin: center center;
+    -o-transform: rotate(-200deg);
+    opacity: 0;
+  }
+
+  /* line 2439, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform-origin: center center;
+    -o-transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+@keyframes rotateIn {
+  /* line 2446, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform-origin: center center;
+    transform: rotate(-200deg);
+    opacity: 0;
+  }
+
+  /* line 2452, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform-origin: center center;
+    transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000032459}}
+.rotateIn {
+  -webkit-animation-name: rotateIn;
+  -moz-animation-name: rotateIn;
+  -o-animation-name: rotateIn;
+  animation-name: rotateIn;
+}
+
+@-webkit-keyframes rotateInUpLeft {
+  /* line 2466, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform-origin: left bottom;
+    -webkit-transform: rotate(90deg);
+    opacity: 0;
+  }
+
+  /* line 2472, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform-origin: left bottom;
+    -webkit-transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes rotateInUpLeft {
+  /* line 2480, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform-origin: left bottom;
+    -moz-transform: rotate(90deg);
+    opacity: 0;
+  }
+
+  /* line 2486, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform-origin: left bottom;
+    -moz-transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+@-o-keyframes rotateInUpLeft {
+  /* line 2494, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform-origin: left bottom;
+    -o-transform: rotate(90deg);
+    opacity: 0;
+  }
+
+  /* line 2500, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform-origin: left bottom;
+    -o-transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+@keyframes rotateInUpLeft {
+  /* line 2508, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform-origin: left bottom;
+    transform: rotate(90deg);
+    opacity: 0;
+  }
+
+  /* line 2514, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform-origin: left bottom;
+    transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000032521}}
+.rotateInUpLeft {
+  -webkit-animation-name: rotateInUpLeft;
+  -moz-animation-name: rotateInUpLeft;
+  -o-animation-name: rotateInUpLeft;
+  animation-name: rotateInUpLeft;
+}
+
+@-webkit-keyframes rotateInDownLeft {
+  /* line 2528, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform-origin: left bottom;
+    -webkit-transform: rotate(-90deg);
+    opacity: 0;
+  }
+
+  /* line 2534, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform-origin: left bottom;
+    -webkit-transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes rotateInDownLeft {
+  /* line 2542, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform-origin: left bottom;
+    -moz-transform: rotate(-90deg);
+    opacity: 0;
+  }
+
+  /* line 2548, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform-origin: left bottom;
+    -moz-transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+@-o-keyframes rotateInDownLeft {
+  /* line 2556, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform-origin: left bottom;
+    -o-transform: rotate(-90deg);
+    opacity: 0;
+  }
+
+  /* line 2562, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform-origin: left bottom;
+    -o-transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+@keyframes rotateInDownLeft {
+  /* line 2570, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform-origin: left bottom;
+    transform: rotate(-90deg);
+    opacity: 0;
+  }
+
+  /* line 2576, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform-origin: left bottom;
+    transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000032583}}
+.rotateInDownLeft {
+  -webkit-animation-name: rotateInDownLeft;
+  -moz-animation-name: rotateInDownLeft;
+  -o-animation-name: rotateInDownLeft;
+  animation-name: rotateInDownLeft;
+}
+
+@-webkit-keyframes rotateInUpRight {
+  /* line 2590, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform-origin: right bottom;
+    -webkit-transform: rotate(-90deg);
+    opacity: 0;
+  }
+
+  /* line 2596, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform-origin: right bottom;
+    -webkit-transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes rotateInUpRight {
+  /* line 2604, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform-origin: right bottom;
+    -moz-transform: rotate(-90deg);
+    opacity: 0;
+  }
+
+  /* line 2610, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform-origin: right bottom;
+    -moz-transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+@-o-keyframes rotateInUpRight {
+  /* line 2618, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform-origin: right bottom;
+    -o-transform: rotate(-90deg);
+    opacity: 0;
+  }
+
+  /* line 2624, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform-origin: right bottom;
+    -o-transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+@keyframes rotateInUpRight {
+  /* line 2632, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform-origin: right bottom;
+    transform: rotate(-90deg);
+    opacity: 0;
+  }
+
+  /* line 2638, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform-origin: right bottom;
+    transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000032645}}
+.rotateInUpRight {
+  -webkit-animation-name: rotateInUpRight;
+  -moz-animation-name: rotateInUpRight;
+  -o-animation-name: rotateInUpRight;
+  animation-name: rotateInUpRight;
+}
+
+@-webkit-keyframes rotateInDownRight {
+  /* line 2652, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform-origin: right bottom;
+    -webkit-transform: rotate(90deg);
+    opacity: 0;
+  }
+
+  /* line 2658, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform-origin: right bottom;
+    -webkit-transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes rotateInDownRight {
+  /* line 2666, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform-origin: right bottom;
+    -moz-transform: rotate(90deg);
+    opacity: 0;
+  }
+
+  /* line 2672, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform-origin: right bottom;
+    -moz-transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+@-o-keyframes rotateInDownRight {
+  /* line 2680, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform-origin: right bottom;
+    -o-transform: rotate(90deg);
+    opacity: 0;
+  }
+
+  /* line 2686, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform-origin: right bottom;
+    -o-transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+@keyframes rotateInDownRight {
+  /* line 2694, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform-origin: right bottom;
+    transform: rotate(90deg);
+    opacity: 0;
+  }
+
+  /* line 2700, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform-origin: right bottom;
+    transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000032707}}
+.rotateInDownRight {
+  -webkit-animation-name: rotateInDownRight;
+  -moz-animation-name: rotateInDownRight;
+  -o-animation-name: rotateInDownRight;
+  animation-name: rotateInDownRight;
+}
+
+@-webkit-keyframes rotateOut {
+  /* line 2714, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform-origin: center center;
+    -webkit-transform: rotate(0);
+    opacity: 1;
+  }
+
+  /* line 2720, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform-origin: center center;
+    -webkit-transform: rotate(200deg);
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes rotateOut {
+  /* line 2728, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform-origin: center center;
+    -moz-transform: rotate(0);
+    opacity: 1;
+  }
+
+  /* line 2734, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform-origin: center center;
+    -moz-transform: rotate(200deg);
+    opacity: 0;
+  }
+}
+
+@-o-keyframes rotateOut {
+  /* line 2742, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform-origin: center center;
+    -o-transform: rotate(0);
+    opacity: 1;
+  }
+
+  /* line 2748, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform-origin: center center;
+    -o-transform: rotate(200deg);
+    opacity: 0;
+  }
+}
+
+@keyframes rotateOut {
+  /* line 2756, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform-origin: center center;
+    transform: rotate(0);
+    opacity: 1;
+  }
+
+  /* line 2762, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform-origin: center center;
+    transform: rotate(200deg);
+    opacity: 0;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000032769}}
+.rotateOut {
+  -webkit-animation-name: rotateOut;
+  -moz-animation-name: rotateOut;
+  -o-animation-name: rotateOut;
+  animation-name: rotateOut;
+}
+
+@-webkit-keyframes rotateOutUpLeft {
+  /* line 2776, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform-origin: left bottom;
+    -webkit-transform: rotate(0);
+    opacity: 1;
+  }
+
+  /* line 2782, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform-origin: left bottom;
+    -webkit-transform: rotate(-90deg);
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes rotateOutUpLeft {
+  /* line 2790, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform-origin: left bottom;
+    -moz-transform: rotate(0);
+    opacity: 1;
+  }
+
+  /* line 2796, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform-origin: left bottom;
+    -moz-transform: rotate(-90deg);
+    opacity: 0;
+  }
+}
+
+@-o-keyframes rotateOutUpLeft {
+  /* line 2804, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform-origin: left bottom;
+    -o-transform: rotate(0);
+    opacity: 1;
+  }
+
+  /* line 2810, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform-origin: left bottom;
+    -o-transform: rotate(-90deg);
+    opacity: 0;
+  }
+}
+
+@keyframes rotateOutUpLeft {
+  /* line 2818, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform-origin: left bottom;
+    transform: rotate(0);
+    opacity: 1;
+  }
+
+  /* line 2824, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform-origin: left bottom;
+    transform: rotate(-90deg);
+    opacity: 0;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000032831}}
+.rotateOutUpLeft {
+  -webkit-animation-name: rotateOutUpLeft;
+  -moz-animation-name: rotateOutUpLeft;
+  -o-animation-name: rotateOutUpLeft;
+  animation-name: rotateOutUpLeft;
+}
+
+@-webkit-keyframes rotateOutDownLeft {
+  /* line 2838, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform-origin: left bottom;
+    -webkit-transform: rotate(0);
+    opacity: 1;
+  }
+
+  /* line 2844, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform-origin: left bottom;
+    -webkit-transform: rotate(90deg);
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes rotateOutDownLeft {
+  /* line 2852, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform-origin: left bottom;
+    -moz-transform: rotate(0);
+    opacity: 1;
+  }
+
+  /* line 2858, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform-origin: left bottom;
+    -moz-transform: rotate(90deg);
+    opacity: 0;
+  }
+}
+
+@-o-keyframes rotateOutDownLeft {
+  /* line 2866, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform-origin: left bottom;
+    -o-transform: rotate(0);
+    opacity: 1;
+  }
+
+  /* line 2872, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform-origin: left bottom;
+    -o-transform: rotate(90deg);
+    opacity: 0;
+  }
+}
+
+@keyframes rotateOutDownLeft {
+  /* line 2880, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform-origin: left bottom;
+    transform: rotate(0);
+    opacity: 1;
+  }
+
+  /* line 2886, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform-origin: left bottom;
+    transform: rotate(90deg);
+    opacity: 0;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000032893}}
+.rotateOutDownLeft {
+  -webkit-animation-name: rotateOutDownLeft;
+  -moz-animation-name: rotateOutDownLeft;
+  -o-animation-name: rotateOutDownLeft;
+  animation-name: rotateOutDownLeft;
+}
+
+@-webkit-keyframes rotateOutUpRight {
+  /* line 2900, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform-origin: right bottom;
+    -webkit-transform: rotate(0);
+    opacity: 1;
+  }
+
+  /* line 2906, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform-origin: right bottom;
+    -webkit-transform: rotate(90deg);
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes rotateOutUpRight {
+  /* line 2914, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform-origin: right bottom;
+    -moz-transform: rotate(0);
+    opacity: 1;
+  }
+
+  /* line 2920, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform-origin: right bottom;
+    -moz-transform: rotate(90deg);
+    opacity: 0;
+  }
+}
+
+@-o-keyframes rotateOutUpRight {
+  /* line 2928, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform-origin: right bottom;
+    -o-transform: rotate(0);
+    opacity: 1;
+  }
+
+  /* line 2934, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform-origin: right bottom;
+    -o-transform: rotate(90deg);
+    opacity: 0;
+  }
+}
+
+@keyframes rotateOutUpRight {
+  /* line 2942, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform-origin: right bottom;
+    transform: rotate(0);
+    opacity: 1;
+  }
+
+  /* line 2948, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform-origin: right bottom;
+    transform: rotate(90deg);
+    opacity: 0;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000032955}}
+.rotateOutUpRight {
+  -webkit-animation-name: rotateOutUpRight;
+  -moz-animation-name: rotateOutUpRight;
+  -o-animation-name: rotateOutUpRight;
+  animation-name: rotateOutUpRight;
+}
+
+@-webkit-keyframes rotateOutDownRight {
+  /* line 2962, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform-origin: right bottom;
+    -webkit-transform: rotate(0);
+    opacity: 1;
+  }
+
+  /* line 2968, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform-origin: right bottom;
+    -webkit-transform: rotate(-90deg);
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes rotateOutDownRight {
+  /* line 2976, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform-origin: right bottom;
+    -moz-transform: rotate(0);
+    opacity: 1;
+  }
+
+  /* line 2982, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform-origin: right bottom;
+    -moz-transform: rotate(-90deg);
+    opacity: 0;
+  }
+}
+
+@-o-keyframes rotateOutDownRight {
+  /* line 2990, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform-origin: right bottom;
+    -o-transform: rotate(0);
+    opacity: 1;
+  }
+
+  /* line 2996, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform-origin: right bottom;
+    -o-transform: rotate(-90deg);
+    opacity: 0;
+  }
+}
+
+@keyframes rotateOutDownRight {
+  /* line 3004, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform-origin: right bottom;
+    transform: rotate(0);
+    opacity: 1;
+  }
+
+  /* line 3010, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform-origin: right bottom;
+    transform: rotate(-90deg);
+    opacity: 0;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000033017}}
+.rotateOutDownRight {
+  -webkit-animation-name: rotateOutDownRight;
+  -moz-animation-name: rotateOutDownRight;
+  -o-animation-name: rotateOutDownRight;
+  animation-name: rotateOutDownRight;
+}
+
+@-webkit-keyframes hinge {
+  /* line 3024, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform: rotate(0);
+    -webkit-transform-origin: top left;
+    -webkit-animation-timing-function: ease-in-out;
+  }
+
+  /* line 3025, ../sass/prso_framework/_app-animate.scss */
+  20%, 60% {
+    -webkit-transform: rotate(80deg);
+    -webkit-transform-origin: top left;
+    -webkit-animation-timing-function: ease-in-out;
+  }
+
+  /* line 3026, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    -webkit-transform: rotate(60deg);
+    -webkit-transform-origin: top left;
+    -webkit-animation-timing-function: ease-in-out;
+  }
+
+  /* line 3027, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -webkit-transform: rotate(60deg) translateY(0);
+    opacity: 1;
+    -webkit-transform-origin: top left;
+    -webkit-animation-timing-function: ease-in-out;
+  }
+
+  /* line 3028, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform: translateY(700px);
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes hinge {
+  /* line 3032, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform: rotate(0);
+    -moz-transform-origin: top left;
+    -moz-animation-timing-function: ease-in-out;
+  }
+
+  /* line 3033, ../sass/prso_framework/_app-animate.scss */
+  20%, 60% {
+    -moz-transform: rotate(80deg);
+    -moz-transform-origin: top left;
+    -moz-animation-timing-function: ease-in-out;
+  }
+
+  /* line 3034, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    -moz-transform: rotate(60deg);
+    -moz-transform-origin: top left;
+    -moz-animation-timing-function: ease-in-out;
+  }
+
+  /* line 3035, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -moz-transform: rotate(60deg) translateY(0);
+    opacity: 1;
+    -moz-transform-origin: top left;
+    -moz-animation-timing-function: ease-in-out;
+  }
+
+  /* line 3036, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform: translateY(700px);
+    opacity: 0;
+  }
+}
+
+@-o-keyframes hinge {
+  /* line 3040, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform: rotate(0);
+    -o-transform-origin: top left;
+    -o-animation-timing-function: ease-in-out;
+  }
+
+  /* line 3041, ../sass/prso_framework/_app-animate.scss */
+  20%, 60% {
+    -o-transform: rotate(80deg);
+    -o-transform-origin: top left;
+    -o-animation-timing-function: ease-in-out;
+  }
+
+  /* line 3042, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    -o-transform: rotate(60deg);
+    -o-transform-origin: top left;
+    -o-animation-timing-function: ease-in-out;
+  }
+
+  /* line 3043, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -o-transform: rotate(60deg) translateY(0);
+    opacity: 1;
+    -o-transform-origin: top left;
+    -o-animation-timing-function: ease-in-out;
+  }
+
+  /* line 3044, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform: translateY(700px);
+    opacity: 0;
+  }
+}
+
+@keyframes hinge {
+  /* line 3048, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform: rotate(0);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+
+  /* line 3049, ../sass/prso_framework/_app-animate.scss */
+  20%, 60% {
+    transform: rotate(80deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+
+  /* line 3050, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    transform: rotate(60deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+
+  /* line 3051, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    transform: rotate(60deg) translateY(0);
+    opacity: 1;
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+
+  /* line 3052, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform: translateY(700px);
+    opacity: 0;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000033055}}
+.hinge {
+  -webkit-animation-name: hinge;
+  -moz-animation-name: hinge;
+  -o-animation-name: hinge;
+  animation-name: hinge;
+}
+
+/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
+@-webkit-keyframes rollIn {
+  /* line 3064, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(-100%) rotate(-120deg);
+  }
+
+  /* line 3065, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0px) rotate(0deg);
+  }
+}
+
+@-moz-keyframes rollIn {
+  /* line 3069, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -moz-transform: translateX(-100%) rotate(-120deg);
+  }
+
+  /* line 3070, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -moz-transform: translateX(0px) rotate(0deg);
+  }
+}
+
+@-o-keyframes rollIn {
+  /* line 3074, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -o-transform: translateX(-100%) rotate(-120deg);
+  }
+
+  /* line 3075, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    -o-transform: translateX(0px) rotate(0deg);
+  }
+}
+
+@keyframes rollIn {
+  /* line 3079, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    transform: translateX(-100%) rotate(-120deg);
+  }
+
+  /* line 3080, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 1;
+    transform: translateX(0px) rotate(0deg);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000033083}}
+.rollIn {
+  -webkit-animation-name: rollIn;
+  -moz-animation-name: rollIn;
+  -o-animation-name: rollIn;
+  animation-name: rollIn;
+}
+
+/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
+@-webkit-keyframes rollOut {
+  /* line 3092, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -webkit-transform: translateX(0px) rotate(0deg);
+  }
+
+  /* line 3097, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(100%) rotate(120deg);
+  }
+}
+
+@-moz-keyframes rollOut {
+  /* line 3104, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -moz-transform: translateX(0px) rotate(0deg);
+  }
+
+  /* line 3109, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -moz-transform: translateX(100%) rotate(120deg);
+  }
+}
+
+@-o-keyframes rollOut {
+  /* line 3116, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    -o-transform: translateX(0px) rotate(0deg);
+  }
+
+  /* line 3121, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    -o-transform: translateX(100%) rotate(120deg);
+  }
+}
+
+@keyframes rollOut {
+  /* line 3128, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 1;
+    transform: translateX(0px) rotate(0deg);
+  }
+
+  /* line 3133, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    opacity: 0;
+    transform: translateX(100%) rotate(120deg);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000033139}}
+.rollOut {
+  -webkit-animation-name: rollOut;
+  -moz-animation-name: rollOut;
+  -o-animation-name: rollOut;
+  animation-name: rollOut;
+}
+
+/* originally authored by Angelo Rohit - https://github.com/angelorohit */
+@-webkit-keyframes lightSpeedIn {
+  /* line 3149, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform: translateX(100%) skewX(-30deg);
+    opacity: 0;
+  }
+
+  /* line 3150, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    -webkit-transform: translateX(-20%) skewX(30deg);
+    opacity: 1;
+  }
+
+  /* line 3151, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -webkit-transform: translateX(0%) skewX(-15deg);
+    opacity: 1;
+  }
+
+  /* line 3152, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform: translateX(0%) skewX(0deg);
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes lightSpeedIn {
+  /* line 3156, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform: translateX(100%) skewX(-30deg);
+    opacity: 0;
+  }
+
+  /* line 3157, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    -moz-transform: translateX(-20%) skewX(30deg);
+    opacity: 1;
+  }
+
+  /* line 3158, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -moz-transform: translateX(0%) skewX(-15deg);
+    opacity: 1;
+  }
+
+  /* line 3159, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform: translateX(0%) skewX(0deg);
+    opacity: 1;
+  }
+}
+
+@-o-keyframes lightSpeedIn {
+  /* line 3163, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform: translateX(100%) skewX(-30deg);
+    opacity: 0;
+  }
+
+  /* line 3164, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    -o-transform: translateX(-20%) skewX(30deg);
+    opacity: 1;
+  }
+
+  /* line 3165, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -o-transform: translateX(0%) skewX(-15deg);
+    opacity: 1;
+  }
+
+  /* line 3166, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform: translateX(0%) skewX(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes lightSpeedIn {
+  /* line 3170, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform: translateX(100%) skewX(-30deg);
+    opacity: 0;
+  }
+
+  /* line 3171, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    transform: translateX(-20%) skewX(30deg);
+    opacity: 1;
+  }
+
+  /* line 3172, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    transform: translateX(0%) skewX(-15deg);
+    opacity: 1;
+  }
+
+  /* line 3173, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform: translateX(0%) skewX(0deg);
+    opacity: 1;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000033176}}
+.lightSpeedIn {
+  -webkit-animation-name: lightSpeedIn;
+  -moz-animation-name: lightSpeedIn;
+  -o-animation-name: lightSpeedIn;
+  animation-name: lightSpeedIn;
+  -webkit-animation-timing-function: ease-out;
+  -moz-animation-timing-function: ease-out;
+  -o-animation-timing-function: ease-out;
+  animation-timing-function: ease-out;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000033188}}
+.animated.lightSpeedIn {
+  -webkit-animation-duration: 0.5s;
+  -moz-animation-duration: 0.5s;
+  -o-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+}
+
+/* originally authored by Angelo Rohit - https://github.com/angelorohit */
+@-webkit-keyframes lightSpeedOut {
+  /* line 3198, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform: translateX(0%) skewX(0deg);
+    opacity: 1;
+  }
+
+  /* line 3199, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform: translateX(100%) skewX(-30deg);
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes lightSpeedOut {
+  /* line 3203, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform: translateX(0%) skewX(0deg);
+    opacity: 1;
+  }
+
+  /* line 3204, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform: translateX(100%) skewX(-30deg);
+    opacity: 0;
+  }
+}
+
+@-o-keyframes lightSpeedOut {
+  /* line 3208, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform: translateX(0%) skewX(0deg);
+    opacity: 1;
+  }
+
+  /* line 3209, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform: translateX(100%) skewX(-30deg);
+    opacity: 0;
+  }
+}
+
+@keyframes lightSpeedOut {
+  /* line 3213, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform: translateX(0%) skewX(0deg);
+    opacity: 1;
+  }
+
+  /* line 3214, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform: translateX(100%) skewX(-30deg);
+    opacity: 0;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000033217}}
+.lightSpeedOut {
+  -webkit-animation-name: lightSpeedOut;
+  -moz-animation-name: lightSpeedOut;
+  -o-animation-name: lightSpeedOut;
+  animation-name: lightSpeedOut;
+  -webkit-animation-timing-function: ease-in;
+  -moz-animation-timing-function: ease-in;
+  -o-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000033229}}
+.animated.lightSpeedOut {
+  -webkit-animation-duration: 0.25s;
+  -moz-animation-duration: 0.25s;
+  -o-animation-duration: 0.25s;
+  animation-duration: 0.25s;
+}
+
+/* originally authored by Angelo Rohit - https://github.com/angelorohit */
+@-webkit-keyframes wiggle {
+  /* line 3239, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -webkit-transform: skewX(9deg);
+  }
+
+  /* line 3240, ../sass/prso_framework/_app-animate.scss */
+  10% {
+    -webkit-transform: skewX(-8deg);
+  }
+
+  /* line 3241, ../sass/prso_framework/_app-animate.scss */
+  20% {
+    -webkit-transform: skewX(7deg);
+  }
+
+  /* line 3242, ../sass/prso_framework/_app-animate.scss */
+  30% {
+    -webkit-transform: skewX(-6deg);
+  }
+
+  /* line 3243, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    -webkit-transform: skewX(5deg);
+  }
+
+  /* line 3244, ../sass/prso_framework/_app-animate.scss */
+  50% {
+    -webkit-transform: skewX(-4deg);
+  }
+
+  /* line 3245, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    -webkit-transform: skewX(3deg);
+  }
+
+  /* line 3246, ../sass/prso_framework/_app-animate.scss */
+  70% {
+    -webkit-transform: skewX(-2deg);
+  }
+
+  /* line 3247, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -webkit-transform: skewX(1deg);
+  }
+
+  /* line 3248, ../sass/prso_framework/_app-animate.scss */
+  90% {
+    -webkit-transform: skewX(0deg);
+  }
+
+  /* line 3249, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform: skewX(0deg);
+  }
+}
+
+@-moz-keyframes wiggle {
+  /* line 3253, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -moz-transform: skewX(9deg);
+  }
+
+  /* line 3254, ../sass/prso_framework/_app-animate.scss */
+  10% {
+    -moz-transform: skewX(-8deg);
+  }
+
+  /* line 3255, ../sass/prso_framework/_app-animate.scss */
+  20% {
+    -moz-transform: skewX(7deg);
+  }
+
+  /* line 3256, ../sass/prso_framework/_app-animate.scss */
+  30% {
+    -moz-transform: skewX(-6deg);
+  }
+
+  /* line 3257, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    -moz-transform: skewX(5deg);
+  }
+
+  /* line 3258, ../sass/prso_framework/_app-animate.scss */
+  50% {
+    -moz-transform: skewX(-4deg);
+  }
+
+  /* line 3259, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    -moz-transform: skewX(3deg);
+  }
+
+  /* line 3260, ../sass/prso_framework/_app-animate.scss */
+  70% {
+    -moz-transform: skewX(-2deg);
+  }
+
+  /* line 3261, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -moz-transform: skewX(1deg);
+  }
+
+  /* line 3262, ../sass/prso_framework/_app-animate.scss */
+  90% {
+    -moz-transform: skewX(0deg);
+  }
+
+  /* line 3263, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform: skewX(0deg);
+  }
+}
+
+@-o-keyframes wiggle {
+  /* line 3267, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    -o-transform: skewX(9deg);
+  }
+
+  /* line 3268, ../sass/prso_framework/_app-animate.scss */
+  10% {
+    -o-transform: skewX(-8deg);
+  }
+
+  /* line 3269, ../sass/prso_framework/_app-animate.scss */
+  20% {
+    -o-transform: skewX(7deg);
+  }
+
+  /* line 3270, ../sass/prso_framework/_app-animate.scss */
+  30% {
+    -o-transform: skewX(-6deg);
+  }
+
+  /* line 3271, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    -o-transform: skewX(5deg);
+  }
+
+  /* line 3272, ../sass/prso_framework/_app-animate.scss */
+  50% {
+    -o-transform: skewX(-4deg);
+  }
+
+  /* line 3273, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    -o-transform: skewX(3deg);
+  }
+
+  /* line 3274, ../sass/prso_framework/_app-animate.scss */
+  70% {
+    -o-transform: skewX(-2deg);
+  }
+
+  /* line 3275, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -o-transform: skewX(1deg);
+  }
+
+  /* line 3276, ../sass/prso_framework/_app-animate.scss */
+  90% {
+    -o-transform: skewX(0deg);
+  }
+
+  /* line 3277, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform: skewX(0deg);
+  }
+}
+
+@keyframes wiggle {
+  /* line 3281, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    transform: skewX(9deg);
+  }
+
+  /* line 3282, ../sass/prso_framework/_app-animate.scss */
+  10% {
+    transform: skewX(-8deg);
+  }
+
+  /* line 3283, ../sass/prso_framework/_app-animate.scss */
+  20% {
+    transform: skewX(7deg);
+  }
+
+  /* line 3284, ../sass/prso_framework/_app-animate.scss */
+  30% {
+    transform: skewX(-6deg);
+  }
+
+  /* line 3285, ../sass/prso_framework/_app-animate.scss */
+  40% {
+    transform: skewX(5deg);
+  }
+
+  /* line 3286, ../sass/prso_framework/_app-animate.scss */
+  50% {
+    transform: skewX(-4deg);
+  }
+
+  /* line 3287, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    transform: skewX(3deg);
+  }
+
+  /* line 3288, ../sass/prso_framework/_app-animate.scss */
+  70% {
+    transform: skewX(-2deg);
+  }
+
+  /* line 3289, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    transform: skewX(1deg);
+  }
+
+  /* line 3290, ../sass/prso_framework/_app-animate.scss */
+  90% {
+    transform: skewX(0deg);
+  }
+
+  /* line 3291, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform: skewX(0deg);
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000033294}}
+.wiggle {
+  -webkit-animation-name: wiggle;
+  -moz-animation-name: wiggle;
+  -o-animation-name: wiggle;
+  animation-name: wiggle;
+  -webkit-animation-timing-function: ease-in;
+  -moz-animation-timing-function: ease-in;
+  -o-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000033306}}
+.animated.wiggle {
+  -webkit-animation-duration: 0.75s;
+  -moz-animation-duration: 0.75s;
+  -o-animation-duration: 0.75s;
+  animation-duration: 0.75s;
+}
+
+/* slide effects by UNITED THEMES */
+@-webkit-keyframes slideInUp {
+  /* line 3317, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(2000px);
+  }
+
+  /* line 3322, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    -webkit-transform: translateY(0px);
+  }
+
+  /* line 3327, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -webkit-transform: translateY(10px);
+  }
+
+  /* line 3331, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes slideInUp {
+  /* line 3337, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -moz-transform: translateY(2000px);
+  }
+
+  /* line 3342, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    -moz-transform: translateY(0px);
+  }
+
+  /* line 3347, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -moz-transform: translateY(10px);
+  }
+
+  /* line 3351, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@-o-keyframes slideInUp {
+  /* line 3358, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -o-transform: translateY(2000px);
+  }
+
+  /* line 3363, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    -o-transform: translateY(0px);
+  }
+
+  /* line 3368, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -o-transform: translateY(10px);
+  }
+
+  /* line 3372, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  /* line 3379, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    transform: translateY(2000px);
+  }
+
+  /* line 3384, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+
+  /* line 3389, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    transform: translateY(10px);
+  }
+
+  /* line 3393, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000033398}}
+.slideInUp {
+  -webkit-animation-name: slideInUp;
+  -moz-animation-name: slideInUp;
+  -o-animation-name: slideInUp;
+  animation-name: slideInUp;
+}
+
+@-webkit-keyframes slideInDown {
+  /* line 3405, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-2000px);
+  }
+
+  /* line 3410, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    -webkit-transform: translateY(0px);
+  }
+
+  /* line 3415, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -webkit-transform: translateY(10px);
+  }
+
+  /* line 3419, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes slideInDown {
+  /* line 3425, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -moz-transform: translateY(-2000px);
+  }
+
+  /* line 3430, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    -moz-transform: translateY(0px);
+  }
+
+  /* line 3435, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -moz-transform: translateY(10px);
+  }
+
+  /* line 3439, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@-o-keyframes slideInDown {
+  /* line 3446, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -o-transform: translateY(-2000px);
+  }
+
+  /* line 3451, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    -o-transform: translateY(0px);
+  }
+
+  /* line 3456, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -o-transform: translateY(10px);
+  }
+
+  /* line 3460, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInDown {
+  /* line 3467, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    transform: translateY(-2000px);
+  }
+
+  /* line 3472, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+
+  /* line 3477, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    transform: translateY(10px);
+  }
+
+  /* line 3481, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000033487}}
+.slideInDown {
+  -webkit-animation-name: slideInDown;
+  -moz-animation-name: slideInDown;
+  -o-animation-name: slideInDown;
+  animation-name: slideInDown;
+}
+
+@-webkit-keyframes slideInLeft {
+  /* line 3494, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(-2000px);
+  }
+
+  /* line 3499, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    -webkit-transform: translateX(0px);
+  }
+
+  /* line 3504, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -webkit-transform: translateX(-10px);
+  }
+
+  /* line 3508, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes slideInLeft {
+  /* line 3514, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -moz-transform: translateX(-2000px);
+  }
+
+  /* line 3519, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    -moz-transform: translateX(0px);
+  }
+
+  /* line 3524, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -moz-transform: translateX(-10px);
+  }
+
+  /* line 3528, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@-o-keyframes slideInLeft {
+  /* line 3535, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -o-transform: translateX(-2000px);
+  }
+
+  /* line 3540, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    -o-transform: translateX(0px);
+  }
+
+  /* line 3545, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -o-transform: translateX(-10px);
+  }
+
+  /* line 3549, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  /* line 3556, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    transform: translateX(-2000px);
+  }
+
+  /* line 3561, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+
+  /* line 3566, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    transform: translateX(-10px);
+  }
+
+  /* line 3570, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000033575}}
+.slideInLeft {
+  -webkit-animation-name: slideInLeft;
+  -moz-animation-name: slideInLeft;
+  -o-animation-name: slideInLeft;
+  animation-name: slideInLeft;
+}
+
+@-webkit-keyframes slideInRight {
+  /* line 3582, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(2000px);
+  }
+
+  /* line 3587, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    -webkit-transform: translateX(0px);
+  }
+
+  /* line 3592, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -webkit-transform: translateX(10px);
+  }
+
+  /* line 3596, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -webkit-transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes slideInRight {
+  /* line 3602, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -moz-transform: translateX(2000px);
+  }
+
+  /* line 3607, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    -moz-transform: translateX(0px);
+  }
+
+  /* line 3612, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -moz-transform: translateX(10px);
+  }
+
+  /* line 3616, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -moz-transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@-o-keyframes slideInRight {
+  /* line 3623, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    -o-transform: translateX(2000px);
+  }
+
+  /* line 3628, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    -o-transform: translateX(0px);
+  }
+
+  /* line 3633, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    -o-transform: translateX(10px);
+  }
+
+  /* line 3637, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    -o-transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  /* line 3644, ../sass/prso_framework/_app-animate.scss */
+  0% {
+    opacity: 0;
+    transform: translateX(2000px);
+  }
+
+  /* line 3649, ../sass/prso_framework/_app-animate.scss */
+  60% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+
+  /* line 3654, ../sass/prso_framework/_app-animate.scss */
+  80% {
+    transform: translateX(10px);
+  }
+
+  /* line 3658, ../sass/prso_framework/_app-animate.scss */
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-animate\.scss}line{font-family:\000033664}}
+.slideInRight {
+  -webkit-animation-name: slideInRight;
+  -moz-animation-name: slideInRight;
+  -o-animation-name: slideInRight;
+  animation-name: slideInRight;
+}
+
 /* DEFAULT CORE FONT SETTINGS */
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/theme_styles\/_typography\.scss}line{font-family:\0000360}}
 .bold {

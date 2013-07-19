@@ -10,6 +10,7 @@
  * 2. get_the_excerpt		- action 'prso_get_the_excerpt'
  * 3. trim_string			- filter 'prso_trim_string' 
  * 4. get_social_button		- filter 'prso_share_button'
+ * 5. detect_ie				- filter 'prso_detect_ie'
  *
  */
  
@@ -56,6 +57,12 @@ class HtmlHelper {
  		* 	 Returns html and JS required to output the requested social media share button
  		*/
  		$this->add_filter( 'prso_share_button', 'get_social_button', 10, 1 );
+ 		
+ 		/**
+ 		* 5. detect_ie
+ 		* 	 Returns true/false if any version of IE is dectected
+ 		*/
+ 		$this->add_filter( 'prso_detect_ie', 'detect_ie', 10, 1 );
  		
  	}
  	
@@ -200,7 +207,7 @@ class HtmlHelper {
 	* @access 	public
 	* @author	Ben Moody
 	*/
-	function get_social_button( $type = NULL ) {
+	public function get_social_button( $type = NULL ) {
 		
 		//Init vars
 		$path 	= NULL;
@@ -257,7 +264,24 @@ class HtmlHelper {
 		return $output;
 	}
 	
-	
+	/**
+	* detect_ie
+	*
+	* Filter:: 'prso_detect_ie'
+	* 
+	* Detects any version of IE and returns true/false
+	* 
+	* @access 	public
+	* @author	Ben Moody
+	*/
+	public function detect_ie( $result = NULL ) {
+    
+	    $IE6 = (ereg('MSIE 6',$_SERVER['HTTP_USER_AGENT'])) ? true : false;
+        $IE7 = (ereg('MSIE 7',$_SERVER['HTTP_USER_AGENT'])) ? true : false;
+        $IE8 = (ereg('MSIE 8',$_SERVER['HTTP_USER_AGENT'])) ? true : false;
+                
+        return $IE6 + $IE7 + $IE8;
+	}
 	
 	
 	

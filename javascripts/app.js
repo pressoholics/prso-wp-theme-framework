@@ -52,6 +52,27 @@ jQuery(document).ready(function ($) {
       centerBullets: true    			// center bullet nav with js, turn this off if you want to position the bullet nav manually
   });
   
+  // Add animation effects to content images on scroll - Except IE6,7,8 (see feature detect logic)
+  if( $.support.cssFloat ) {
+	  
+	$("#main img").css( 'visibility', 'hidden' );
+	$("#main img").waypoint( function() {
+	                                    
+		$(this).delay(100).queue(function(next){
+		    
+		    if( !$(this).hasClass("animated") ) {
+		    	//See _app-animate.scss for animation options
+		        $(this).addClass("animated fadeIn");
+		    }
+		    
+		    next();
+		
+		});                                    
+	
+	}, { offset: "99%" });
+	  
+  }
+  
   // add foundation classes and color based on how many times tag is used
 	function addFoundationClass(thisObj) {
 	  var title = $(thisObj).attr('title');
