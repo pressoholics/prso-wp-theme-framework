@@ -57,6 +57,10 @@ span.gform_description {
 article {
 	ul, ol, dl {
 		@include rem(padding-left,40px);
+		//Remove padding on foundation accordion elements
+		&.accordion {
+			padding: 0;
+		}
 	}
 }
 
