@@ -551,7 +551,7 @@ class PostHelper {
 		$html_output	= NULL;
 		$defaults 		= array(
 			'post_parent'	=>	$post->ID,
-			'post_type'		=>	'any',
+			'post_type'		=>	'page',
 			'numberposts'	=> -1,
 			'post_status'	=> 'published',
 			'order'			=> 'ASC'
