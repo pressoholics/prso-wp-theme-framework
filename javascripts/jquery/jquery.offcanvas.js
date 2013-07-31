@@ -18,7 +18,7 @@
 	      
 	      $("#content").css("-webkit-transform: none");
 			setTimeout(function(){
-			  $("#content").css("-webkit-transform", "translate3d(55%,0,0)")
+			  $("#content").css("-webkit-transform", "translate3d(80%,0,0)")
 			}, 0);
 	      
       } else if( (test.length === 0) && navigator.userAgent.match(/(iPhone|iPod|iPad)/i) ) {

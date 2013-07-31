@@ -8,7 +8,7 @@ Template Name: Full Width Page
 
 <div id="main" class="twelve columns clearfix" role="main">
 
-	<?php get_template_part( 'loop', 'page' ); ?>
+	<?php get_template_part( 'loop', 'page_full_width' ); ?>
 
 </div> <!-- end #main -->
 

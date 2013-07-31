@@ -93,7 +93,7 @@ if( !function_exists('prso_theme_comments') ) {
 	                    ">
 	                        <div class="row">
 	            				<div class="avatar two columns">
-	            					<?php echo get_avatar($comment,$size='75',$default='<path_to_url>' ); ?>
+	            					<?php echo get_avatar($comment,$size='75',$default='' ); ?>
 	            				</div>
 	            				<div class="ten columns">
 	            					<?php printf(__('<h4 class="span8">%s</h4>'), get_comment_author_link()) ?>

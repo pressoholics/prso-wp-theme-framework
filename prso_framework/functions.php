@@ -51,6 +51,9 @@
  * 37. load_backstretch_script	=	Register and enqueue script for Backstretch background image script
  * 38. wp_head	-	Add calls to method you want to run during wp_head action
  * 39. update_post_views	-	Adds a view counter to posts/pages
+ * 40. init_cuztom_helper	-	Includes cuztom.php from inc/wordpress-cuztom-helper-master folder
+ * 41. add_nav_parent_child_classes	-	Filter to add nav depth specific css classes to nav items
+ * 42. init_theme_shortcodes	-	Include theme custom shortcodes
  *
  */
 class PrsoThemeFunctions extends PrsoThemeAppController {
@@ -100,7 +103,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  		add_action( 'widgets_init', array($this, 'register_sidebars') );
  		
  		//Remove <p> tag from around imgs (http://css-tricks.com/snippets/wordpress/remove-paragraph-tags-from-around-images/)
- 		add_filter( 'the_content', array($this, 'remove_p_tag_from_images') );
+ 		add_filter( 'the_content', array($this, 'remove_p_tag_from_images'), 100 );
  		
  		//Hack to enable rel='' attr for links - thanks to yoast
  		if( !function_exists('yoast_allow_rel') ) {
@@ -130,9 +133,9 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  		add_filter( 'image_send_to_editor', array($this, 'remove_thumbnail_dimensions'), 10 );
  		
  		//Deletes all CSS classes and id's, except for those listed in the array
- 		add_filter( 'nav_menu_css_class', array($this, 'custom_wp_nav_menu') );
- 		add_filter( 'nav_menu_item_id', array($this, 'custom_wp_nav_menu') );
- 		add_filter( 'page_css_class', array($this, 'custom_wp_nav_menu') );
+ 		//add_filter( 'nav_menu_css_class', array($this, 'custom_wp_nav_menu') );
+ 		//add_filter( 'nav_menu_item_id', array($this, 'custom_wp_nav_menu') );
+ 		//add_filter( 'page_css_class', array($this, 'custom_wp_nav_menu') );
  		
  		//change the standard class that wordpress puts on the active menu item in the nav bar
  		add_filter( 'wp_nav_menu', array($this, 'current_to_active') );
@@ -158,8 +161,17 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  		//Add method for 'wp_head' action
  		add_action( 'wp_head', array($this, 'wp_head') );
  		
- 		//Call method to include Pro Gravity Forms Customizer
+ 		//Call method to include Prso Gravity Forms Customizer
  		$this->gravity_forms_customizer();
+ 		
+ 		//Call method to include Wordpress Cuztom Helper
+ 		$this->init_cuztom_helper();
+ 		
+ 		//Add filter to apply parent/child classes to nav menu items
+ 		add_filter( 'walker_nav_menu_start_el', array($this, 'add_nav_parent_child_classes'), 10, 4 );
+ 		
+ 		//Call method to include theme Shortcodes
+ 		$this->init_theme_shortcodes();
  		
  	}
  	
@@ -185,8 +197,8 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		remove_action( 'wp_head', 'wp_generator' );                           // WP version
 		
 		if ( !is_admin() ) {
-			wp_deregister_script('jquery');                                   // De-Register jQuery
-			wp_register_script('jquery', '', '', '', true);                   // It's already in the Header
+			//wp_deregister_script('jquery');                                   // De-Register jQuery
+			//wp_register_script('jquery', '', '', '', true);                   // It's already in the Header
 		}
  		
  	}
@@ -228,7 +240,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 	 		if( isset($this->theme_google_jquery_url) ) {
 	 			$google_jquery_url = @fopen( $this->theme_google_jquery_url, 'r' ); //Test google jquery file
 	 		
-		 		if( $google_jquery_url !== false ) {
+		 		if( ($google_jquery_url !== false) && !empty($google_jquery_url) ) {
 		 			$this->load_google_jquery();
 		 		} else {
 		 			$this->load_wp_jquery();
@@ -240,6 +252,9 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 	 		
 	 		//Enqueue Backstretch script for background images
 	 		$this->load_backstretch_script();
+	 		
+	 		//Enqueue Waypoints script
+	 		$this->load_waypoints_script();
 	 		
 	 		//Load Modernizr script from Zurb Foundation
  			wp_register_script( 'modernizr', get_template_directory_uri() . '/javascripts/foundation/modernizr.foundation.js', NULL, '3.2.5' ); 
@@ -488,30 +503,14 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 	*/
  	public function enqueue_theme_styles() {
  		
- 		//Register Zurb Foundation Full CSS
-    	//wp_register_style( 'foundation-app', get_template_directory_uri() . '/stylesheets/foundation.css', array(), '3.2.5', 'all' );
-    	
-    	//Register Zurb Foundation Min CSS
-    	wp_register_style( 'foundation-app', get_template_directory_uri() . '/stylesheets/foundation.min.css', array(), '3.2.5', 'all' );
-   		
-   		//Register Theme Stylsheet - req by wordpress, use app.css for custom styles
- 		wp_register_style( 'presso-theme-base', get_stylesheet_directory_uri() . '/style.css', array( 'foundation-app' ), filemtime( get_stylesheet_directory() . '/style.css' ), 'all' );
-   		
-   		//Register Wordpress Specific Stylsheet
- 		wp_register_style( 'presso-theme-wp', get_template_directory_uri() . '/stylesheets/app-wordpress.css', array( 'presso-theme-base' ), filemtime( get_template_directory() . '/stylesheets/app-wordpress.css' ), 'all' );
- 		
- 		//Register the Prso Theme Core stylesheet
-	    wp_register_style( 'presso-theme-core', get_template_directory_uri() . '/stylesheets/app-core.css', array( 'presso-theme-wp' ), filemtime( get_template_directory() . '/stylesheets/app-core.css' ), 'all' );
- 		
  		//Register the App's specific stylesheet - NOTE if child theme is used will try to find app.css in child dir
 	    if( file_exists( get_stylesheet_directory() . '/stylesheets/app.css' ) ) {
-	    	wp_register_style( 'presso-theme-app', get_stylesheet_directory_uri() . '/stylesheets/app.css', array( 'presso-theme-wp' ), filemtime( get_stylesheet_directory() . '/stylesheets/app.css' ), 'all' );
+	    	wp_register_style( 'presso-theme-app', get_stylesheet_directory_uri() . '/stylesheets/app.css', array(), filemtime( get_stylesheet_directory() . '/stylesheets/app.css' ), 'all' );
     	} else {
-    		wp_register_style( 'presso-theme-app', get_template_directory_uri() . '/stylesheets/app.css', array( 'presso-theme-wp' ), filemtime( get_template_directory() . '/stylesheets/app.css' ), 'all' );
+    		wp_register_style( 'presso-theme-app', get_template_directory_uri() . '/stylesheets/app.css', array(), filemtime( get_template_directory() . '/stylesheets/app.css' ), 'all' );
     	}
     	
     	//Enqueue App's specific stylesheet - will enqueue all required styles as well :)
-    	wp_enqueue_style( 'presso-theme-core' );
     	wp_enqueue_style( 'presso-theme-app' );
  		
  	}
@@ -1448,7 +1447,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		
 		$defaults = array(
 			'handle'		=>	'backstretch',
-			'script_cdn'	=>	'http://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.3/jquery.backstretch.min.js ',
+			'script_cdn'	=>	'http://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.3/jquery.backstretch.min.js',
 			'script'		=>	get_template_directory_uri() . '/javascripts/jquery/jquery.backstretch.min.js',
 			'version'		=>	'2.0.3'
 		);
@@ -1489,6 +1488,71 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 			//Enqueue script
 			wp_enqueue_script( $handle );
 		}
+		
+	}
+	
+	/**
+	* load_waypoints_script - http://imakewebthings.com/jquery-waypoints/
+	* 
+	* Registers and enqueues Waypoints script. Will try to load the CDN version
+	* if that fails then will try to load the local version.
+	*
+	* NOTE: args are set in $theme_backstretch_script_args array in config.php, comment out this
+	*		array to disable backstretch script enqueue
+	*
+	* How to use: 
+	*				 $('.thing').waypoint(function(direction) {
+					  alert('Top of thing hit top of viewport.');
+					});
+	*
+	* @access 	private
+	* @author	Ben Moody
+	*/
+	private function load_waypoints_script() {
+		
+		//Init vars
+		$backstretch_url 	= NULL;
+		$args				= array();
+		
+		$defaults = array(
+			'handle'		=>	'jquery-waypoints',
+			'script_cdn'	=>	'http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.2/waypoints.min.js',
+			'script'		=>	get_template_directory_uri() . '/javascripts/jquery/jquery.waypoints.min.js',
+			'version'		=>	'2.0.2'
+		);
+			
+		//Parse args
+		$args = wp_parse_args( $this->theme_backstretch_script_args, $defaults );
+		
+		extract($args);
+		
+		//First try and open the cdn script
+		$waypoints_url = @fopen( $script_cdn, 'r' );
+		
+		if( $waypoints_url !== FALSE ) {
+			
+			//Register cdn version
+			wp_register_script( $handle, 
+				$script_cdn, 
+				array('jquery'), 
+				$version, 
+				TRUE 
+			);
+			
+		} else {
+			
+			//Register framework version
+			wp_register_script( $handle, 
+				$script, 
+				array('jquery'), 
+				$version, 
+				TRUE 
+			);
+			
+		}
+		
+		//Enqueue script
+		wp_enqueue_script( $handle );
 		
 	}
 	
@@ -1551,6 +1615,98 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 			}
 			
 		}
+		
+	}
+	
+	/**
+	* cuztom-helper
+	* 
+	* Includes the Wordpress Cuztom Helper inc file
+	* This helper class allows quick and easy creation of custom Post Types and Meta Fields
+	*
+	* See the template file in ThemeRoot/cusztom_post_types folder for example on how to use this
+	*
+	* @access 	private
+	* @author	Ben Moody
+	*/
+	private function init_cuztom_helper() {
+		
+		//Init vars
+		$file_path = get_template_directory() . "/prso_framework/includes/wordpress-cuztom-helper-master/cuztom.php";
+		
+		if( file_exists($file_path) ) {
+			require_once( $file_path );
+		}
+		
+	}
+	
+	/**
+	* add_nav_parent_child_classes
+	* 
+	* Called by wp filter: 'walker_nav_menu_start_el'
+	*
+	* Adds nav depth specific classes to nav links - parent/child/grandchild
+	*
+	* CSS Classes: 'parent-nav-item', 'child-nav-item', 'grandchild-nav-item'
+	*
+	* @access 	private
+	* @author	Ben Moody
+	*/
+	public function add_nav_parent_child_classes( $item_output, $item, $depth = 0, $args ) {
+		
+		if( isset($item->ID, $item->title, $item->url) ) {
+			
+			//Loop nav items and detect if parent or child
+			if( $depth === 0 ) {
+				
+				//Parent nav element with children
+				ob_start();
+				?>
+				<a class="parent-nav-item" href="<?php echo $item->url; ?>"><?php echo $item->title; ?></a>
+				<?php
+				$item_output = ob_get_contents();
+				ob_end_clean();
+				
+			} elseif( $depth === 1 ) {
+				
+				//Child nav element
+				ob_start();
+				?>
+				<a class="child-nav-item" href="<?php echo $item->url; ?>"><?php echo $item->title; ?></a>
+				<?php
+				$item_output = ob_get_contents();
+				ob_end_clean();
+				
+			} elseif( $depth === 2 ) {
+				
+				//GrandChild nav element
+				ob_start();
+				?>
+				<a class="grandchild-nav-item" href="<?php echo $item->url; ?>"><?php echo $item->title; ?></a>
+				<?php
+				$item_output = ob_get_contents();
+				ob_end_clean();
+				
+			}
+			
+		}
+		
+		
+		return $item_output;
+	}
+	
+	/**
+	* theme-shortcodes
+	* 
+	* Includes the theme shortcode file
+	* Includes file to load all theme shortcodes
+	*
+	* @access 	private
+	* @author	Ben Moody
+	*/
+	private function init_theme_shortcodes() {
+		
+		get_template_part( 'shortcodes' );
 		
 	}
 	

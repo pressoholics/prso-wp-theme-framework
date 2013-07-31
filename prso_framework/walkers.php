@@ -18,7 +18,7 @@ if( !class_exists('main_nav_walker') ) {
 	            $class_names = $value = '';
 	            
 	            // If the item has children, add the dropdown class for foundation
-	            if ( $args->has_children ) {
+	            if ( $args->has_children && ($depth == 0) ) {
 	                $class_names = "has-flyout ";
 	            }
 	            
@@ -43,7 +43,7 @@ if( !class_exists('main_nav_walker') ) {
 	            $item_output .= $args->link_before .apply_filters( 'the_title', $item->title, $item->ID );
 	            $item_output .= $args->link_after;
 	            // if the item has children add the caret just before closing the anchor tag
-	            if ( $args->has_children ) {
+	            if ( $args->has_children && ($depth == 0) ) {
 	                $item_output .= '</a><a href="#" class="flyout-toggle"><span> </span></a>';
 	            }
 	            else{

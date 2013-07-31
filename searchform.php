@@ -7,7 +7,7 @@
 	        <input type="text" id="search" placeholder="Search" name="s" value="<?php the_search_query(); ?>" />
 	      </div>
 	      <div class="four mobile-one columns">
-	        <button type="submit" id="search-button" class="postfix button">Search</a>
+	        <button type="submit" id="search-button" class="postfix button">Search</button>
 	      </div>
   		</form>
     </div>
@@ -19,7 +19,7 @@
 	        <input type="text" id="search" placeholder="Search" name="s" value="<?php the_search_query(); ?>" />
 	      </div>
 	      <div class="twelve columns">
-	        <button type="submit" id="search-button" class="postfix button full-width">Search</a>
+	        <button type="submit" id="search-button" class="postfix button full-width">Search</button>
 	      </div>
   		</form>
     </div>

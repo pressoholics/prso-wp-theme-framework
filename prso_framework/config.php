@@ -377,7 +377,8 @@ class PrsoThemeConfig {
 			'foundation-joyride', 'foundation-magellan', 'foundation-mediaQueryToggle', 'foundation-navigation', 'foundation-orbit', 
 			'foundation-reveal', 'foundation-tabs', 'foundation-tooltips', 'foundation-topbar', 'foundation-placeholder', 'jquery-cookie', 'jquery-offcanvas', 'jquery-event-move', 'jquery-event-swipe',
 		)
-	);*/
+	);
+	*/
 	
 	/**
  	* $this->theme_script_merge_exceptions
