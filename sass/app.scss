@@ -1,4 +1,5 @@
 // Your custom settings file to override Foundation defaults
+@import "theme_styles/_colors.scss";
 @import "settings";
 
 // Comment out this import if you are customizing you imports below
@@ -63,7 +64,6 @@
 @import "theme_styles/_header.scss";
 @import "theme_styles/_footer.scss";
 @import "theme_styles/_typography.scss";
-@import "theme_styles/_colors.scss";
 @import "theme_styles/_forms.scss";
 @import "theme_styles/_shared.scss";
 @import "theme_styles/_sidebar.scss";
