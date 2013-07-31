@@ -103,7 +103,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  		add_action( 'widgets_init', array($this, 'register_sidebars') );
  		
  		//Remove <p> tag from around imgs (http://css-tricks.com/snippets/wordpress/remove-paragraph-tags-from-around-images/)
- 		add_filter( 'the_content', array($this, 'remove_p_tag_from_images') );
+ 		add_filter( 'the_content', array($this, 'remove_p_tag_from_images'), 100 );
  		
  		//Hack to enable rel='' attr for links - thanks to yoast
  		if( !function_exists('yoast_allow_rel') ) {
