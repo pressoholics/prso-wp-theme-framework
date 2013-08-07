@@ -11,7 +11,7 @@ if( !class_exists('main_nav_walker') ) {
 	
 	class main_nav_walker extends Walker_Nav_Menu {
 	  
-	      function start_el(&$output, $object, $depth = 0, $args = array(), $current_object_id = 0) {
+	      function start_el(&$output, $item, $depth = 0, $args = array(), $current_object_id = 0) {
 	            global $wp_query;
 	            $indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
 	            
@@ -82,7 +82,7 @@ if( !class_exists('main_nav_walker') ) {
 if( !class_exists('footer_links_walker') ) {
 	
 	class footer_links_walker extends Walker_Nav_Menu {
-	      function start_el(&$output, $object, $depth = 0, $args = array(), $current_object_id = 0)
+	      function start_el(&$output, $item, $depth = 0, $args = array(), $current_object_id = 0)
 	      {
 	            global $wp_query;
 	            $indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
