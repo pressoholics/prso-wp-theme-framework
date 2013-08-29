@@ -8,7 +8,7 @@
 */
 
 html {
-	font-size: 100%;
+	font-size: strip-units($baseFontSize)/16 * 100%;
 }
 
 /* layout */
