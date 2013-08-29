@@ -309,7 +309,8 @@ function prso_orbit_banner_output( $args = array() ) {
 		'show_all' 			=> false, //Output all banners regardless of Gallery taxonomy
 		'gallery_name'		=> NULL, //Output all banners for a specific gallery
 		'image_fallback'	=> true, //Fallback to post featured image if one is set
-		'echo'				=> true //Whether to return or echo the html output
+		'echo'				=> true, //Whether to return or echo the html output
+		'image_size'		=> 'prso-orbit' //Thumbnail slug, can override thumbnail size used when calling action
 	);
 	
 	$args = wp_parse_args( $args, $defaults );
@@ -323,7 +324,7 @@ function prso_orbit_banner_output( $args = array() ) {
 	}
 	
 
-	if( !empty($banner_gallery_data) && isset($banner_gallery_data['slug']) ) {
+	if( !empty($banner_gallery_data) && isset($banner_gallery_data['slug']) && !isset($gallery_name) ) {
 		
 		//Lets get any banners in this gallery
 		$post_args = array(
@@ -397,7 +398,8 @@ function prso_orbit_banner_content( $banners = array(), $args = array() ) {
 	
 	$defaults = array(
 		'container_id' 		=> 'featured',
-		'container_class'	=> NULL
+		'container_class'	=> NULL,
+		'image_size'		=> 'prso-orbit'
 	);
 	
 	$args = wp_parse_args( $args, $defaults );
@@ -436,7 +438,7 @@ function prso_orbit_banner_content( $banners = array(), $args = array() ) {
 				}
 				
 				//Now we have assesed the banner content we need to build the html - returns array of ['banner'] and ['caption']
-				$html_array[] = prso_orbit_banner_html( $banner, $has_thumbnail, $has_content, $has_caption );
+				$html_array[] = prso_orbit_banner_html( $banner, $has_thumbnail, $has_content, $has_caption, $args['image_size'] );
 				
 			}
 			
@@ -473,7 +475,7 @@ function prso_orbit_banner_content( $banners = array(), $args = array() ) {
 	return $output;
 }
 
-function prso_orbit_banner_html( $banner = array(), $has_thumbnail = false, $has_content = false, $has_caption = false) {
+function prso_orbit_banner_html( $banner = array(), $has_thumbnail = false, $has_content = false, $has_caption = false, $image_size) {
 	
 	//Init vars
 	$data_caption 	= NULL;
@@ -500,7 +502,7 @@ function prso_orbit_banner_html( $banner = array(), $has_thumbnail = false, $has
 		if( $has_thumbnail && !$has_content ) {
 			
 			//Get image src
-			$image_src = wp_get_attachment_image_src( get_post_thumbnail_id( $banner->ID ), 'prso-orbit' );
+			$image_src = wp_get_attachment_image_src( get_post_thumbnail_id( $banner->ID ), $image_size );
 			
 			//Output banner image
 			ob_start();
@@ -525,7 +527,7 @@ function prso_orbit_banner_html( $banner = array(), $has_thumbnail = false, $has
 		} elseif( $has_thumbnail && $has_content ) {
 			
 			//Get image src
-			$image_src = wp_get_attachment_image_src( get_post_thumbnail_id( $banner->ID ), 'prso-orbit' );
+			$image_src = wp_get_attachment_image_src( get_post_thumbnail_id( $banner->ID ), $image_size );
 			
 			//Output banner content div with background set to thumb src
 			ob_start();
