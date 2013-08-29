@@ -11,14 +11,18 @@
 #-----------------------------------------------------------------
 # Disable wpautop on shortcode content
 #-----------------------------------------------------------------
-remove_filter( 'the_content', 'do_shortcode' );
-remove_filter( 'the_content', 'wpautop' );
-add_filter( 'the_content', 'do_shortcode', 10 );
-add_filter( 'the_content', 'wpautop', 11 );
+remove_filter( 'the_content', 'do_shortcode', 11 );
+add_filter( 'the_content', 'do_shortcode', 13 );
+
 //Be sure all empty p tags are removed from content
 add_filter( 'the_content', 'remove_empty_p', 12 );
+add_filter( 'widget_text', 'remove_empty_p', 5 );
 function remove_empty_p( $content ){
+
     $content = force_balance_tags($content);
+    $content = preg_replace('#<p>\s*+(<br\s*/*>)?\s*</p>#i', '', $content);
+    $content = shortcode_unautop( $content );
+    
     return preg_replace('#<p>\s*+(<br\s*/*>)?\s*</p>#i', '', $content);
 }
 
