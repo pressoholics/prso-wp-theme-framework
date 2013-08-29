@@ -262,4 +262,6 @@ class Cuztom_Singleton
 
 endif; // End class_exists check
 
-Cuztom_Singleton::instance();
+$CuztomInit = new Cuztom_Singleton();
+$CuztomInit->instance();
+//Cuztom_Singleton::instance();

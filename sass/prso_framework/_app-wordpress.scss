@@ -8,7 +8,7 @@
 */
 
 html {
-	font-size: 100%;
+	font-size: strip-units($baseFontSize)/16 * 100%;
 }
 
 /* layout */
@@ -582,12 +582,12 @@ a[class^='tag-link-']:hover{
 	}
 
 	#featured p{
-		padding-left: 4em;
+		padding-left: 2em;
 	}
 
 	#featured h3,
 	#featured p{
-		width: 66%;
+		
 	}
 	
 }
