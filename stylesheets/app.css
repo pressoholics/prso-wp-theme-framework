@@ -6800,13 +6800,7 @@ a[class^='tag-link-']:hover {
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-wordpress\.scss}line{font-family:\00003584}}
   #featured p {
-    padding-left: 4em;
-  }
-
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-wordpress\.scss}line{font-family:\00003589}}
-  #featured h3,
-  #featured p {
-    width: 66%;
+    padding-left: 2em;
   }
 }
 @media only screen and (min-width: 940px) {
