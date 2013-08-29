@@ -102,18 +102,40 @@ function prso_orbit_meta_box() {
         'prso-orbit-banner',
         __('Banner Gallery', 'prso_textdomain' ), 
         'prso_orbit_banner_option',
-        'page',
+        'post',
         'side'
     );
     add_meta_box(
         'prso-orbit-banner',
-        __('Banner Gallery', 'prso_textdomain' ), 
-        'prso_orbit_banner_option',
-        'post',
-        'side'
+        __('Banner Link URL', 'prso_textdomain' ), 
+        'prso_orbit_link_option',
+        'prso_orbit_banner'
     );
 }
 add_action( 'add_meta_boxes', 'prso_orbit_meta_box' );
+
+/**
+* prso_orbit_banner_option()
+*
+* Collects all Orbit page banner categories set in the system and outputs
+* an html select option for each Orbit banner category found
+*
+*/
+function prso_orbit_link_option( $post ) {
+	
+	// Use nonce for verification
+	wp_nonce_field( plugin_basename( __FILE__ ), 'prso_noncename' );
+	
+	$current_url = get_post_meta( $post->ID, 'prso_orbit_banner_link', true );
+	
+	// The actual fields for data entry
+	?>
+		<label for="orbit_page_banner_link">
+		<?php _e("Banner Link URL", 'prso_textdomain' ); ?>
+		</label>
+		<input id="orbit_page_banner_link" type="text" value="<?php echo esc_url($current_url); ?>" name="prso_orbit_banner_link" size="100"/>
+	<?php
+}
 
 /**
 * prso_orbit_banner_option()
@@ -204,6 +226,11 @@ function prso_orbit_save_options( $post_id ) {
 		//Cache page banner cat data
 		if( isset($_POST['prso_orbit_banner_gallery']) ) {
 			$data['prso_orbit_banner_gallery'] = $_POST['prso_orbit_banner_gallery'];
+		}
+		
+		//Cache banner link
+		if( isset($_POST['prso_orbit_banner_link']) ) {
+			$data['prso_orbit_banner_link'] = esc_url($_POST['prso_orbit_banner_link']);
 		}
 			
 		// Loop data array and save post meta
@@ -481,6 +508,7 @@ function prso_orbit_banner_html( $banner = array(), $has_thumbnail = false, $has
 	$data_caption 	= NULL;
 	$caption_html	= NULL;
 	$image_src		= array();
+	$image_link		= NULL;
 	$output 		= NULL;
 	
 	if( !empty($banner) ) {
@@ -504,10 +532,15 @@ function prso_orbit_banner_html( $banner = array(), $has_thumbnail = false, $has
 			//Get image src
 			$image_src = wp_get_attachment_image_src( get_post_thumbnail_id( $banner->ID ), $image_size );
 			
+			//Get image link url
+			$image_link = get_post_meta( $banner->ID, 'prso_orbit_banner_link', true );
+			
 			//Output banner image
 			ob_start();
 			?>
-			<img src="<?php echo $image_src[0]; ?>" alt="<?php echo esc_attr($banner->post_title); ?>" data-caption="<?php echo $data_caption; ?>" />
+			<a href="<?php echo esc_url($image_link); ?>" target="_blank">
+				<img src="<?php echo $image_src[0]; ?>" alt="<?php echo esc_attr($banner->post_title); ?>" data-caption="<?php echo $data_caption; ?>" />
+			</a>
 			<?php
 			$output['banner'] = ob_get_contents();
 			ob_end_clean();

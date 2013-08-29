@@ -64,6 +64,13 @@ class HtmlHelper {
  		*/
  		$this->add_filter( 'prso_detect_ie', 'detect_ie', 10, 1 );
  		
+ 		/**
+ 		* 6. remove_empty_p
+ 		* 	 Filters out any empty p tags and br created by wp_auto_p
+ 		*/
+ 		$this->add_filter( 'prso_remove_p', 'remove_empty_p', 10, 1 );
+ 		
+ 		
  	}
  	
 	/**
@@ -283,6 +290,15 @@ class HtmlHelper {
         return $IE6 + $IE7 + $IE8;
 	}
 	
+	public function remove_empty_p( $content ){
+
+	    $content = force_balance_tags($content);
+	    $content = preg_replace('#<p>\s*+(<br\s*/*>)?\s*</p>#i', '', $content);
+	    $content = shortcode_unautop( $content );
+	    
+	    return preg_replace('#<p>\s*+(<br\s*/*>)?\s*</p>#i', '', $content);
+	}
+	
 	
 	
 	/**
@@ -324,4 +340,5 @@ class HtmlHelper {
 		}
 		
 	}
+
 }

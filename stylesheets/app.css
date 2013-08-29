@@ -6880,9 +6880,19 @@ article ul.accordion, article ol.accordion, article dl.accordion {
   padding: 0;
 }
 
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-core\.scss}line{font-family:\0000367}}
+dl.gallery-item {
+  padding: 0;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-core\.scss}line{font-family:\0000369}}
+dl.gallery-item img {
+  margin-bottom: 5px;
+  width: 100%;
+}
+
 /**** Footer */
 /* Hide 'flyout' menu items in footer menu */
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-core\.scss}line{font-family:\0000371}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-core\.scss}line{font-family:\0000378}}
 .footer-links ul.flyout {
   display: none;
 }
@@ -6890,24 +6900,24 @@ article ul.accordion, article ol.accordion, article dl.accordion {
 /**** Media Queries */
 /* Medium Screens AND Landscape - iPad */
 @media only screen and (max-width: 1279px) and (min-width: 768px) and (orientation: landscape) {
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-core\.scss}line{font-family:\0000381}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-core\.scss}line{font-family:\0000388}}
   .show-for-medium-landscape {
     display: inherit !important;
   }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-core\.scss}line{font-family:\0000385}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-core\.scss}line{font-family:\0000392}}
   .hide-for-medium-landscape {
     display: none !important;
   }
 }
 /* Medium Screens AND Portrait - iPad */
 @media only screen and (max-width: 1279px) and (min-width: 768px) and (orientation: portrait) {
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-core\.scss}line{font-family:\0000394}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-core\.scss}line{font-family:\00003101}}
   .show-for-medium-portrait {
     display: inherit !important;
   }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-core\.scss}line{font-family:\0000398}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/ben\/Documents\/Development\/vhost\/www\.pressoholics\.dev\/wp-content\/themes\/pressotheme\/sass\/prso_framework\/_app-core\.scss}line{font-family:\00003105}}
   .hide-for-medium-portrait {
     display: none !important;
   }

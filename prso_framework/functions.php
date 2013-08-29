@@ -304,14 +304,6 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  		);
  		wp_enqueue_script( 'foundation-buttons' );
  		
- 		wp_register_script( 'foundation-clearing', 
- 			get_template_directory_uri() . '/javascripts/foundation/jquery.foundation.clearing.js', 
- 			array('jquery'), 
- 			'3.2.5', 
- 			true 
- 		);
- 		wp_enqueue_script( 'foundation-clearing' );
- 		
  		wp_register_script( 'foundation-forms', 
  			get_template_directory_uri() . '/javascripts/foundation/jquery.foundation.forms.js', 
  			array('jquery'), 
@@ -367,6 +359,14 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  			true 
  		);
  		wp_enqueue_script( 'foundation-reveal' );
+ 		
+ 		wp_register_script( 'foundation-clearing', 
+ 			get_template_directory_uri() . '/javascripts/foundation/jquery.foundation.clearing.js', 
+ 			array('jquery'), 
+ 			'3.2.5', 
+ 			true 
+ 		);
+ 		wp_enqueue_script( 'foundation-clearing' );
  		
  		wp_register_script( 'foundation-tabs', 
  			get_template_directory_uri() . '/javascripts/foundation/jquery.foundation.tabs.js', 
