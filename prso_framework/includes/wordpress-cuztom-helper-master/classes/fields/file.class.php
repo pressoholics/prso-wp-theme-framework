@@ -5,8 +5,10 @@ if( ! defined( 'ABSPATH' ) ) exit;
 class Cuztom_Field_File extends Cuztom_Field
 {
 	var $_supports_ajax			= true;
+
+	var $css_classes 			= array( 'cuztom-hidden', 'cuztom-input' );
 	
-	function _output( $value, $object )
+	function _output( $value )
 	{
 		$output = '';
 
@@ -28,11 +30,13 @@ class Cuztom_Field_File extends Cuztom_Field
 			$file = '';
 		}
 	
-		$output .= '<input type="hidden" name="cuztom[' . $this->id_name . ']" id="' . $this->id_name . '" class="cuztom-hidden cuztom-input" value="' . ( ! empty( $value ) ? $value : '' ) . '" />';
+		$output .= '<input type="hidden" ' . $this->output_name() . ' ' . $this->output_id() . ' ' . $this->output_css_class() . ' value="' . ( ! empty( $value ) ? $value : '' ) . '" />';
 		$output .= sprintf( '<input id="upload-file-button" type="button" class="button js-cuztom-upload" data-cuztom-media-type="file" value="%s" />', __( 'Select file', 'cuztom' ) );
 		$output .= ( ! empty( $value ) ? sprintf( '<a href="#" class="js-cuztom-remove-media cuztom-remove-media">%s</a>', __( 'Remove current file', 'cuztom' ) ) : '' );
 
 		$output .= '<span class="cuztom-preview">' . $file . '</span>';
+
+		$output .= $this->output_explanation();
 
 		return $output;
 	}

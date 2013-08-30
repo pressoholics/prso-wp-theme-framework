@@ -2,7 +2,7 @@
 
 This helper can be used to quickly register Custom Post Types, Taxonomies, Meta Boxes, Menu Pages and Sidebars within your Wordpress projects. Please comment, review, watch, fork and report bugs.
 
-**Version:** 2.3.1  
+**Version:** 2.6.6  
 **Requires:** 3.5 / 3.0+  
 
 ## Basic usage
@@ -109,60 +109,43 @@ See the <a href="https://github.com/Gizburdt/Wordpress-Cuztom-Helper/wiki">wiki<
 ## Changelog
 You can see the full changelog <a href="https://github.com/Gizburdt/Wordpress-Cuztom-Helper/wiki/Changelog">here</a>.
 
-###2.3.1
-* Fixed: Issue #136: Cuztom::uglify() is removed from select, radio, checkbox slug. So you can control the slug, like BottomLeft.
+###2.6.6
+* Fixed: Issue #185: Hidden fields now work just like normal text fields, but still hidden ofcourse ;)
+* Fixed: Issue #186: Data is now saved when value is 0
+* Fixed: Small fixes and improvements
+* Added: License file
 
-###2.3
-* Enhancement: Cuztom pluralize can now handle more types of plural words
-* Enhancement: Security improvements
-* Enhancement: Cleaner code, better asset naming
-* Added: Cuztom now uses a Singleton to handle the initialization
-* Added: Cuztom_Notice to handle admin notices better
+###2.6.4 / 2.6.5
+* Fixed: Issue #175: Errors when saving meta
 
-###2.2.1
-* Fixed: Issue #130: Image select button loses ats value in bundle
-* Added: Select in bundle
+###2.6.3
+* Improvement: Iris picker is now shown with the right CSS. probs @ikixxx
+* Fixed: Issue #179: Meta data not being saved on pages. 
 
-###2.2
-* Fixed: Issue #126: Image field error when editor is not supported by post type
-* Fixed: Issue #125: Conflict with names in repeatable fields
-* Added: Image support in bundles
+###2.6.2
+* Fixed: Since 2.6.1 there were some bugs and errors, regarding the saving and displaying of meta data. They are all fixed now.
+* Removed: The page classes are now removed, because they are not very helpful. They will be back when there is more logic for them to handle.
 
-###2.1.3
-* Fixed: Issue #118: Upload with small images
+###2.6.1
+* Fixed: Issue #175: PHP warnings and errors
+* Improvement: Code cleanup of Cuztom_Field
 
-###2.1.2
-* Fixed: Fixed a bug where only 5 posts were shown in Cuztom post fields
-* Fixed: call_to_user_func error
+### 2.6
+* NOTE: If you would like to set the id, you need to set id, and not id_name anymore
+* Improvement: Use better OOP for saving meta
+* Added: It is now possible to add bundles within tabs
 
-###2.1.1
-* Fixed: Issue #47: Wrong content in the wrong admin column
+###2.5.3
+* Improvement: Image select improvements
+* Improvement: New colorpicker (Iris)
+* Added: Term meta in Taxonomy List Table
 
-###2.1
-* Added: New field: multi select
-* Enhancement: Table and fields are now looking better when the metabox is in the sidebar
-* Enhancement: The version check within the javascript wasn't working well
-* Enhancement: HTML tags outside of the translated string
-* Changed (NOTE): Meta boxes now have a $id and a $title. Id is the unique string, the title can be translated
+###2.5.2
+* Fixed: Issue #168: Repeatable field won't save
 
-###2.0.2
-* Enhancement: new jQuery UI theme version
-* Fixed: Issue #105: Strings inside meta are now translated after using it in logic
+###2.5.1
+* Fixed: Issue #167: Fields that require javascript now work in Term Meta
+* Changed: Date and datetime are now being saved as unix time stamp
 
-###2.0.1
-* Fixed: Issue #100: Little bug with the WYSIWYG editor where data is not saved to the database
-
-###2.0
-* Added: Explanation. This is a second description shown below the field (not all fields are supported yet)
-* Added: Possibility to add a 'None' option to Cuztom_Select and Cuztom_Post_Select
-* Added: AJAX support for all fields (except radios and checkboxes)
-* Added: New fields, datepicker and datetimepicker
-* Enhancement: Better CSS and JS (selectors)
-* Enhancement: Better field outputting
-* Enhancement: Better handling of images and files
-* Enhancement: Many minor enchancements
-* Changed: show_column is renamed to show_admin_column, for Taxonomies and Fields
-* Changed: $options is changed to $args (field options). Options is now used for select, radios and checkboxes
-* Fixed: Many minor bugs
-* Removed: Field functions (/functions/field.php)
-* Removed: Cuztom_Field_Radio
+###2.5
+* Added: Term meta!

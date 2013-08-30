@@ -3,28 +3,31 @@ jQuery.noConflict();
 jQuery(function($) {
 	
 	// Datepicker
-	$('.js-cuztom-datepicker').each(function(){
-		$(this).datepicker({ dateFormat: $(this).data('date-format') });
+	$('.js-cuztom-datepicker').map(function(){
+		return $(this).datepicker({ dateFormat: $(this).data('date-format') });
 	});
 
 	// Timepicker
-	$('.js-cuztom-timepicker').each(function(){
-		$(this).timepicker({ timeFormat: $(this).data('time-format') });
+	$('.js-cuztom-timepicker').map(function(){
+		return $(this).timepicker({ timeFormat: $(this).data('time-format') });
 	});
 
 	// Datetime
-	$('.js-cuztom-datetimepicker').each(function(){
-		$(this).datetimepicker({ 
+	$('.js-cuztom-datetimepicker').map(function(){
+		return $(this).datetimepicker({ 
 			timeFormat: $(this).data('time-format'),
 			dateFormat: $(this).data('date-format')
 		});
 	});
 	
 	// Colorpicker
-	$('.js-cuztom-colorpicker').miniColors();
+	$('.js-cuztom-colorpicker').wpColorPicker();
 
 	// Tabs
 	$('.js-cuztom-tabs').tabs();
+
+	// Slider
+	$( ".js-slider" ).slider();
 
 	// Accordion
 	$('.js-cuztom-accordion').accordion();
@@ -42,20 +45,6 @@ jQuery(function($) {
 		
 		if( fields > 1 ) { field.remove(); }
 		if( fields == 2 ){ $( '.js-cuztom-sortable-item', wrap ).find('.js-cuztom-remove-sortable').remove(); }
-	});
-
-	// Remove current attached image
-	$('.cuztom-td').on( 'click', '.js-cuztom-remove-media', function()
-	{
-		var that 	= $( this ),
-			td 		= that.closest('.cuztom-td');
-
-		$( '.cuztom-preview', td ).html('');
-		$( '.cuztom-hidden', td ).val('');
-		
-		that.hide();
-		
-		return false;
 	});		
 	
 	// Add sortable
@@ -75,6 +64,7 @@ jQuery(function($) {
 		{
 			new_item.find('.cuztom-input').each( function() {
 				$(this).attr('name', function( i, val ) { return val.replace( /\[(\d+)\]/, function( match, n ) { return "[" + ( Number(n) + 1 ) + "]"; }); })
+				$(this).attr('id', function( i, val ) { return val.replace( /\_(\d+)/, function( match, n ) { return "_" + ( Number(n) + 1 ); }); })
 			});
 		}
 		
@@ -102,22 +92,22 @@ jQuery(function($) {
 			parent		= that.closest('.cuztom-td'),
 			cuztom 		= parent.closest('.cuztom'),
 			input 		= $('.cuztom-input', parent),
-			id_name 	= input.attr('id'),
+			field_id 	= input.attr('id'),
 			value		= input.val(),
 
-			// Need better handling
+			// Needs better handling
 			meta_type 	= cuztom.data('meta-type'),
-			id 			= cuztom.data('id');
+			object_id	= cuztom.data('object-id');
 
 		var data = {
 			action: 	'cuztom_field_ajax_save',
 			cuztom: 	{
 				value: 		value,
-				id_name: 	id_name,
+				field_id: 	field_id,
 
-				// Need better handling
+				// Needs better handling
 				meta_type:  meta_type,
-				id: 		id
+				object_id: 	object_id
 			}
 		};
 
@@ -129,6 +119,20 @@ jQuery(function($) {
 		return false;
 	});
 
+	// Remove current attached image
+	$('.cuztom-td').on( 'click', '.js-cuztom-remove-media', function()
+	{
+		var that 	= $( this ),
+			td 		= that.closest('.cuztom-td');
+
+		$( '.cuztom-preview', td ).html('');
+		$( '.cuztom-hidden', td ).val('');
+		
+		that.hide();
+		
+		return false;
+	});
+
 	// Upload image
 	$('.cuztom-td').on( 'click', '.js-cuztom-upload', function()
 	{
@@ -136,39 +140,46 @@ jQuery(function($) {
 			type 	= that.data('cuztom-media-type'),
 			parent	= that.closest('.cuztom-td'),
 			hidden 	= $( '.cuztom-hidden', parent ),
-			preview = $( '.cuztom-preview', parent );
+			preview = $( '.cuztom-preview', parent ),
+			_cuztom_uploader;
 
 		if( Cuztom.wp_version >= '3.5' )
 		{
-			var	_original_send_attachment = wp.media.editor.send.attachment;
-				_cuztom = true;
-
-			wp.media.editor.send.attachment = function(props, attachment)
+			if( _cuztom_uploader ) 
 			{
-				if( _cuztom )
-		    	{
-		    		if( type == 'image' )
-		    		{
-		    			var thumbnail = attachment.sizes.medium ? attachment.sizes.medium : attachment.sizes.full;
+				_cuztom_uploader.open();
+            	return;
+        	}
 
-		    			preview.html('<img src="' + thumbnail.url + '" height="' + thumbnail.height + '" width="' + thumbnail.width + '" />')
-		    			hidden.val(attachment.id);
-		    		}
-		    		else
-		    		{
-		    			preview.html('<span class="cuztom-mime"><a href="' + attachment.url + '" target="_blank">' + attachment.name + '</a></span>' );
-		    			hidden.val(attachment.url);
-		    		}
+        	//Extend the wp.media object
+	        _cuztom_uploader = wp.media.frames.file_frame = wp.media({
+	            multiple: false,
+	        });
 
-		    		_cuztom = false;
-		    	} 
-		    	else 
-		    	{
-		    		return _original_send_attachment.apply( this, [props, attachment] );
-		      	};
-		    }
+	        // Send the data to the fields
+	        _cuztom_uploader.on('select', function() {
+            	attachment = _cuztom_uploader.state().get('selection').first().toJSON();
 
-		    wp.media.editor.open();
+            	// (Re)set the remove button
+            	$('.js-cuztom-remove-media', parent).remove();
+            	that.after('<a href="#" class="js-cuztom-remove-media cuztom-remove-media">' + ( type == 'image' ? Cuztom.remove_image : Cuztom.remove_file ) + '</a> ');
+
+            	// Send an id or url to the field and set the preview
+            	if( type == 'image' )
+				{
+					var thumbnail = attachment.sizes.medium ? attachment.sizes.medium : attachment.sizes.full;
+
+					preview.html('<img src="' + thumbnail.url + '" height="' + thumbnail.height + '" width="' + thumbnail.width + '" />')
+					hidden.val( attachment.id );
+				}
+				else
+				{
+					preview.html('<span class="cuztom-mime"><a href="' + attachment.url + '" target="_blank">' + attachment.name + '</a></span>' );
+					hidden.val( attachment.url );
+				}
+        	});
+
+        	_cuztom_uploader.open();
 		}
 		else
 		{
@@ -206,15 +217,14 @@ jQuery(function($) {
 				// Close Wordpress media popup
 				tb_remove();
 
+				$('.js-cuztom-remove-media', parent).remove();
+				that.after('<a href="#" class="js-cuztom-remove-media cuztom-remove-media">' + ( type == 'image' ? Cuztom.remove_image : Cuztom.remove_file ) + '</a> ');
+
 				// Reset default function
 				window.send_to_editor = _original_send_to_editor;
 			}
 		}
 
-		// Add remove button
-		$('.js-cuztom-remove-media', parent).remove();
-		that.after('<a href="#" class="js-cuztom-remove-media cuztom-remove-media">' + ( type == 'image' ? Cuztom.remove_image : Cuztom.remove_file ) + '</a> ');
-	    
 		return false;
 	});
 	

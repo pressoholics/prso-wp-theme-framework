@@ -22,7 +22,7 @@ class Cuztom_Singleton
 	 * @since  	2.3
 	 * 
 	 */
-	public function instance()
+	public static function instance()
 	{
 		if ( ! isset( self::$instance ) ) 
 		{
@@ -45,7 +45,7 @@ class Cuztom_Singleton
 	private function setup_constants()
 	{
 		if( ! defined( 'CUZTOM_VERSION' ) ) 
-			define( 'CUZTOM_VERSION', '2.3.1' );
+			define( 'CUZTOM_VERSION', '2.6.6' );
 
 		if( ! defined( 'CUZTOM_DIR' ) ) 
 			define( 'CUZTOM_DIR', plugin_dir_path( __FILE__ ) );
@@ -72,42 +72,38 @@ class Cuztom_Singleton
 		include( CUZTOM_DIR . 'classes/taxonomy.class.php' );
 		include( CUZTOM_DIR . 'classes/sidebar.class.php' );
 
-		if( is_admin() )
-		{
-			include( CUZTOM_DIR . 'classes/meta.class.php' );
-			include( CUZTOM_DIR . 'classes/meta_box.class.php' );
-			include( CUZTOM_DIR . 'classes/user_meta.class.php' );
-			
-			include( CUZTOM_DIR . 'classes/field.class.php' );
-			include( CUZTOM_DIR . 'classes/fields/bundle.class.php' );
-			include( CUZTOM_DIR . 'classes/fields/tabs.class.php' );
-			include( CUZTOM_DIR . 'classes/fields/accordion.class.php' );
-			include( CUZTOM_DIR . 'classes/fields/tab.class.php' );
-			include( CUZTOM_DIR . 'classes/fields/text.class.php' );
-			include( CUZTOM_DIR . 'classes/fields/textarea.class.php' );
-			include( CUZTOM_DIR . 'classes/fields/checkbox.class.php' );
-			include( CUZTOM_DIR . 'classes/fields/yesno.class.php' );
-			include( CUZTOM_DIR . 'classes/fields/select.class.php' );
-			include( CUZTOM_DIR . 'classes/fields/multi_select.class.php' );
-			include( CUZTOM_DIR . 'classes/fields/checkboxes.class.php' );
-			include( CUZTOM_DIR . 'classes/fields/radios.class.php' );
-			include( CUZTOM_DIR . 'classes/fields/wysiwyg.class.php' );
-			include( CUZTOM_DIR . 'classes/fields/image.class.php' );
-			include( CUZTOM_DIR . 'classes/fields/file.class.php' );
-			include( CUZTOM_DIR . 'classes/fields/date.class.php' );
-			include( CUZTOM_DIR . 'classes/fields/time.class.php' );
-			include( CUZTOM_DIR . 'classes/fields/datetime.class.php' );
-			include( CUZTOM_DIR . 'classes/fields/color.class.php' );
-			include( CUZTOM_DIR . 'classes/fields/post_select.class.php' );
-			include( CUZTOM_DIR . 'classes/fields/post_checkboxes.class.php' );
-			include( CUZTOM_DIR . 'classes/fields/term_select.class.php' );
-			include( CUZTOM_DIR . 'classes/fields/term_checkboxes.class.php' );
-			include( CUZTOM_DIR . 'classes/fields/hidden.class.php' );
-
-			include( CUZTOM_DIR . '/classes/page.class.php' );
-			include( CUZTOM_DIR . '/classes/pages/menu_page.class.php' );
-			include( CUZTOM_DIR . '/classes/pages/submenu_page.class.php' );
-		}
+		include( CUZTOM_DIR . 'classes/meta.class.php' );
+		include( CUZTOM_DIR . 'classes/meta_box.class.php' );
+		include( CUZTOM_DIR . 'classes/user_meta.class.php' );
+		include( CUZTOM_DIR . 'classes/term_meta.class.php' );
+		
+		include( CUZTOM_DIR . 'classes/field.class.php' );
+		include( CUZTOM_DIR . 'classes/fields/bundle.class.php' );
+		include( CUZTOM_DIR . 'classes/fields/tabs.class.php' );
+		include( CUZTOM_DIR . 'classes/fields/accordion.class.php' );
+		include( CUZTOM_DIR . 'classes/fields/tab.class.php' );
+		include( CUZTOM_DIR . 'classes/fields/text.class.php' );
+		include( CUZTOM_DIR . 'classes/fields/textarea.class.php' );
+		include( CUZTOM_DIR . 'classes/fields/checkbox.class.php' );
+		include( CUZTOM_DIR . 'classes/fields/yesno.class.php' );
+		include( CUZTOM_DIR . 'classes/fields/select.class.php' );
+		include( CUZTOM_DIR . 'classes/fields/multi_select.class.php' );
+		include( CUZTOM_DIR . 'classes/fields/checkboxes.class.php' );
+		include( CUZTOM_DIR . 'classes/fields/radios.class.php' );
+		include( CUZTOM_DIR . 'classes/fields/wysiwyg.class.php' );
+		include( CUZTOM_DIR . 'classes/fields/image.class.php' );
+		include( CUZTOM_DIR . 'classes/fields/file.class.php' );
+		include( CUZTOM_DIR . 'classes/fields/date.class.php' );
+		include( CUZTOM_DIR . 'classes/fields/time.class.php' );
+		include( CUZTOM_DIR . 'classes/fields/datetime.class.php' );
+		include( CUZTOM_DIR . 'classes/fields/color.class.php' );
+		include( CUZTOM_DIR . 'classes/fields/post_select.class.php' );
+		include( CUZTOM_DIR . 'classes/fields/post_checkboxes.class.php' );
+		include( CUZTOM_DIR . 'classes/fields/term_select.class.php' );
+		include( CUZTOM_DIR . 'classes/fields/term_checkboxes.class.php' );
+		// include( CUZTOM_DIR . 'classes/fields/slider.class.php' );
+		// include( CUZTOM_DIR . 'classes/fields/url.class.php' );
+		include( CUZTOM_DIR . 'classes/fields/hidden.class.php' );
 
 		include( CUZTOM_DIR . 'functions/post_type.php' );
 		include( CUZTOM_DIR . 'functions/taxonomy.php' );
@@ -151,8 +147,7 @@ class Cuztom_Singleton
 				wp_register_style( 'cuztom-jquery-ui', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/' . CUZTOM_JQUERY_UI_STYLE . '/jquery-ui.css', false, CUZTOM_VERSION, 'screen' );
 		}
 		
-		wp_register_style( 'cuztom-colorpicker', 	CUZTOM_URL . '/assets/css/colorpicker.css', false, CUZTOM_VERSION, 'screen' );
-		wp_register_style( 'cuztom', 				CUZTOM_URL . '/assets/css/style.css', 		false, CUZTOM_VERSION, 'screen' );
+		wp_register_style( 'cuztom', CUZTOM_URL . '/assets/css/style.css', false, CUZTOM_VERSION, 'screen' );
 	}
 
 	/**
@@ -166,7 +161,7 @@ class Cuztom_Singleton
 	{
 		wp_enqueue_style( 'thickbox' );
 		wp_enqueue_style( 'cuztom-jquery-ui' );
-		wp_enqueue_style( 'cuztom-colorpicker' );
+		wp_enqueue_style( 'wp-color-picker' );
 		wp_enqueue_style( 'cuztom' );
 	}
 
@@ -179,9 +174,8 @@ class Cuztom_Singleton
 	 */
 	function register_scripts()
 	{
-		wp_register_script( 'jquery-colorpicker', 	CUZTOM_URL . '/assets/js/jquery.colorpicker.js', 	array( 'jquery' ), CUZTOM_VERSION, true );
 		wp_register_script( 'jquery-timepicker', 	CUZTOM_URL . '/assets/js/jquery.timepicker.js', 	array( 'jquery' ), CUZTOM_VERSION, true );
-		wp_register_script( 'cuztom', 				CUZTOM_URL . '/assets/js/functions.js', 			array( 'jquery', 'jquery-ui-core', 'jquery-ui-datepicker', 'jquery-ui-tabs', 'jquery-ui-accordion', 'jquery-ui-sortable', 'jquery-colorpicker', 'jquery-timepicker' ), CUZTOM_VERSION, true );
+		wp_register_script( 'cuztom', 				CUZTOM_URL . '/assets/js/functions.js', 			array( 'jquery', 'jquery-ui-core', 'jquery-ui-datepicker', 'jquery-ui-tabs', 'jquery-ui-accordion', 'jquery-ui-sortable', 'wp-color-picker', 'jquery-timepicker', 'jquery-ui-slider' ), CUZTOM_VERSION, true );
 	}
 	
 	/**

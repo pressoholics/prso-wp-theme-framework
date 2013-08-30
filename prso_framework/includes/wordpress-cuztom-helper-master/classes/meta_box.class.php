@@ -18,7 +18,7 @@ class Cuztom_Meta_Box extends Cuztom_Meta
 	/**
 	 * Constructs the meta box
 	 *
-	 * @param   integer 		$id
+	 * @param   string 			$id
 	 * @param 	string|array	$title
 	 * @param 	array|string	$fields
 	 * @param 	string 			$post_type_name
@@ -43,14 +43,16 @@ class Cuztom_Meta_Box extends Cuztom_Meta
 			// Chack if the class, function or method exist, otherwise use cuztom callback
 			if( Cuztom::is_wp_callback( $data ) )
 			{
+				
 				$this->callback = $data;
 			}
 			else
 			{
+				
 				$this->callback = array( &$this, 'callback' );
 
 				// Build the meta box and fields
-				$this->build( $data );
+				$this->data = $this->build( $data );
 
 				foreach( $this->post_types as $post_type )
 				{
@@ -104,38 +106,37 @@ class Cuztom_Meta_Box extends Cuztom_Meta
 
 		// Verify nonce
 		if( ! ( isset( $_POST['cuztom_nonce'] ) && wp_verify_nonce( $_POST['cuztom_nonce'], plugin_basename( dirname( __FILE__ ) ) ) ) ) return;
-		
+
 		// Is the post from the given post type?
-		if( ! in_array( get_post_type( $post_id ), $this->post_types ) ) return;
-		
+		if( ! in_array( get_post_type( $post_id ), array_merge( $this->post_types, array( 'revision' ) ) ) ) return;
+
 		// Is the current user capable to edit this post
 		foreach( $this->post_types as $post_type )
 			if( ! current_user_can( get_post_type_object( $post_type )->cap->edit_post, $post_id ) ) return;
-		
-		// Loop through each meta box
-		if( ! empty( $this->data ) && isset( $_POST['cuztom'] ) )
+
+		$values = isset( $_POST['cuztom'] ) ? $_POST['cuztom'] : array();
+
+		if( ! empty( $values ) )
+			parent::save( $post_id, $values );
+	}
+
+	/**
+	 * Normal save method to save all the fields in a metabox
+	 *
+	 * @author 	Gijs Jorissen
+	 * @since 	2.6
+	 */
+	function save( $post_id, $values )
+	{
+		foreach( $this->fields as $id => $field )
 		{
-			if( $this->data instanceof Cuztom_Bundle && $field = $this->data )
-			{
-				// Delete old data, so the new sorted data can be saved
-				delete_post_meta( $post_id, $this->id );
-				
-				$value = isset( $_POST['cuztom'][$field->id] ) ? array_values( $_POST['cuztom'][$field->id] ) : '';
-				$value = apply_filters( "cuztom_post_meta_save_bundle_$field->id", apply_filters( 'cuztom_post_meta_save_bundle', $value, $field, $post_id ), $field, $post_id );
+			if( $field->in_bundle ) continue;
+			
+			$value = isset( $values[$id] ) ? $values[$id] : '';
+			$value = apply_filters( "cuztom_post_meta_save_$field->type", apply_filters( 'cuztom_post_meta_save', $value, $field, $post_id ), $field, $post_id );
 
-				$field->save( $post_id, $value, 'post' );
-			}
-			else
-			{
-				foreach( $this->fields as $id_name => $field )
-				{
-					$value = isset( $_POST['cuztom'][$id_name] ) ? $_POST['cuztom'][$id_name] : '';
-					$value = apply_filters( "cuztom_post_meta_save_$field->type", apply_filters( 'cuztom_post_meta_save', $value, $field, $post_id ), $field, $post_id );
-
-					$field->save( $post_id, $value, 'post' );
-				}
-			}
-		}		
+			$field->save( $post_id, $value, 'post' );
+		}
 	}
 	
 	/**
@@ -176,23 +177,26 @@ class Cuztom_Meta_Box extends Cuztom_Meta
 	{
 		$meta = get_post_meta( $post_id, $column, true );
 		
-		foreach( $this->fields as $id_name => $field )
+		if( $this->fields )
 		{
-			if( $column == $id_name )
+			foreach( $this->fields as $id_name => $field )
 			{
-				if( $field->repeatable && $field->_supports_repeatable )
+				if( $column == $id_name )
 				{
-					echo implode( $meta, ', ' );
-				}
-				else
-				{
-					if( $field instanceof Cuztom_Field_Image )
-						echo wp_get_attachment_image( $meta, array( 100, 100 ) );
+					if( $field->repeatable && $field->_supports_repeatable )
+					{
+						echo implode( $meta, ', ' );
+					}
 					else
-						echo $meta;
-				}
+					{
+						if( $field instanceof Cuztom_Field_Image )
+							echo wp_get_attachment_image( $meta, array( 100, 100 ) );
+						else
+							echo $meta;
+					}
 
-				break;
+					break;
+				}
 			}
 		}
 	}
@@ -209,8 +213,11 @@ class Cuztom_Meta_Box extends Cuztom_Meta
 	 */
 	function add_sortable_column( $columns )
 	{
-		foreach( $this->fields as $id_name => $field )
-			if( $field->show_admin_column ) $columns[$id_name] = $field->label;
+		if( $this->fields )
+		{
+			foreach( $this->fields as $id_name => $field )
+				if( $field->admin_column_sortable ) $columns[$id_name] = $field->label;
+		}
 
 		return $columns;
 	}

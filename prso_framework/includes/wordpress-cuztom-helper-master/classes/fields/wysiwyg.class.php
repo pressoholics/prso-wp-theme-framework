@@ -6,13 +6,13 @@ class Cuztom_Field_Wysiwyg extends Cuztom_Field
 {
 	var $_supports_ajax			= true;
 	
-	function __construct( $field, $meta_box )
+	function __construct( $field, $parent )
 	{
-		parent::__construct( $field, $meta_box );
+		parent::__construct( $field, $parent );
 
 		$this->args = array_merge( 
 			array(
-				'textarea_name' => 'cuztom[' . $this->id_name . ']',
+				'textarea_name' => 'cuztom[' . $this->id . ']',
 				'editor_class'	=> ''
 			),
 			$this->args
@@ -21,15 +21,15 @@ class Cuztom_Field_Wysiwyg extends Cuztom_Field
 		$this->args['editor_class'] .= ' cuztom-input';
 	}
 
-	function _output( $value, $object )
+	function _output( $value )
 	{	
-		return wp_editor( ( ! empty( $value ) ? $value : $this->default_value ), $this->id_name, $this->args );
+		return wp_editor( ( ! empty( $value ) ? $value : $this->default_value ), $this->id, $this->args ) . $this->output_explanation();
 	}
 
-	function save( $post_id, $value, $context )
+	function save( $id, $value )
 	{
 		$value = wpautop( $value );
 
-		parent::save( $post_id, $value, $context );
+		return parent::save( $id, $value );
 	}
 }
