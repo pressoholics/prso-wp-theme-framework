@@ -34,7 +34,7 @@ function EXAMPLE( $atts, $content ){
 	    
 	    //NOTE: You may need to manually apply wpautop to content in your shortcode
 	    //		If you want the user to be able to add P and BR with tinymce
-	    $content = wpautop( trim($content) );
+	    $content = apply_filters( 'prso_format_shortcode_content', $content );
 	    
     }
     

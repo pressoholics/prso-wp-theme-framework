@@ -312,6 +312,18 @@ class HtmlHelper {
 		$content = wpautop( trim($content) );
 		$content = apply_filters( 'prso_remove_p', $content );
 		
+		//Sanitize content - allow iframe for video embeds
+		$allowed_tags = wp_kses_allowed_html( 'post' );
+		$allowed_tags["iframe"] = array( //add new allowed tags
+			"src" 				=> array(),
+			"height" 			=> array(),
+			"width" 			=> array(),
+			"frameborder" 		=> array(),
+			"allowfullscreen" 	=> array()
+		);
+		
+		$content = wp_kses( $content, $allowed_tags );
+		
 		return $content;
 	}
 	
