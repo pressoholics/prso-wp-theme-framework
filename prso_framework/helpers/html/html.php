@@ -71,6 +71,12 @@ class HtmlHelper {
  		$this->add_filter( 'prso_remove_p', 'remove_empty_p', 10, 1 );
  		
  		
+ 		/**
+ 		* 7. format_shortcode_content
+ 		* 	 Prepares shortcode content, runs do_shortcode, wpautop, remove_p
+ 		*/
+ 		$this->add_filter( 'prso_format_shortcode_content', 'format_shortcode_content', 10, 1 );
+ 		
  	}
  	
 	/**
@@ -297,6 +303,16 @@ class HtmlHelper {
 	    $content = shortcode_unautop( $content );
 	    
 	    return preg_replace('#<p>\s*+(<br\s*/*>)?\s*</p>#i', '', $content);
+	}
+	
+	public function format_shortcode_content( $content ) {
+		
+		//Format content
+		$content = do_shortcode( $content );
+		$content = wpautop( trim($content) );
+		$content = apply_filters( 'prso_remove_p', $content );
+		
+		return $content;
 	}
 	
 	

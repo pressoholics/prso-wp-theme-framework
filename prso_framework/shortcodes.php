@@ -304,6 +304,9 @@ class PrsoThemeShortcodes {
 			$radius = 'radius';
 		}
 		
+		//Format content
+		$content = apply_filters( 'prso_format_shortcode_content', $content );
+		
 		$output = "<div class='panel {$radius} {$type}'>";
 		$output .= $content;
 		$output .= '</div>';
@@ -415,9 +418,7 @@ class PrsoThemeShortcodes {
 			extract( $attr );
 			
 			//Format content
-			$content = do_shortcode( $content );
-			$content = wpautop( trim($content) );
-			$content = apply_filters( 'prso_remove_p', $content );
+		   $content = apply_filters( 'prso_format_shortcode_content', $content );
 			
 			//Is this slide active
 			if( $active == 'true' ) {
@@ -491,6 +492,9 @@ class PrsoThemeShortcodes {
 			    //Also increment global column counter to second column
 			    $cja_shortcode_column_count = 2;
 		    }
+		    
+		    //Format content
+		   $content = apply_filters( 'prso_format_shortcode_content', $content );
 		    
 		    //Wrap content around 2 col foudnation div
 		    ob_start();
