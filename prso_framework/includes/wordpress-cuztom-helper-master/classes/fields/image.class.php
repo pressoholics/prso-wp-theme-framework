@@ -6,8 +6,10 @@ class Cuztom_Field_Image extends Cuztom_Field
 {
 	var $_supports_ajax			= true;
 	var $_supports_bundle		= true;
+
+	var $css_classes			= array( 'cuztom-hidden', 'cuztom-input' );
 	
-	function _output( $value, $object )
+	function _output( $value )
 	{
 		$output = '';
 
@@ -22,11 +24,13 @@ class Cuztom_Field_Image extends Cuztom_Field
 			$image = '';
 		}
 	
-		$output .= '<input type="hidden" name="cuztom' . $this->pre . '[' . $this->id_name . ']' . $this->after . '" id="' . $this->id_name . '" class="cuztom-hidden cuztom-input" value="' . ( ! empty( $value ) ? $value : '' ) . '" />';
+		$output .= '<input type="hidden" ' . $this->output_name() . ' ' . $this->output_id() . ' ' . $this->output_css_class() . ' value="' . ( ! empty( $value ) ? $value : '' ) . '" />';
 		$output .= sprintf( '<input id="upload-image-button" type="button" class="button js-cuztom-upload" data-cuztom-media-type="image" value="%s" />', __( 'Select image', 'cuztom' ) );
 		$output .= ( ! empty( $value ) ? sprintf( '<a href="#" class="js-cuztom-remove-media cuztom-remove-media">%s</a>', __( 'Remove current image', 'cuztom' ) ) : '' );
 
 		$output .= '<span class="cuztom-preview">' . $image . '</span>';
+
+		$output .= $this->output_explanation();
 
 		return $output;
 	}

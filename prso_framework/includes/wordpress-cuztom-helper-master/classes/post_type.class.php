@@ -51,7 +51,7 @@ class Cuztom_Post_Type
 			$this->args 		= $args;
 			$this->labels 		= $labels;
 			$this->add_features	= $this->remove_features = array();
-			
+
 			// Add action to register the post type, if the post type doesnt exist
 			if( ! post_type_exists( $this->name ) )
 			{
