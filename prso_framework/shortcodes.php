@@ -261,7 +261,7 @@ class PrsoThemeShortcodes {
 		$output = '<a href="' . esc_url($url) . '" class="button '. esc_attr($type) . ' ' . esc_attr($size) . ' ' . esc_attr($color);
 		
 		$output .= '">';
-		$output .= esc_attr($content);
+		$output .= esc_html($content);
 		$output .= '</a>';
 		
 		return $output;
@@ -278,7 +278,7 @@ class PrsoThemeShortcodes {
 		'text' => '', 
 		), $atts ) );
 		
-		$output = '<div class="fade in alert-box '. $type . '">';
+		$output = '<div class="fade in alert-box '. esc_attr($type) . '">';
 		
 		$output .= $text;
 		if($close == 'true') {
@@ -500,7 +500,7 @@ class PrsoThemeShortcodes {
 		    ob_start();
 		    ?>
 		    <div class="six mobile-two columns">
-		    	<?php echo apply_filters( 'prso_remove_p', wpautop(trim($content)) ); ?>
+		    	<?php echo $content; ?>
 		    </div>
 		    <?php
 		    $output.= ob_get_contents();

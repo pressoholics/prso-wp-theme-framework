@@ -6,27 +6,31 @@ class Cuztom_Field_Post_Select extends Cuztom_Field
 {
 	var $_supports_repeatable 	= true;
 	var $_supports_ajax			= true;
+
+	var $css_classes 			= array( 'cuztom-input' );
 	
-	function __construct( $field, $meta_box )
+	function __construct( $field, $parent )
 	{
-		parent::__construct( $field, $meta_box );
+		parent::__construct( $field, $parent );
 
 		$this->args = array_merge(
 			array(
 				'post_type'			=> 'post',
-				'posts_per_page'	=> -1
+				'posts_per_page'	=> -1,
+				'cache_results' 	=> false, 
+				'no_found_rows' 	=> true,
 			),
 			$this->args
 		);
 
-		$this->posts 	= get_posts( $this->args );
+		$this->posts = get_posts( $this->args );
 	}
 	
-	function _output( $value, $object )
+	function _output( $value )
 	{
-		$output = '<select name="cuztom' . $this->pre . '[' . $this->id_name . ']' . $this->after . '" id="' . $this->id_name . '" class="cuztom-input">';
-			if( isset( $this->args['option_none'] ) && $this->args['option_none'] )
-				$output .= '<option value="0" ' . ( empty( $value ) ? 'selected="selected"' : '' ) . '>' . __( 'None', 'cuztom' ) . '</option>';
+		$output = '<select ' . $this->output_name() . ' ' . $this->output_id() . ' ' . $this->output_css_class() . '>';
+			if( isset( $this->args['show_option_none'] ) )
+				$output .= '<option value="0" ' . ( empty( $value ) ? 'selected="selected"' : '' ) . '>' . $this->args['show_option_none'] . '</option>';
 
 			if( is_array( $this->posts ) )
 			{
@@ -36,6 +40,8 @@ class Cuztom_Field_Post_Select extends Cuztom_Field
 				}
 			}
 		$output .= '</select>';
+
+		$output .= $this->output_explanation();
 
 		return $output;
 	}

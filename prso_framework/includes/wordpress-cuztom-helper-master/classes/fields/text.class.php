@@ -8,8 +8,20 @@ class Cuztom_Field_Text extends Cuztom_Field
 	var $_supports_bundle		= true;
 	var $_supports_ajax			= true;
 
-	function _output( $value, $object )
+	var $css_classes			= array( 'cuztom-input' );
+
+	function save( $post_id, $value )
 	{
-		return '<input type="text" name="cuztom' . $this->pre . '[' . $this->id_name . ']' . $this->after . '" id="' . $this->id_name . '" value="' . ( ! empty( $value ) ? $value : $this->default_value ) . '" class="cuztom-input" />' . ( ! $this->repeatable && $this->explanation ? '<em class="cuztom-explanation">' . $this->explanation . '</em>' : '' );
+		if( is_array( $value ) )
+			array_walk_recursive( $value, array( &$this, 'do_htmlspecialchars' ) );
+		else
+			$value = htmlspecialchars( $value );
+
+		return parent::save( $post_id, $value );
+	}
+
+	function do_htmlspecialchars( &$value )
+	{
+		$value = htmlspecialchars( $value );
 	}
 }

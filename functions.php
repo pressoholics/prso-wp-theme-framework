@@ -10,6 +10,57 @@ Version: 2.0
 *
 */
 
+/**
+* prso_theme_add_meta_boxes
+* 
+* Helper to add meta boxes to post types via Cuztom Helper Class
+* 
+* Use 'prso_theme_add_meta_boxes' filter to add your meta box data
+*
+*
+* @param	array	$meta_box_data
+* @access 	public
+* @author	Ben Moody
+*/
+add_action( 'init', 'prso_theme_add_meta_boxes', 1 );
+function prso_theme_add_meta_boxes() {
+	
+	/* Example of array to create meta box
+	array(
+		'meta_box_id',
+	    'Box Title', 
+	    'post_type',
+	    array(
+	        'name'          => 'author',
+	        'label'         => 'Author',
+	        'description'   => 'Just a little description',
+	        'type'          => 'wysiwyg'
+	    )
+	);
+	*/
+	
+	//Init vars
+	$meta_box_data = array();
+	
+	//Filter meta_box_data array
+	$meta_box_data = apply_filters( 'prso_theme_add_meta_boxes', $meta_box_data );
+	
+	if( is_array($meta_box_data) && !empty($meta_box_data) ) {
+		
+		//Create meta boxes
+		foreach( $meta_box_data as $meta_box ) {
+			new Cuztom_Meta_Box(
+				$meta_box[0],
+				$meta_box[1],
+				$meta_box[2],
+				$meta_box[3]
+			);
+		}
+		
+	}
+
+}
+
 add_filter('get_archives_link', 'archive_count_no_brackets');
 add_filter('wp_list_categories', 'archive_count_no_brackets');
 function archive_count_no_brackets($links) {

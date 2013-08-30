@@ -237,8 +237,6 @@ function prso_orbit_save_options( $post_id ) {
 		if( !empty($data) && isset($post_id) ){
 			
 			foreach( $data as $meta_key => $meta_value ) {
-				//Type cast value as int
-				$meta_value = (int) $meta_value;
 				
 				if( update_post_meta( $post_id, $meta_key, $meta_value ) ) {
 					add_post_meta( $post_id, $meta_key, $meta_value );

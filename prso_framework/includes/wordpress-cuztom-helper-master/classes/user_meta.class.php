@@ -16,7 +16,7 @@ class Cuztom_User_Meta extends Cuztom_Meta
 	/**
 	 * Constructor for User Meta
 	 *
-	 * @param   integer 		$id
+	 * @param   string 			$id
 	 * @param 	string|array	$title
 	 * @param 	string|array 	$locations
 	 * @param 	array  			$data
@@ -42,7 +42,7 @@ class Cuztom_User_Meta extends Cuztom_Meta
 			$this->callback = array( &$this, 'callback' );
 
 			// Build the meta box and fields
-			$this->build( $data );
+			$this->data = $this->build( $data );
 
 			add_action( 'personal_options_update', array( &$this, 'save_user' ) );
 			add_action( 'edit_user_profile_update', array( &$this, 'save_user' ) );
@@ -82,28 +82,28 @@ class Cuztom_User_Meta extends Cuztom_Meta
 		// Verify nonce
 		if( ! ( isset( $_POST['cuztom_nonce'] ) && wp_verify_nonce( $_POST['cuztom_nonce'], plugin_basename( dirname( __FILE__ ) ) ) ) ) return;
 
-		// Loop through each meta box
-		if( ! empty( $this->data ) && isset( $_POST['cuztom'] ) )
+		$values = isset( $_POST['cuztom'] ) ? $_POST['cuztom'] : array();
+
+		if( ! empty( $values ) )
+			parent::save( $user_id, $values );
+	}
+
+	/**
+	 * Normal save method to save all the fields in a metabox
+	 *
+	 * @author 	Gijs Jorissen
+	 * @since 	2.6
+	 */
+	function save( $user_id, $values )
+	{
+		foreach( $this->fields as $id => $field )
 		{
-			if( $this->data instanceof Cuztom_Bundle && $field = $this->data )
-			{
-				delete_user_meta( $user_id, $this->id );
-				
-				$value = isset( $_POST['cuztom'][$field->id] ) ? array_values( $_POST['cuztom'][$field->id] ) : '';
-				$value = apply_filters( "cuztom_user_meta_save_bundle_$field->id", apply_filters( 'cuztom_user_meta_save_bundle', $value, $field, $user_id ), $field, $user_id );			
+			if( $field->in_bundle ) continue;
+			
+			$value = isset( $values[$id] ) ? $values[$id] : '';
+			$value = apply_filters( "cuztom_user_meta_save_$field->type", apply_filters( 'cuztom_user_meta_save', $value, $field, $user_id ), $field, $user_id );
 
-				$field->save( $user_id, $value, 'user' );
-			}
-			else
-			{
-				foreach( $this->fields as $id_name => $field )
-				{
-					$value = isset( $_POST['cuztom'][$id_name] ) ? $_POST['cuztom'][$id_name] : '';
-					$value = apply_filters( "cuztom_user_meta_save_$field->type", apply_filters( 'cuztom_user_meta_save', $value, $field, $user_id ), $field, $user_id );
-
-					$field->save( $user_id, $value, 'user' );
-				}
-			}
-		}		
+			$field->save( $user_id, $value, 'user' );
+		}
 	}
 }
