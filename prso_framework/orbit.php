@@ -102,6 +102,13 @@ function prso_orbit_meta_box() {
         'prso-orbit-banner',
         __('Banner Gallery', 'prso_textdomain' ), 
         'prso_orbit_banner_option',
+        'page',
+        'side'
+    );
+    add_meta_box(
+        'prso-orbit-banner',
+        __('Banner Gallery', 'prso_textdomain' ), 
+        'prso_orbit_banner_option',
         'post',
         'side'
     );
@@ -239,7 +246,7 @@ function prso_orbit_save_options( $post_id ) {
 			foreach( $data as $meta_key => $meta_value ) {
 				
 				if( update_post_meta( $post_id, $meta_key, $meta_value ) ) {
-					add_post_meta( $post_id, $meta_key, $meta_value );
+					
 				}
 			
 			}
