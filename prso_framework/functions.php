@@ -1006,6 +1006,11 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 		    
 	    }
 	    
+	    //Is active page?
+        if( $post->ID == $item->object_id ) {
+            $css_class[] = 'active';
+        }
+	    
 	    return $css_class;
 	}
 	
@@ -1020,9 +1025,12 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 	public function current_to_active($text){
         $replace = array(
                 //List of menu item classes that should be changed to "active"
-                'current_page_item' => 'active',
-                'current_page_parent' => 'active',
+                'current_page_item' 	=> 'active',
+                'current_page_parent' 	=> 'active',
                 'current_page_ancestor' => 'active',
+                'current-menu-item' 	=> 'active',
+                'current-menu-parent' 	=> 'active',
+                'current-menu-ancestor' => 'active',
         );
         $text = str_replace(array_keys($replace), $replace, $text);
         
