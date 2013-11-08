@@ -400,10 +400,14 @@ function prso_orbit_banner_output( $args = array() ) {
 	
 	//Fallback, does the post have a featured image set
 	if( $image_fallback && empty($banners) && has_post_thumbnail( $post->ID ) ) {
+		
+		//Cache image size from action args
+		$image_size = $args['image_size'];
+		
 		ob_start();
 		?>
 		<div class="post-featured-image">
-			<?php echo get_the_post_thumbnail( $post->ID, 'prso-orbit' ); ?>
+			<?php echo get_the_post_thumbnail( $post->ID, $image_size ); ?>
 		</div>
 		<?php
 		$output = ob_get_contents();
