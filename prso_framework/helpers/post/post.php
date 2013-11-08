@@ -554,7 +554,7 @@ class PostHelper {
 			'post_type'		=>	'page',
 			'numberposts'	=> -1,
 			'post_status'	=> 'published',
-			'order'			=> 'ASC'
+			'order'			=> 'ASC',
 		);
 		
 		$args = wp_parse_args( $args, $defaults );
@@ -565,11 +565,23 @@ class PostHelper {
 			//Get current post/page children
 			$child_posts = get_children( $args );
 			
+			//If is empty try and see of this pages parent has any children
+			if( empty($child_posts) ) {
+				
+				$args['post_parent'] = $post->post_parent;
+				
+				$child_posts = get_children( $args );
+				
+			}
+			
 			//Loop any child posts and build html for drop down menu
 			if( !empty($child_posts) && is_array($child_posts) ) {
 				
 				//Start html
 				$html_output = '<select id="prso-mobile-deep-nav">';
+				
+				//Add first option
+				$html_output.= '<option value="">Select a section</option>';
 				
 				ob_start();
 				
@@ -616,6 +628,7 @@ class PostHelper {
 		
 		//Echo out the html
 		if( !empty($html_output) ) {
+			$html_output = apply_filters( 'prso_deep_mobile_nav_html', $html_output, $args );
 			echo $html_output;
 		}
 	}
