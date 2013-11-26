@@ -988,6 +988,9 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 	*/
 	public function custom_wp_nav_menu( $css_class, $item ) {
 		
+		//Init vars
+		global $post;
+		
         //Remove 'current_page_parent' from blog menu item when not a blog page
         if( get_post_type() !== 'post' ) {
 
