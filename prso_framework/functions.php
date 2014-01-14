@@ -233,7 +233,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
  		if( !is_admin() ) {
  			
  			//Load Wordpress commments jQuery for single pages only
- 			$this->enqueue_comments_script();
+ 			//$this->enqueue_comments_script();
  			
  			//Load Google jQuery, if not fall back to WP jQuery
 	 		if( isset($this->theme_google_jquery_url) ) {

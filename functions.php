@@ -61,6 +61,26 @@ function prso_theme_add_meta_boxes() {
 
 }
 
+/**
+* prso_get_file_version
+* 
+* Helper to dynamically generate a file version for enqueued scripts/styles based
+* on the filemtime()
+* 
+* NOTE that the param should be the path to the enequeud file from the theme root
+* note it should start with a slash e.g. '/styles.css'
+*
+*
+* @param	string	$file_path_from_theme_dir
+* @access 	public
+* @author	Ben Moody
+*/
+function prso_get_file_version( $file_path_from_theme_dir = NULL ) {
+	
+	return filemtime( get_stylesheet_directory() . $file_path_from_theme_dir );
+	
+}
+
 add_filter('get_archives_link', 'archive_count_no_brackets');
 add_filter('wp_list_categories', 'archive_count_no_brackets');
 function archive_count_no_brackets($links) {

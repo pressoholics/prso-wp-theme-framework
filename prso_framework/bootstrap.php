@@ -56,10 +56,6 @@
 		//Set framework helpers dir
 		$this->theme_helpers = $this->theme_root . '/helpers';
 		
-		//Set framework views folder
-		$this->theme_views 			= $this->theme_root . '/views';
-		$this->child_theme_views	= $this->child_theme_root . '/views';
-		
 		//Set plugin Class slug to be prepended to class names making them unique
 		$this->theme_class_slug = 'PrsoTheme';
 		//REMOVE - $this->theme_class_slug = str_replace(' ', '', ucwords(str_replace('_', ' ', $this->theme_slug)));
@@ -84,12 +80,6 @@
 	 		
 	 		//Instantiate helpers
 	 		$this->load_helpers();
-	 		
-	 		//Scan the views dir
-	 		$this->views_scan = $this->scan_views();
-	 		
-	 		//If user is admin load admin views
-	 		$this->load_admin_views();
 	 		
 	 		//Load general app functions
 	 		$this->load_app_functions();
@@ -204,49 +194,6 @@
  			}
  			
  		}
- 		
- 	}
- 	
- 	/**
-	* scan_views
-	* 
-	* Scans theme framework views dir, caches any files found in
-	* $this->views_scan array.
-	*
-	* Returns false on error
-	* 
-	*/
- 	private function scan_views() {
- 			
- 		//Init vars
- 		$result = false;
- 		$args	= array(
-			'plugin_views_dir' 			=> $this->theme_views,
-			'plugin_child_views_dir'	=> $this->child_theme_views
-		);
- 		 		
- 		$result = apply_filters( 'prso_core_scan_plugin_views', $result, $args );
- 		
- 		return $result;
- 	}
- 	
- 	/**
-	* load_admin
-	* 
-	* Detects if user is logged in, if so then it detects the theme framework admin view
-	* file in $this->theme_views dir and creates an instance of the class.
-	* 
-	*/
- 	private function load_admin_views() {
- 		
- 		$args = array(
-			'views_scan' 				=> $this->views_scan,
-			'plugin_class_slug'			=> $this->theme_class_slug,
-			'plugin_views_dir'			=> $this->theme_views,
-			'plugin_child_views_dir'	=> $this->child_theme_views
-		);
- 		
- 		do_action( 'prso_core_load_plugin_views', $args );
  		
  	}
  	
