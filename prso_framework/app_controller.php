@@ -9,34 +9,6 @@ class PrsoThemeAppController extends PrsoThemeConfig {
 	}
 	
 	/**
-	* get_options
-	* 
-	* Little helper to get data from the wordpress options database table
-	* and cache it for later use.
-	* 
-	* @access 	protected
-	* @author	Ben Moody
-	*/
-	protected function get_options( $option_slug = NULL, $multi_array_slug = NULL ) {
-		
-		//Init vars
-		$option_data = array();
-		$temp_data = array();
-		
-		if(isset( $option_slug )) {
-			
-			//Call custom wp filter '' to get options data, pass $option_slug, $multi_array_slug
-			$option_data = apply_filters( 'prso_core_get_options', $option_data, $option_slug, $multi_array_slug );
-			
-			$this->data[ $option_slug ] = $option_data;
-			return true;
-			
-		}
-		
-		return false;
-	}
-	
-	/**
 	* get_slug
 	* 
 	* Little helper to prepend any slug vars with the framework slug constant PRSO_SLUG

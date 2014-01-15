@@ -11,54 +11,23 @@ Version: 2.0
 */
 
 /**
-* prso_theme_add_meta_boxes
+* prso_get_file_version
 * 
-* Helper to add meta boxes to post types via Cuztom Helper Class
+* Helper to dynamically generate a file version for enqueued scripts/styles based
+* on the filemtime()
 * 
-* Use 'prso_theme_add_meta_boxes' filter to add your meta box data
+* NOTE that the param should be the path to the enequeud file from the theme root
+* note it should start with a slash e.g. '/styles.css'
 *
 *
-* @param	array	$meta_box_data
+* @param	string	$file_path_from_theme_dir
 * @access 	public
 * @author	Ben Moody
 */
-add_action( 'init', 'prso_theme_add_meta_boxes', 1 );
-function prso_theme_add_meta_boxes() {
+function prso_get_file_version( $file_path_from_theme_dir = NULL ) {
 	
-	/* Example of array to create meta box
-	array(
-		'meta_box_id',
-	    'Box Title', 
-	    'post_type',
-	    array(
-	        'name'          => 'author',
-	        'label'         => 'Author',
-	        'description'   => 'Just a little description',
-	        'type'          => 'wysiwyg'
-	    )
-	);
-	*/
+	return filemtime( get_stylesheet_directory() . $file_path_from_theme_dir );
 	
-	//Init vars
-	$meta_box_data = array();
-	
-	//Filter meta_box_data array
-	$meta_box_data = apply_filters( 'prso_theme_add_meta_boxes', $meta_box_data );
-	
-	if( is_array($meta_box_data) && !empty($meta_box_data) ) {
-		
-		//Create meta boxes
-		foreach( $meta_box_data as $meta_box ) {
-			new Cuztom_Meta_Box(
-				$meta_box[0],
-				$meta_box[1],
-				$meta_box[2],
-				$meta_box[3]
-			);
-		}
-		
-	}
-
 }
 
 add_filter('get_archives_link', 'archive_count_no_brackets');
