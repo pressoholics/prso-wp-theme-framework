@@ -94,12 +94,32 @@
  			$this->load_orbit_banner();
  			
  		} else {
-		
-			//Error loading app controller
-			wp_die( wp_sprintf( '%1s: ' . __( 'Sorry, this theme requires the Pressoholics framework plugin to work.', 'prso_core' ), __FILE__ ) );
+			
+			if( !function_exists('is_plugin_active') ) {
+				include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+			}
+			
+			//Prso Core plugin
+			$parent_path 	= 'presso-core/presso-core.php';
+	
+			//Check that parent class is active
+			if( !is_plugin_active($parent_path) ) {
+				
+				//Parent plugin not active -- do something!!
+				add_action( 'admin_notices', array($this, 'prso_core_missing_admin_notice') );
+				
+			}
 			
 		}
  		
+ 	}
+ 	
+ 	public function prso_core_missing_admin_notice() {
+	 	
+	 	echo '<div class="error">
+	       <p>WARNING, Your theme requires the Pressoholics framework plugin to work!!!</p>
+	    </div>';
+	 	
  	}
  	
  	/**
